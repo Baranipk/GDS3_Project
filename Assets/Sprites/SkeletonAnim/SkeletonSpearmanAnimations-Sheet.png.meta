@@ -1,0 +1,789 @@
+fileFormatVersion: 2
+guid: 5740800277c6a95469ee9a959d034df6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5086033317127830853
+    second: SkeletonSpearmanAnimations-Sheet_0
+  - first:
+      213: -7945300624730793502
+    second: SkeletonSpearmanAnimations-Sheet_1
+  - first:
+      213: -3543793628823802327
+    second: SkeletonSpearmanAnimations-Sheet_2
+  - first:
+      213: 6289542790347265878
+    second: SkeletonSpearmanAnimations-Sheet_3
+  - first:
+      213: -6586981791457661750
+    second: SkeletonSpearmanAnimations-Sheet_4
+  - first:
+      213: -7705351712290375772
+    second: SkeletonSpearmanAnimations-Sheet_5
+  - first:
+      213: -6304289852342134624
+    second: SkeletonSpearmanAnimations-Sheet_6
+  - first:
+      213: -1110075989750227718
+    second: SkeletonSpearmanAnimations-Sheet_7
+  - first:
+      213: 7309724331401649883
+    second: SkeletonSpearmanAnimations-Sheet_8
+  - first:
+      213: -6395876438943244979
+    second: SkeletonSpearmanAnimations-Sheet_9
+  - first:
+      213: 5413627922720346477
+    second: SkeletonSpearmanAnimations-Sheet_10
+  - first:
+      213: 462980645695770589
+    second: SkeletonSpearmanAnimations-Sheet_11
+  - first:
+      213: 2356482121263996303
+    second: SkeletonSpearmanAnimations-Sheet_12
+  - first:
+      213: 9185397323268466131
+    second: SkeletonSpearmanAnimations-Sheet_13
+  - first:
+      213: 499007379612176012
+    second: SkeletonSpearmanAnimations-Sheet_14
+  - first:
+      213: -7498751166543054628
+    second: SkeletonSpearmanAnimations-Sheet_15
+  - first:
+      213: 1716433385163517269
+    second: SkeletonSpearmanAnimations-Sheet_16
+  - first:
+      213: -6552136135702535191
+    second: SkeletonSpearmanAnimations-Sheet_17
+  - first:
+      213: -7645240997427897427
+    second: SkeletonSpearmanAnimations-Sheet_18
+  - first:
+      213: -8779184879048315745
+    second: SkeletonSpearmanAnimations-Sheet_19
+  - first:
+      213: -7919921456861612939
+    second: SkeletonSpearmanAnimations-Sheet_20
+  - first:
+      213: -7674346755619068220
+    second: SkeletonSpearmanAnimations-Sheet_21
+  - first:
+      213: -2127728283477315589
+    second: SkeletonSpearmanAnimations-Sheet_22
+  - first:
+      213: -3822143518378773325
+    second: SkeletonSpearmanAnimations-Sheet_23
+  - first:
+      213: 2736065541083714071
+    second: SkeletonSpearmanAnimations-Sheet_24
+  - first:
+      213: 4815203388105541749
+    second: SkeletonSpearmanAnimations-Sheet_25
+  - first:
+      213: -9194950683290966631
+    second: SkeletonSpearmanAnimations-Sheet_26
+  - first:
+      213: -4661604738866688378
+    second: SkeletonSpearmanAnimations-Sheet_27
+  - first:
+      213: -3571351204795660743
+    second: SkeletonSpearmanAnimations-Sheet_28
+  - first:
+      213: 6684993754219763202
+    second: SkeletonSpearmanAnimations-Sheet_29
+  - first:
+      213: 5866394787738927844
+    second: SkeletonSpearmanAnimations-Sheet_30
+  - first:
+      213: -2960568297309818640
+    second: SkeletonSpearmanAnimations-Sheet_31
+  - first:
+      213: 6427932419446083052
+    second: SkeletonSpearmanAnimations-Sheet_32
+  - first:
+      213: 7065630057019727858
+    second: SkeletonSpearmanAnimations-Sheet_33
+  - first:
+      213: 4905736100063067610
+    second: SkeletonSpearmanAnimations-Sheet_34
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 200
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb24bc025a7ca69b0800000000000000
+      internalID: -5086033317127830853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 200
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e95b358d2f9cb190800000000000000
+      internalID: -7945300624730793502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 200
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92e2aac687ae1dec0800000000000000
+      internalID: -3543793628823802327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 150
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 657944a28d1f84750800000000000000
+      internalID: 6289542790347265878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 150
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acc2332c5f65694a0800000000000000
+      internalID: -6586981791457661750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 150
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a7fb7f3177111590800000000000000
+      internalID: -7705351712290375772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 150
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a81c06e7c9a288a0800000000000000
+      internalID: -6304289852342134624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 150
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afc5f3dc4c73890f0800000000000000
+      internalID: -1110075989750227718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 150
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bde99330d8b517560800000000000000
+      internalID: 7309724331401649883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4d5f7df3484d37a0800000000000000
+      internalID: -6395876438943244979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 100
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d61d1efb9e1112b40800000000000000
+      internalID: 5413627922720346477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 100
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddfc39cb176dc6600800000000000000
+      internalID: 462980645695770589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 100
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8ddf7d0108e3b020800000000000000
+      internalID: 2356482121263996303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 100
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d5ad3ef236197f70800000000000000
+      internalID: 9185397323268466131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 100
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8e05126194dce600800000000000000
+      internalID: 499007379612176012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 50
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd8b72b4b851fe790800000000000000
+      internalID: -7498751166543054628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 50
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55dea4bd11ff1d710800000000000000
+      internalID: 1716433385163517269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 50
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e3237736e22215a0800000000000000
+      internalID: -6552136135702535191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 50
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dab9e0ea1d5a6e590800000000000000
+      internalID: -7645240997427897427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 50
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9c28daddd11a2680800000000000000
+      internalID: -8779184879048315745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 50
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 574f4c28569c61290800000000000000
+      internalID: -7919921456861612939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c66724494e3f7590800000000000000
+      internalID: -7674346755619068220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bff68cc366ac872e0800000000000000
+      internalID: -2127728283477315589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonSpearmanAnimations-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 0
+        width: 68
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b4b87a78b405fac0800000000000000
+      internalID: -3822143518378773325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: b77fa9e345441a442b5f1ebcfb31aa81
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":5.0},"gridSpriteSize":{"x":68.0,"y":50.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      SkeletonSpearmanAnimations-Sheet_0: -5086033317127830853
+      SkeletonSpearmanAnimations-Sheet_1: -7945300624730793502
+      SkeletonSpearmanAnimations-Sheet_10: 5413627922720346477
+      SkeletonSpearmanAnimations-Sheet_11: 462980645695770589
+      SkeletonSpearmanAnimations-Sheet_12: 2356482121263996303
+      SkeletonSpearmanAnimations-Sheet_13: 9185397323268466131
+      SkeletonSpearmanAnimations-Sheet_14: 499007379612176012
+      SkeletonSpearmanAnimations-Sheet_15: -7498751166543054628
+      SkeletonSpearmanAnimations-Sheet_16: 1716433385163517269
+      SkeletonSpearmanAnimations-Sheet_17: -6552136135702535191
+      SkeletonSpearmanAnimations-Sheet_18: -7645240997427897427
+      SkeletonSpearmanAnimations-Sheet_19: -8779184879048315745
+      SkeletonSpearmanAnimations-Sheet_2: -3543793628823802327
+      SkeletonSpearmanAnimations-Sheet_20: -7919921456861612939
+      SkeletonSpearmanAnimations-Sheet_21: -7674346755619068220
+      SkeletonSpearmanAnimations-Sheet_22: -2127728283477315589
+      SkeletonSpearmanAnimations-Sheet_23: -3822143518378773325
+      SkeletonSpearmanAnimations-Sheet_3: 6289542790347265878
+      SkeletonSpearmanAnimations-Sheet_4: -6586981791457661750
+      SkeletonSpearmanAnimations-Sheet_5: -7705351712290375772
+      SkeletonSpearmanAnimations-Sheet_6: -6304289852342134624
+      SkeletonSpearmanAnimations-Sheet_7: -1110075989750227718
+      SkeletonSpearmanAnimations-Sheet_8: 7309724331401649883
+      SkeletonSpearmanAnimations-Sheet_9: -6395876438943244979
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
