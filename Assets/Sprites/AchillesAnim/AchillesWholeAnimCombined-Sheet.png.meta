@@ -1,0 +1,1107 @@
+fileFormatVersion: 2
+guid: b03fc56ebf82a9542a5bb148d0003ded
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3103508633576137457
+    second: AchillesWholeAnimCombined-Sheet_0
+  - first:
+      213: 2010247035971791233
+    second: AchillesWholeAnimCombined-Sheet_1
+  - first:
+      213: 3799773259545819568
+    second: AchillesWholeAnimCombined-Sheet_2
+  - first:
+      213: 9202441432466201747
+    second: AchillesWholeAnimCombined-Sheet_3
+  - first:
+      213: -2413220438256100122
+    second: AchillesWholeAnimCombined-Sheet_4
+  - first:
+      213: 5928391049145339293
+    second: AchillesWholeAnimCombined-Sheet_5
+  - first:
+      213: 8878027161291570486
+    second: AchillesWholeAnimCombined-Sheet_6
+  - first:
+      213: -8434900714893984301
+    second: AchillesWholeAnimCombined-Sheet_7
+  - first:
+      213: -5647156119228922923
+    second: AchillesWholeAnimCombined-Sheet_8
+  - first:
+      213: -328288822665379301
+    second: AchillesWholeAnimCombined-Sheet_9
+  - first:
+      213: 3227369914564609927
+    second: AchillesWholeAnimCombined-Sheet_10
+  - first:
+      213: -2591654748943891817
+    second: AchillesWholeAnimCombined-Sheet_11
+  - first:
+      213: 4561846466790179588
+    second: AchillesWholeAnimCombined-Sheet_12
+  - first:
+      213: -7265394695595961852
+    second: AchillesWholeAnimCombined-Sheet_13
+  - first:
+      213: 4601518579062334781
+    second: AchillesWholeAnimCombined-Sheet_14
+  - first:
+      213: 6476300196304645033
+    second: AchillesWholeAnimCombined-Sheet_15
+  - first:
+      213: 7115526767034066592
+    second: AchillesWholeAnimCombined-Sheet_16
+  - first:
+      213: 2003343300585440536
+    second: AchillesWholeAnimCombined-Sheet_17
+  - first:
+      213: -5608223785819621078
+    second: AchillesWholeAnimCombined-Sheet_18
+  - first:
+      213: 738563529500646844
+    second: AchillesWholeAnimCombined-Sheet_19
+  - first:
+      213: -2975685850542201077
+    second: AchillesWholeAnimCombined-Sheet_20
+  - first:
+      213: 3640711862848428694
+    second: AchillesWholeAnimCombined-Sheet_21
+  - first:
+      213: -6231958012449976382
+    second: AchillesWholeAnimCombined-Sheet_22
+  - first:
+      213: -6034097426302819095
+    second: AchillesWholeAnimCombined-Sheet_23
+  - first:
+      213: -1432853452761459288
+    second: AchillesWholeAnimCombined-Sheet_24
+  - first:
+      213: 6604562411125256893
+    second: AchillesWholeAnimCombined-Sheet_25
+  - first:
+      213: 8755356685292022058
+    second: AchillesWholeAnimCombined-Sheet_26
+  - first:
+      213: 6910291036922353504
+    second: AchillesWholeAnimCombined-Sheet_27
+  - first:
+      213: 4518689241427400892
+    second: AchillesWholeAnimCombined-Sheet_28
+  - first:
+      213: -279726969990108273
+    second: AchillesWholeAnimCombined-Sheet_29
+  - first:
+      213: 8541760169352326612
+    second: AchillesWholeAnimCombined-Sheet_30
+  - first:
+      213: 6278765769575193579
+    second: AchillesWholeAnimCombined-Sheet_31
+  - first:
+      213: 7983337675196651365
+    second: AchillesWholeAnimCombined-Sheet_32
+  - first:
+      213: 4242098273735714800
+    second: AchillesWholeAnimCombined-Sheet_33
+  - first:
+      213: -1898158315693458498
+    second: AchillesWholeAnimCombined-Sheet_34
+  - first:
+      213: -8365797014734398998
+    second: AchillesWholeAnimCombined-Sheet_35
+  - first:
+      213: 6459122080291341298
+    second: AchillesWholeAnimCombined-Sheet_36
+  - first:
+      213: -912518373921740165
+    second: AchillesWholeAnimCombined-Sheet_37
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0d1652475f1ee4d0800000000000000
+      internalID: -3103508633576137457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 336
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18961e94705d5eb10800000000000000
+      internalID: 2010247035971791233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 336
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b9b142c5a18bb430800000000000000
+      internalID: 3799773259545819568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39c1c78e9b3a5bf70800000000000000
+      internalID: 9202441432466201747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 288
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ec58051cc4828ed0800000000000000
+      internalID: -2413220438256100122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 288
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9dc9edcf30e54250800000000000000
+      internalID: 5928391049145339293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 288
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63dbd075aa6153b70800000000000000
+      internalID: 8878027161291570486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 288
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dd3e056d7631fa80800000000000000
+      internalID: -8434900714893984301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 288
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d3cf22fd6541a1b0800000000000000
+      internalID: -5647156119228922923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b128c4d1e0fa17bf0800000000000000
+      internalID: -328288822665379301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 240
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 787086486dbe9cc20800000000000000
+      internalID: 3227369914564609927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 240
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 792cebcacb7980cd0800000000000000
+      internalID: -2591654748943891817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40346ec113fee4f30800000000000000
+      internalID: 4561846466790179588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 192
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 402deff94022c2b90800000000000000
+      internalID: -7265394695595961852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 192
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d35ee5c84c0ebdf30800000000000000
+      internalID: 4601518579062334781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 192
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9abe78337b070e950800000000000000
+      internalID: 6476300196304645033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 192
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a669da15ed6fb260800000000000000
+      internalID: 7115526767034066592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 192
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 815cd822e1e4dcb10800000000000000
+      internalID: 2003343300585440536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 192
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2933513e269b22b0800000000000000
+      internalID: -5608223785819621078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbdd1f3fd97ef3a00800000000000000
+      internalID: 738563529500646844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 144
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b07a64b1c7d34b6d0800000000000000
+      internalID: -2975685850542201077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 144
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69a91a26628668230800000000000000
+      internalID: 3640711862848428694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 144
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cf05ccb433a389a0800000000000000
+      internalID: -6231958012449976382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 144
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e42f1d5c54924ca0800000000000000
+      internalID: -6034097426302819095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a516f4506b7d1ce0800000000000000
+      internalID: -1432853452761459288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 96
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db2b40c358e18ab50800000000000000
+      internalID: 6604562411125256893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 96
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a292ca47486418970800000000000000
+      internalID: 8755356685292022058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 96
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0679256f51946ef50800000000000000
+      internalID: 6910291036922353504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 96
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb8d8ad8ceb95be30800000000000000
+      internalID: 4518689241427400892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8ba4a78dc53e1cf0800000000000000
+      internalID: -279726969990108273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 48
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dd63da2e9d6a8670800000000000000
+      internalID: 8541760169352326612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 48
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: beb596b7338a22750800000000000000
+      internalID: 6278765769575193579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 48
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 567d61c61538ace60800000000000000
+      internalID: 7983337675196651365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 48
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f7a05487e5feda30800000000000000
+      internalID: 4242098273735714800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 48
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebb33a9911368a5e0800000000000000
+      internalID: -1898158315693458498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae99bb160f7b6eb80800000000000000
+      internalID: -8365797014734398998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 0
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f3c5a46f4963a950800000000000000
+      internalID: 6459122080291341298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AchillesWholeAnimCombined-Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7aa067af551653f0800000000000000
+      internalID: -912518373921740165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7a4af7961e806d442baa195864df7724
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":7.0,"y":8.0},"gridSpriteSize":{"x":60.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      AchillesWholeAnimCombined-Sheet_0: -3103508633576137457
+      AchillesWholeAnimCombined-Sheet_1: 2010247035971791233
+      AchillesWholeAnimCombined-Sheet_10: 3227369914564609927
+      AchillesWholeAnimCombined-Sheet_11: -2591654748943891817
+      AchillesWholeAnimCombined-Sheet_12: 4561846466790179588
+      AchillesWholeAnimCombined-Sheet_13: -7265394695595961852
+      AchillesWholeAnimCombined-Sheet_14: 4601518579062334781
+      AchillesWholeAnimCombined-Sheet_15: 6476300196304645033
+      AchillesWholeAnimCombined-Sheet_16: 7115526767034066592
+      AchillesWholeAnimCombined-Sheet_17: 2003343300585440536
+      AchillesWholeAnimCombined-Sheet_18: -5608223785819621078
+      AchillesWholeAnimCombined-Sheet_19: 738563529500646844
+      AchillesWholeAnimCombined-Sheet_2: 3799773259545819568
+      AchillesWholeAnimCombined-Sheet_20: -2975685850542201077
+      AchillesWholeAnimCombined-Sheet_21: 3640711862848428694
+      AchillesWholeAnimCombined-Sheet_22: -6231958012449976382
+      AchillesWholeAnimCombined-Sheet_23: -6034097426302819095
+      AchillesWholeAnimCombined-Sheet_24: -1432853452761459288
+      AchillesWholeAnimCombined-Sheet_25: 6604562411125256893
+      AchillesWholeAnimCombined-Sheet_26: 8755356685292022058
+      AchillesWholeAnimCombined-Sheet_27: 6910291036922353504
+      AchillesWholeAnimCombined-Sheet_28: 4518689241427400892
+      AchillesWholeAnimCombined-Sheet_29: -279726969990108273
+      AchillesWholeAnimCombined-Sheet_3: 9202441432466201747
+      AchillesWholeAnimCombined-Sheet_30: 8541760169352326612
+      AchillesWholeAnimCombined-Sheet_31: 6278765769575193579
+      AchillesWholeAnimCombined-Sheet_32: 7983337675196651365
+      AchillesWholeAnimCombined-Sheet_33: 4242098273735714800
+      AchillesWholeAnimCombined-Sheet_34: -1898158315693458498
+      AchillesWholeAnimCombined-Sheet_35: -8365797014734398998
+      AchillesWholeAnimCombined-Sheet_36: 6459122080291341298
+      AchillesWholeAnimCombined-Sheet_37: -912518373921740165
+      AchillesWholeAnimCombined-Sheet_4: -2413220438256100122
+      AchillesWholeAnimCombined-Sheet_5: 5928391049145339293
+      AchillesWholeAnimCombined-Sheet_6: 8878027161291570486
+      AchillesWholeAnimCombined-Sheet_7: -8434900714893984301
+      AchillesWholeAnimCombined-Sheet_8: -5647156119228922923
+      AchillesWholeAnimCombined-Sheet_9: -328288822665379301
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
