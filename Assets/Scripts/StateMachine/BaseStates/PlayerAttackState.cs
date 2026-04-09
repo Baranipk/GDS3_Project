@@ -9,6 +9,7 @@ public class PlayerAttackState : IplayerState
     Rigidbody2D rigidbody;
     PlayerAttack playerAttack;
 
+    private float originalDamping;
 
     public PlayerAttackState(PlayerController controller)
     {
@@ -18,21 +19,28 @@ public class PlayerAttackState : IplayerState
         inputHandler = controller.GetComponent<PlayerInputHandler>();
         playerAttack = controller.GetComponent<PlayerAttack>();
     }
-    public async void Enter()
+    public void Enter()
     {
-        pAnim.Attack(); // Karakterin vuruş animasyonunu oynatır
-        playerAttack.PerformAttack(); // Efekti çıkarır ve cooldown'ı başlatır
+        // 1. Mevcut sürtünme değerini kaydet
+        originalDamping = rigidbody.linearDamping;
 
-        // Animasyonun veya vuruşun "kilit" süresi
-        // Bu süreyi de attackSpeed'e oranlayabilirsin
+        // 2. Sürtünmeyi uçur (Karakterin kaymasını engeller ama yerçekimini bozmaz)
+        rigidbody.linearDamping = 20f;
+
+        pAnim.Attack();
+        playerAttack.PerformAttack();
+        FinishAttack();
+    }
+
+    private async void FinishAttack()
+    {
         await UniTask.Delay(300);
-
         controller.playerStateMachine.ChangeState(controller.idleState);
     }
 
     public void Exit()
     {
-        
+        rigidbody.linearDamping = originalDamping;
     }
 
     public void FixedUpdate()

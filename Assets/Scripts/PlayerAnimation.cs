@@ -45,5 +45,31 @@ public class PlayerAnimation : MonoBehaviour
     {
         animator.SetTrigger("Attack");
     }
+
+    public void PlayBlockStart()
+    {
+        Debug.Log("1. PlayBlockStart metodu tetiklendi!");
+
+        if (animator == null)
+        {
+            Debug.LogError("HATA: Animator (anim) referansı boş! Bu yüzden Trigger çalışmıyor.");
+            return; // Hata varsa aşağıya inme
+        }
+
+        animator.SetTrigger("BlockTrigger");
+        animator.SetBool("isBlocking", true);
+
+        Debug.Log("2. Trigger ve Bool başarıyla Animator'a gönderildi!");
+    }
+
+    public void StopBlock()
+    {     
+        animator.SetBool("isBlocking", false);
+    }
+
+    public void PlayThrow()
+    {
+        animator.SetTrigger("ThrowTrigger");
+    }
 }
 

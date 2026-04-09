@@ -9,6 +9,10 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject slashPrefab;    // Slash (kesik) efekti prefabı
     [SerializeField] private Transform attackPoint;     // Efektin çıkacağı nokta (karakterin önünde bir boş obje)
 
+    [Header("Menzilli Saldırı Ayarları")]
+    [SerializeField] private GameObject javelinPrefab;
+    [SerializeField] private Transform throwPoint;
+
     private PlayerController _controller;
     private float _nextAttackTime = 0f;
 
@@ -57,8 +61,7 @@ public class PlayerAttack : MonoBehaviour
         // 2. Efektin içindeki SwordSlash scriptine ulaş
         if (slash.TryGetComponent(out SwordSlash slashScript))
         {
-            // Controller'daki FacingDirection (1 veya -1) bilgisini gönderiyoruz
-            // Hatırlatma: GetMoveDirection'a göre güncellediğin FacingDirection'ı kullanır.
+           
             slashScript.Setup(_controller.FacingDirection);
         }
     }
@@ -76,6 +79,20 @@ public class PlayerAttack : MonoBehaviour
 
             // İstersen vuruş yönünü göstermek için küçük bir çizgi de ekleyebilirsin
             Gizmos.DrawLine(attackPoint.position, attackPoint.position + attackPoint.right * 0.5f);
+        }
+    }
+
+    public void SpawnJavelin()
+    {
+        if (javelinPrefab == null || throwPoint == null) return;
+
+        // Javelin'i oluştur
+        GameObject javelin = Instantiate(javelinPrefab, throwPoint.position, throwPoint.rotation);
+
+        // Javelin scriptine ulaş ve karakterin yönünü gönder
+        if (javelin.TryGetComponent(out Javelin javelinScript))
+        {
+            javelinScript.Setup(_controller.FacingDirection);
         }
     }
 }

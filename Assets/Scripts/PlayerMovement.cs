@@ -84,12 +84,6 @@ public class PlayerMovement : MonoBehaviour
             amount *= Mathf.Sign(_rb.linearVelocityX);
             _rb.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
         }
-
-        // 6. Görsel Çevirme (Flip)
-        if (moveInput != 0)
-        {
-            _sr.flipX = moveInput < 0;
-        }
     }
     public void Jump()
     {

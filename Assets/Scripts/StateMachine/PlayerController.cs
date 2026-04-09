@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public PlayerDeathState deathState;
     public PlayerBumperState bumperState;
     public PlayerAttackState attackState;
+    public PlayerBlockState blockState;
+    public PlayerThrowState throwState;
     private void Awake()
     {
         playerStateMachine = new PlayerStateMachine();
@@ -24,6 +26,8 @@ public class PlayerController : MonoBehaviour
         deathState = new PlayerDeathState(this);
         bumperState = new PlayerBumperState(this);
         attackState = new PlayerAttackState(this);
+        blockState = new PlayerBlockState(this);
+        throwState = new PlayerThrowState(this);
     }
 
     private void Start()
@@ -35,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         playerStateMachine.CurrentState.Update();
+        HandleFlip();
     }
             
     private void FixedUpdate()

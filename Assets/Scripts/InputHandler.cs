@@ -64,9 +64,13 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void ThrowPressed(InputAction.CallbackContext context)
     {
-        if (context.ReadValueAsButton())
+        if (context.performed)
         {
-            Debug.Log("Throw Pressed!");
+            if (_playerController.playerStateMachine.CurrentState == _playerController.idleState ||
+                _playerController.playerStateMachine.CurrentState == _playerController.moveState)
+            {
+                _playerController.playerStateMachine.ChangeState(_playerController.throwState);
+            }
         }
     }
 
@@ -86,13 +90,20 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void BlockPressed(InputAction.CallbackContext context)
     {
-        if (context.ReadValueAsButton())
+        if (context.performed) // Sadece basıldığı AN tetiklenir
         {
-            Debug.Log("Block Pressed");
+            // ÖNEMLİ: Eğer zaten bloktaysak tekrar girmeye çalışma!
+            if (_playerController.playerStateMachine.CurrentState != _playerController.blockState)
+            {
+                _playerController.playerStateMachine.ChangeState(_playerController.blockState);
+            }
         }
-        else
+        else if (context.canceled) // Tuş bırakıldığı AN
         {
-            Debug.Log("Block Realesed");
+            if (_playerController.playerStateMachine.CurrentState == _playerController.blockState)
+            {
+                _playerController.playerStateMachine.ChangeState(_playerController.idleState);
+            }
         }
     }
 
