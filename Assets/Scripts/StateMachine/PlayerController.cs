@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
     public float FacingDirection { get; private set; } = 1f; // Başlangıçta sağa bakıyor
     private PlayerInputHandler _inputHandler;
 
+    [Header("Knockback Ayarları")]
+    public Vector2 knockbackForce = new Vector2(5f, 5f); // Normal hasar geri tepmesi
+    public float blockKnockbackMultiplier = 0.4f; // Blok anındaki geri tepme oranı (%40)
+
     public PlayerIdleState idleState;
     public PlayerMoveState moveState;
     public PlayerJumpState jumpState;
@@ -15,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public PlayerAttackState attackState;
     public PlayerBlockState blockState;
     public PlayerThrowState throwState;
+    public PlayerHurtState hurtState;
     private void Awake()
     {
         playerStateMachine = new PlayerStateMachine();
@@ -28,6 +33,7 @@ public class PlayerController : MonoBehaviour
         attackState = new PlayerAttackState(this);
         blockState = new PlayerBlockState(this);
         throwState = new PlayerThrowState(this);
+        hurtState = new PlayerHurtState(this);
     }
 
     private void Start()
@@ -62,6 +68,20 @@ public class PlayerController : MonoBehaviour
         {
             Flip(-1f);
         }
+    }
+
+    public void ApplyKnockback(float multiplier = 1.0f)
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        float knockbackDir = -FacingDirection;
+
+        rb.linearVelocity = Vector2.zero;
+
+        // Küçük bir "Y" zıplaması eklemek her zaman iyidir (Y ekseni kuvvetini artır)
+        // Bu, karakterin yere sürtünüp durmasını engeller ve geriye kaymasını sağlar
+        float verticalForce = knockbackForce.y * 1.2f;
+
+        rb.AddForce(new Vector2(knockbackDir * knockbackForce.x * multiplier, verticalForce * multiplier), ForceMode2D.Impulse);
     }
 
     private void Flip(float newDirection)

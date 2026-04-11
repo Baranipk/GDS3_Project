@@ -174,5 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cdc7a5309a58e44a952026e9b9e1a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Javelin
+  damage: 2
   speed: 20
   lifeTime: 3

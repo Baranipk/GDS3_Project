@@ -72,6 +72,11 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetTrigger("ThrowTrigger");
     }
 
+    public void PlayHurt()
+    {
+        animator.SetTrigger("Hurt");
+    }
+
     public void PlayIdleForce()
     {
         if (animator == null) return;

@@ -178,6 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 925e5c4d05e42ee4ab86b3f171171534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  knockbackForce: {x: 5, y: 5}
+  blockKnockbackMultiplier: 0.3
   spawnPoint: {fileID: 0}
 --- !u!114 &5695058739397700066
 MonoBehaviour:
@@ -244,6 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 5
   currentHealth: 5
+  isInvincible: 0
 --- !u!1 &4933564610146562662
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +321,7 @@ GameObject:
   - component: {fileID: 8960629469965045703}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

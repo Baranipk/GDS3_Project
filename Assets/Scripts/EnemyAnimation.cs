@@ -16,9 +16,15 @@ public class EnemyAnimation : MonoBehaviour
         animator.SetTrigger("Hurt");
     }
 
+    
     public void PlayDeath()
     {
         if (animator == null) return;
+
+        
+        animator.ResetTrigger("Hurt");
+        animator.ResetTrigger("Attack");
+
         animator.SetTrigger("Death");
     }
 

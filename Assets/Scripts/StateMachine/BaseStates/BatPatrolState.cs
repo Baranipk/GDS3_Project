@@ -3,7 +3,7 @@ using UnityEngine;
 public class BatPatrolState : IEnemyState
 {
     private BatController bat;
-    private int currentWaypointIndex = 0;
+    private bool movingRight = true;
 
     public BatPatrolState(BatController batController)
     {
@@ -12,8 +12,8 @@ public class BatPatrolState : IEnemyState
 
     public void Enter()
     {
-        // Gerekirse uçma animasyonunu yavaşa alabilirsin
-        // bat.anim.Play("BatFlySlow");
+        // Başlangıçta hangi yöne bakıyorsa o yöne gitmeye başla (opsiyonel)
+        movingRight = bat.transform.localScale.x > 0;
     }
 
     public void Update()
@@ -26,25 +26,33 @@ public class BatPatrolState : IEnemyState
             return;
         }
 
-        // 2. DEVRİYE HAREKETİ: Eğer waypoint yoksa olduğu yerde kalsın
-        if (bat.waypoints.Length == 0) return;
+        // 2. DEVRİYE HAREKETİ (X Ekseni Sınır Kontrolü)
+        PatrolMovement();
+    }
 
-        Transform targetWaypoint = bat.waypoints[currentWaypointIndex];
+    private void PatrolMovement()
+    {
+        // Hedef X koordinatını belirle
+        float targetX = movingRight ? bat.rightLimitX : bat.leftLimitX;
 
-        // Hedefe doğru ilerle
-        bat.transform.position = Vector2.MoveTowards(bat.transform.position, targetWaypoint.position, bat.patrolSpeed * Time.deltaTime);
+        // Sadece X ekseninde hareket oluştur (Y sabit kalır)
+        Vector2 targetPosition = new Vector2(targetX, bat.transform.position.y);
 
-        // Yönünü hedefe çevir
-        bat.CheckFlip(targetWaypoint.position.x - bat.transform.position.x);
+        // Karakteri hareket ettir
+        bat.transform.position = Vector2.MoveTowards(
+            bat.transform.position,
+            targetPosition,
+            bat.patrolSpeed * Time.deltaTime
+        );
 
-        // Hedefe çok yaklaştıysa bir sonraki noktaya geç
-        if (Vector2.Distance(bat.transform.position, targetWaypoint.position) < 0.2f)
+        // Görsel yönü ayarla (CheckFlip metodunu kullanarak)
+        float moveDirection = targetX - bat.transform.position.x;
+        bat.CheckFlip(moveDirection);
+
+        // Sınıra ulaştı mı kontrol et (0.05f küçük bir tolerans payıdır)
+        if (Mathf.Abs(bat.transform.position.x - targetX) < 0.05f)
         {
-            currentWaypointIndex++;
-            if (currentWaypointIndex >= bat.waypoints.Length)
-            {
-                currentWaypointIndex = 0; // Başa dön
-            }
+            movingRight = !movingRight; // Yön değiştir
         }
     }
 

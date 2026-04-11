@@ -9,40 +9,55 @@ public class EnemyHealth : MonoBehaviour
     private EnemyController _controller;
     private bool _isDead = false;
 
+    // KRİTİK SATIR: Dışarıdaki scriptlerin (HurtState gibi) ölümü kontrol etmesini sağlar
+    public bool IsDead => _isDead;
+
     private void Awake()
     {
         _controller = GetComponent<EnemyController>();
         currentHealth = maxHealth;
     }
 
-    // EnemyHealth.cs içindeki TakeDamage metodunu güncelle:
     public void TakeDamage(int damage)
     {
         if (_isDead) return;
 
         currentHealth -= damage;
-
-        // Eğer düşman bir Bat (Yarasa) ise onu HurtState'e sok
-        if (_controller is BatController bat)
-        {
-            bat.StateMachine.ChangeState(bat.hurtState);
-        }
+        Debug.Log($"{gameObject.name} hasar aldı! Kalan Can: {currentHealth}");
 
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
             Die();
+        }
+        else
+        {
+            // Ölmediyse sarsılma (Hurt) durumuna geç
+            if (_controller is BatController bat)
+            {
+                bat.StateMachine.ChangeState(bat.hurtState);
+            }
+            else if (_controller is SkeletonController skeleton)
+            {
+                skeleton.StateMachine.ChangeState(skeleton.hurtState);
+            }
         }
     }
 
     private void Die()
     {
+        if (_isDead) return;
         _isDead = true;
-        // Düşmanı ölüm state'ine sokuyoruz
-        // BatController içindeki deathState'e erişeceğiz
+
+        Debug.Log($"{gameObject.name} öldü!");
+
         if (_controller is BatController bat)
         {
             bat.StateMachine.ChangeState(bat.deathState);
         }
-        // Not: İleride diğer düşmanlar için burayı genişleteceğiz
+        else if (_controller is SkeletonController skeleton)
+        {
+            skeleton.StateMachine.ChangeState(skeleton.deathState);
+        }
     }
 }

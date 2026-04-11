@@ -3,6 +3,7 @@ using UnityEngine;
 public class Javelin : MonoBehaviour
 {
     [Header("Javelin Ayarları")]
+    [SerializeField] private int damage = 15;        // YENİ: Düşmana verilecek hasar
     [SerializeField] private float speed = 15f;      // Uçuş hızı
     [SerializeField] private float lifeTime = 3f;    // Hiçbir şeye çarpmazsa kaç saniye sonra yok olsun?
 
@@ -31,15 +32,21 @@ public class Javelin : MonoBehaviour
     // Çarpışma Algılama
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Eğer düşmana çarparsa
-        if (collision.CompareTag("Enemy"))
+        // Eğer düşmana veya düşman objesinin herhangi bir alt parçasına çarparsa
+        if (collision.CompareTag("Enemy") || collision.transform.root.CompareTag("Enemy"))
         {
-            Debug.Log("Javelin düşmana çarptı ve hasar verdi!");
-            // TODO: Düşmanın canını azaltma kodunu buraya ekle
+            // GetComponentInParent: Alt objeye (collider) çarpsak bile gidip ana objedeki EnemyHealth scriptini bulur
+            EnemyHealth enemyHealth = collision.GetComponentInParent<EnemyHealth>();
 
-            Destroy(gameObject); // Javelin'i yok et
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage); // Hasar ver
+                Debug.Log($"Javelin {collision.name} objesine çarptı ve {damage} hasar verdi!");
+            }
+
+            Destroy(gameObject); // Düşmana çarptığında mızrağı yok et
         }
-        // Eğer yere veya duvara çarparsa ("Ground" tag'ini kullandığını varsayıyorum)
+        // Eğer yere veya duvara çarparsa
         else if (collision.CompareTag("Ground"))
         {
             Debug.Log("Javelin duvara/yere çarptı!");

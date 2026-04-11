@@ -25,7 +25,7 @@ public class PlayerDeathState : IplayerState
 
 
         // 3. Etkileşimi kes
-        
+
         controller.GetComponentInChildren<Collider2D>().enabled = false;
 
         // 4. ANIMASYONUN BİTMESİNİ BEKLE (Örn: 2 saniye)

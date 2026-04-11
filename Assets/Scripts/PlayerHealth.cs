@@ -7,6 +7,9 @@ public class Health : MonoBehaviour
     public int maxHealth = 5;
     public int currentHealth;
 
+    [Header("I-Frame Durumu")]
+    public bool isInvincible = false; // Hasar alınamazlık kontrolü
+
     private PlayerController _controller;
     private bool _isDead = false;
 
@@ -18,23 +21,30 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (_isDead) return; // Zaten ölüyse hasar almasın
+        if (_isDead || isInvincible) return;
 
-        // BLOK KONTROLÜ (Opsiyonel ama çok iyi olur)
+        // BLOK KONTROLÜ
         if (_controller.playerStateMachine.CurrentState == _controller.blockState)
         {
-            damage = 0; // Blok yapıyorsa hasarı yarıya indir
-            Debug.Log("Bloklandığı için hasar alınmadı!");
+            damage = 0;
+            _controller.ApplyKnockback(_controller.blockKnockbackMultiplier);
+            Debug.Log("Bloklandı!");
+            return;
         }
 
+        // 1. Canı düşür
         currentHealth -= damage;
-        Debug.Log($"Hasar alındı! Kalan Can: {currentHealth}");
 
-        // Hasar efekti veya sesini burada tetikleyebilirsin
-
+        // 2. ÖLÜM KONTROLÜ (BURASI EKSİKTİ)
         if (currentHealth <= 0)
         {
-            Die();
+            currentHealth = 0; // Canın eksiye düşmesini engelle
+            Die();             // Ölüm metodunu çağır
+        }
+        else
+        {
+            // 3. Eğer ölmediyse Hasar Alma State'ine geç
+            _controller.playerStateMachine.ChangeState(_controller.hurtState);
         }
     }
 
@@ -44,7 +54,6 @@ public class Health : MonoBehaviour
         _controller.playerStateMachine.ChangeState(_controller.deathState);
     }
 
-    // Can iksiri vb. için iyileşme metodu
     public void Heal(int amount)
     {
         if (_isDead) return;
@@ -55,7 +64,6 @@ public class Health : MonoBehaviour
     {
         currentHealth = maxHealth;
         _isDead = false;
+        isInvincible = false; // Resetlerken hasar alınamazlığı da kapat
     }
-
-
 }
