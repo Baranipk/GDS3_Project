@@ -71,5 +71,25 @@ public class PlayerAnimation : MonoBehaviour
     {
         animator.SetTrigger("ThrowTrigger");
     }
+
+    public void PlayIdleForce()
+    {
+        if (animator == null) return;
+
+        
+        animator.ResetTrigger("Death");
+        animator.ResetTrigger("Jump");
+        animator.ResetTrigger("Attack");
+        animator.ResetTrigger("ThrowTrigger");
+        animator.ResetTrigger("BlockTrigger");
+
+        
+        animator.SetBool("IsWalk", false);
+        animator.SetBool("IsFall", false);
+        animator.SetBool("isBlocking", false);
+
+        
+        animator.Play("IdleAnimation", 0, 0f);
+    }
 }
 

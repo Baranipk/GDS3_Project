@@ -58,7 +58,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.ReadValueAsButton())
         {
-            // EventBus<OnPausePressed>.Publish(new OnPausePressed());
+            GetComponent<Health>().TakeDamage(5);
         }
     }
 

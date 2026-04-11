@@ -2,40 +2,38 @@ using UnityEngine;
 
 public class SwordSlash : MonoBehaviour
 {
-    // Hız (speed) değişkenine artık gerek kalmadı, sildik.
-
-    // ÖNEMLİ: Bu objenin yok olması için hala bir yönteme ihtiyacı var.
-    // Önceki mesajdaki "Yöntem 1 (Animation Event)" veya "Yöntem 2 (Timer)"ı uyguladığından emin ol.
-    // Aşağıdaki örnekte basitlik adına timer kullanıyoruz:
-    [SerializeField] private float lifeTime = 0.3f;
+    [Header("Saldırı Ayarları")]
+    [SerializeField] private int damage = 20; // Düşmana verilecek hasar
+    [SerializeField] private float lifeTime = 0.3f; // Efektin sahnede kalma süresi
 
     public void Setup(float characterDirection)
     {
-        // Karakterin baktığı yöne göre slash efektini çevir
+        // 1. Karakterin baktığı yöne göre slash efektini çevir
         Vector3 newScale = transform.localScale;
-
-        // Mathf.Abs(newScale.x) kılıcın orijinal genişliğini korur,
-        // characterDirection (1 veya -1) ise onu sağa veya sola çevirir.
         newScale.x = Mathf.Abs(newScale.x) * characterDirection;
         transform.localScale = newScale;
 
-        // Belirli bir süre sonra yok et (Eğer Animation Event kullanmıyorsan)
+        // 2. Belirli bir süre sonra efekti yok et
         Destroy(gameObject, lifeTime);
     }
 
-    // --- Update() METODUNU TAMAMEN SİLDİK ---
-    // Böylece obje olduğu yerde sabit kalacak.
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        // Çarptığımız obje veya ebeveyni "Enemy" tag'ine mi sahip?
+        if (collision.CompareTag("Enemy") || collision.transform.root.CompareTag("Enemy"))
         {
-            // Düşmana hasar verme mantığı buraya...
-            Debug.Log("Sabit slash düşmana değdi!");
+            // GetComponentInParent: Alt objeye (collider) çarpsak bile 
+            // gidip ana objedeki EnemyHealth scriptini bulur.
+            EnemyHealth enemyHealth = collision.GetComponentInParent<EnemyHealth>();
 
-            // Sabit bir efekti düşmana değince yok etmek istemeyebilirsin,
-            // (animasyonun tamamlanması daha iyi görünür). 
-            // Bu yüzden Destroy(gameObject) satırını buraya eklemiyoruz.
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage);
+                Debug.Log($"Sabit slash {collision.name} objesine {damage} hasar verdi!");
+
+                // Sabit duran slash'larda genellikle çarptığında yok etmeyiz,
+                // animasyonun (0.3s) tamamlanması daha profesyonel görünür.
+            }
         }
     }
 }

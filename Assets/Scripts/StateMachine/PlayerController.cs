@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     {
         playerStateMachine.CurrentState.Update();
         HandleFlip();
+
     }
             
     private void FixedUpdate()
@@ -69,6 +70,29 @@ public class PlayerController : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x = newDirection; // Karakteri görsel olarak aynala
         transform.localScale = scale;
+    }
+
+    // PlayerController.cs içine ekle
+
+    [SerializeField] private Transform spawnPoint; // Karakterin doğacağı boş bir obje
+
+    public void Respawn()
+    {
+        // 1. Pozisyonu başlangıca çek
+        transform.position = spawnPoint.position;
+
+        // 2. Rigidbody tipini tekrar Dynamic yap (Yer çekimi geri gelir)
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
+        // 3. Collider'ı geri aç
+        GetComponentInChildren<Collider2D>().enabled = true;
+
+        GetComponent<PlayerAnimation>().PlayIdleForce();
+
+        // 4. Canı ve State'i sıfırla
+        GetComponent<Health>().ResetHealth();
+        playerStateMachine.ChangeState(idleState);     
     }
 }
 

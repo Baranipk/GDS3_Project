@@ -1,43 +1,42 @@
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 public class PlayerDeathState : IplayerState
 {
     PlayerController controller;
-    SpriteRenderer spriteRenderer;
-    Material _material;
-
-    private static readonly int DissolveAmountID = Shader.PropertyToID("_DisolveAmount");
+    PlayerAnimation pAnim;
+    Rigidbody2D rb;
 
     public PlayerDeathState(PlayerController controller)
     {
         this.controller = controller;
-        spriteRenderer = controller.GetComponent<SpriteRenderer>();
-        _material = spriteRenderer.material;
+        this.pAnim = controller.GetComponent<PlayerAnimation>();
+        this.rb = controller.GetComponent<Rigidbody2D>();
     }
 
     public async void Enter()
     {
-        controller.GetComponent<PlayerAnimation>().Death();
-        controller.GetComponent<PlayerInputHandler>().DeactivateInput();
-        controller.GetComponent<Rigidbody2D>().linearVelocity = Vector3.zero;
-        SoundManager.Instance.Get("Death").Play();
-       /* //Disolve Effect
-         await DOTween.To(() => _material.GetFloat(DissolveAmountID),
-                 x => _material.SetFloat(DissolveAmountID, x), 1.1f, 1.5f)
-             .ToUniTask();
-        await UniTask.Delay(1000);
-        Time.timeScale = 0f;
-        LevelManager.Instance.HandlePlayerDeath().Forget(); */
-    } 
+        // 1. Hareketleri durdur
+        rb.linearVelocity = Vector2.zero;
 
-    public void Exit() { }
+        rb.bodyType = RigidbodyType2D.Static;
+        // 2. Ölüm animasyonunu tetikle
+        pAnim.Death();
 
+
+        // 3. Etkileşimi kes
+        
+        controller.GetComponentInChildren<Collider2D>().enabled = false;
+
+        // 4. ANIMASYONUN BİTMESİNİ BEKLE (Örn: 2 saniye)
+        // Ölüm animasyonun ne kadar sürüyorsa o kadar beklet
+        await UniTask.Delay(2000);
+
+        // 5. Yeniden doğuşu başlat
+        controller.Respawn();
+    }
+
+    public void Update() { } // Ölüyken input almasın diye boş bırakıyoruz
     public void FixedUpdate() { }
-
-    public void Update() { }
-
-
+    public void Exit() { }
 }
