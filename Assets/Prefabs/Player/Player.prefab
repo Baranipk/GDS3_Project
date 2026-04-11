@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8742387196791468781}
   - component: {fileID: 6103868272765820287}
   - component: {fileID: 3614514414585550354}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2802640032002516446}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GroundCheckTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7728376855880207463}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttackTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7914678689431521270}
   - component: {fileID: 8960629469965045703}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Player
   m_Icon: {fileID: 0}

@@ -176,4 +176,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Javelin
   damage: 2
   speed: 20
-  lifeTime: 3
+  lifeTime: 1.5

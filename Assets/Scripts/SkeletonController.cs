@@ -5,23 +5,25 @@ public class SkeletonController : EnemyController
     [Header("Hareket ve Menzil")]
     public float patrolSpeed = 2f;
     public float chaseSpeed = 3.5f;
-    public float stopDistance = 1.2f; // Saldırıya başlama mesafesi
+    public float stopDistance = 1.2f;
 
     [Header("Seçenekler")]
-    public bool startAsPatrol = true; // Inspector üzerinden değiştirilebilir
+    public bool startAsPatrol = true;
     public Transform leftPoint;
     public Transform rightPoint;
 
-    [Header("Saldırı")]
-    public GameObject slashProjectilePrefab;
+    [Header("Saldırı Ayarları (Melee)")]
+    public Transform attackPoint;      // Hasarın çıkacağı merkez nokta
+    public float attackRange = 0.8f;   // Hasar verme dairesinin yarıçapı
+    public LayerMask playerLayer;      // Sadece "Player" katmanına hasar vermek için
+    public int attackDamage = 1;
     public float attackCooldown = 2.5f;
     [HideInInspector] public float lastAttackTime;
 
-    [Header("Slash Spawn Offset")]
-    [Tooltip("İskeletin merkezinden sağa/sola olan yatay mesafe")]
-    public float spawnOffsetX = 0.5f;
-    [Tooltip("İskeletin merkezinden yukarı/aşağı olan dikey mesafe")]
-    public float spawnOffsetY = 0f;
+    [Header("Temas Hasarı Ayarları")]
+    public int contactDamage = 1;            // Dokunduğunda vereceği hasar
+    public float contactDamageCooldown = 1f; // Hasar verme sıklığı (saniye)
+    private float nextContactDamageTime;
 
     // State'ler
     public SkeletonIdleState idleState;
@@ -34,8 +36,6 @@ public class SkeletonController : EnemyController
     protected override void Awake()
     {
         base.Awake();
-
-        // State Instance'larını oluştur
         idleState = new SkeletonIdleState(this);
         patrolState = new SkeletonPatrolState(this);
         chaseState = new SkeletonChaseState(this);
@@ -46,40 +46,41 @@ public class SkeletonController : EnemyController
 
     private void Start()
     {
-        // Başlangıç moduna göre State Machine'i başlat
         if (startAsPatrol)
             StateMachine.Initialize(patrolState);
         else
             StateMachine.Initialize(idleState);
     }
 
-    // Animation Event tarafından çağrılacak
-    public void SpawnSlash()
+    // --- YENİ MELEE ATTACK METODU ---
+    // Animasyon Event üzerinden bunu çağıracağız
+    public void PerformMeleeAttack()
     {
         if (GetComponent<EnemyHealth>().IsDead) return;
-        if (slashProjectilePrefab == null) return;
 
-        // İskeletin baktığı yönü hesapla (+1 sağ, -1 sol)
-        float facingDir = transform.localScale.x > 0 ? 1f : -1f;
+        Debug.Log("Saldırı metodu çalıştı!"); // 1. Kontrol: Event çalışıyor mu?
 
-        // Spawn pozisyonunu inspector offset'lerine göre hesapla
-        Vector3 spawnPos = transform.position + new Vector3(spawnOffsetX * facingDir, spawnOffsetY, 0f);
+        Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
 
-        // Efekti doğru pozisyonda oluştur
-        GameObject slash = Instantiate(slashProjectilePrefab, spawnPos, Quaternion.identity);
-
-        // Yönü mermiye gönder
-        if (slash.TryGetComponent(out SkeletonSlash projectile))
+        if (hitPlayer != null)
         {
-            projectile.Setup(facingDir);
+            Debug.Log("Oyuncu tespit edildi: " + hitPlayer.name); // 2. Kontrol: Menzil ve Layer doğru mu?
+
+            Health playerHealth = hitPlayer.GetComponentInParent<Health>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(attackDamage);
+            }
+        }
+        else
+        {
+            Debug.Log("Saldırı yapıldı ama kimseye değmedi.");
         }
     }
 
     public void FinalizeAttack()
     {
-        // Eğer iskelet çoktan öldüyse, animasyon bitse bile durumu değiştirme
         if (GetComponent<EnemyHealth>().IsDead) return;
-
         if (StateMachine.CurrentState == attackState)
         {
             StateMachine.ChangeState(chaseState);
@@ -88,32 +89,61 @@ public class SkeletonController : EnemyController
 
     private void OnDrawGizmosSelected()
     {
-        // 1. Saldırı Menzili (Stop Distance) - Kırmızı
+        // 1. Durma/Takip Menzilleri
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, stopDistance);
 
-        // 2. Fark Etme Menzili (Detection Radius) - Mavi
+        // 2. SALDIRI ALANI (Vuruş Noktası) - Editörde görmek için çok önemli
+        if (attackPoint != null)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        }
+
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
-
-        // 3. Kaybetme Menzili (Lose Radius) - Sarı
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, loseRadius);
-
-        // 4. Slash Spawn Noktası - Cyan (her iki yön için)
-        Gizmos.color = Color.cyan;
-        Vector3 rightSpawn = transform.position + new Vector3(spawnOffsetX, spawnOffsetY, 0f);
-        Vector3 leftSpawn = transform.position + new Vector3(-spawnOffsetX, spawnOffsetY, 0f);
-        Gizmos.DrawWireSphere(rightSpawn, 0.15f);
-        Gizmos.DrawWireSphere(leftSpawn, 0.15f);
     }
 
-    // Saldırı animasyonu tamamen bittiğinde state değiştirmek için çağıracağız
     public void OnAttackComplete()
     {
         if (StateMachine.CurrentState == attackState)
         {
             StateMachine.ChangeState(chaseState);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        HandleContactDamage(collision.collider);
+    }
+
+    // Eğer iskeletin collider'ı "Is Trigger" SE bu metod çalışır
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        HandleContactDamage(other);
+    }
+
+    private void HandleContactDamage(Collider2D other)
+    {
+        // 1. Çarptığımız obje Player mı? (Tag kontrolü)
+        // İpucu: Player collider'ın child objede olduğu için CompareTag'i dikkatli kullanmalıyız.
+        if (other.CompareTag("Player") || other.transform.root.CompareTag("Player"))
+        {
+            // 2. Hasar verme zamanı geldi mi?
+            if (Time.time >= nextContactDamageTime)
+            {
+                // 3. Health bileşenine ulaş
+                Health playerHealth = other.GetComponentInParent<Health>();
+
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage(contactDamage);
+                    Debug.Log("İskelet temas yoluyla hasar verdi!");
+
+                    // Bekleme süresini güncelle
+                    nextContactDamageTime = Time.time + contactDamageCooldown;
+                }
+            }
         }
     }
 }
