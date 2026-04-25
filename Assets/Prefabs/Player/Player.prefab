@@ -117,7 +117,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1.5
+  m_GravityScale: 1.7
   m_Material: {fileID: 6200000, guid: a2ff0e69fae229a4086dd46240953255, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -142,11 +142,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   maxSpeed: 12
-  acceleration: 10
+  acceleration: 8
   deceleration: 16
   turnSpeed: 10
-  velPower: 0.9
-  jumpForce: 20
+  velPower: 1
+  jumpForce: 13
   groundCheckRadius: 0.3
   groundCheckTransform: {fileID: 2802640032002516446}
   groundLayer:
@@ -244,8 +244,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9bb20ed26a87743a9d1b98525b64a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 5
-  currentHealth: 5
+  maxHealth: 3
+  currentHealth: 1
+  currentShield: 0
+  maxShield: 3
   isInvincible: 0
 --- !u!1 &4933564610146562662
 GameObject:
@@ -375,7 +377,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.1519258, y: -0.2276746}
+  m_Offset: {x: 0.1519258, y: -0.26182175}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -385,5 +387,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.9721122, y: 2.5478513}
+  m_Size: {x: 0.9721122, y: 2.479557}
   m_EdgeRadius: 0

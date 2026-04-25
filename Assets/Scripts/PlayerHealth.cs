@@ -7,8 +7,12 @@ public class Health : MonoBehaviour
     public int maxHealth = 5;
     public int currentHealth;
 
+    [Header("Kalkan Ayarları")]
+    public int currentShield = 0; // Mevcut kalkan miktarı
+    public int maxShield = 3;     // Oyuncunun en fazla biriktirebileceği kalkan sayısı
+
     [Header("I-Frame Durumu")]
-    public bool isInvincible = false; // Hasar alınamazlık kontrolü
+    public bool isInvincible = false;
 
     private PlayerController _controller;
     private bool _isDead = false;
@@ -28,24 +32,46 @@ public class Health : MonoBehaviour
         {
             damage = 0;
             _controller.ApplyKnockback(_controller.blockKnockbackMultiplier);
-            Debug.Log("Bloklandı!");
             return;
         }
 
-        // 1. Canı düşür
+        // --- YENİ: KALKAN KONTROLÜ ---
+        if (currentShield > 0)
+        {
+            // Kalkanın emebileceği hasarı hesapla
+            int damageToShield = Mathf.Min(currentShield, damage);
+
+            currentShield -= damageToShield; // Kalkanı düşür
+            damage -= damageToShield;        // Kalan hasarı hesapla
+
+            Debug.Log($"Kalkan hasarı emdi! Kalan Kalkan: {currentShield}");
+
+            // Eğer kalkan tüm hasarı emdiyse ve geriye hasar kalmadıysa, cana dokunmadan çık
+            if (damage <= 0) return;
+        }
+
+        // 1. Kalan hasarı candan düşür
         currentHealth -= damage;
 
-        // 2. ÖLÜM KONTROLÜ (BURASI EKSİKTİ)
+        // 2. ÖLÜM KONTROLÜ
         if (currentHealth <= 0)
         {
-            currentHealth = 0; // Canın eksiye düşmesini engelle
-            Die();             // Ölüm metodunu çağır
+            currentHealth = 0;
+            Die();
         }
         else
         {
             // 3. Eğer ölmediyse Hasar Alma State'ine geç
             _controller.playerStateMachine.ChangeState(_controller.hurtState);
         }
+    }
+
+    // --- YENİ: KALKAN EKLEME METODU ---
+    public void AddShield(int amount)
+    {
+        if (_isDead) return;
+        currentShield = Mathf.Min(currentShield + amount, maxShield);
+        Debug.Log($"Kalkan alındı! Mevcut Kalkan: {currentShield}");
     }
 
     private void Die()
@@ -63,7 +89,15 @@ public class Health : MonoBehaviour
     public void ResetHealth()
     {
         currentHealth = maxHealth;
+        currentShield = 0; // Doğduğunda kalkanlar sıfırlansın
         _isDead = false;
-        isInvincible = false; // Resetlerken hasar alınamazlığı da kapat
+        isInvincible = false;
+    }
+
+    public void IncreaseMaxHealth(int amount)
+    {
+        maxHealth += amount;
+        currentHealth += amount; // Yeni eklenen kalbi dolu olarak veriyoruz
+                                 // HealthUI scriptimiz Update içinde bu değişikliği fark edip kendini yenileyecek
     }
 }

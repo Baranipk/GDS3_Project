@@ -41,7 +41,7 @@ public class Javelin : MonoBehaviour
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(damage); // Hasar ver
-                Debug.Log($"Javelin {collision.name} objesine çarptı ve {damage} hasar verdi!");
+                // Debug.Log($"Javelin {collision.name} objesine çarptı ve {damage} hasar verdi!");
             }
 
             Destroy(gameObject); // Düşmana çarptığında mızrağı yok et

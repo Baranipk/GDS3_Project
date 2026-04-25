@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
         if (_isDead) return;
 
         currentHealth -= damage;
-        Debug.Log($"{gameObject.name} hasar aldı! Kalan Can: {currentHealth}");
+        // Debug.Log($"{gameObject.name} hasar aldı! Kalan Can: {currentHealth}");
 
         if (currentHealth <= 0)
         {
@@ -53,7 +53,7 @@ public class EnemyHealth : MonoBehaviour
         if (_isDead) return;
         _isDead = true;
 
-        Debug.Log($"{gameObject.name} öldü!");
+        // Debug.Log($"{gameObject.name} öldü!");
 
         if (_controller is BatController bat)
         {

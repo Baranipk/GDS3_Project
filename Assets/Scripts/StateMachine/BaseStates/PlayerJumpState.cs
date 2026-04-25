@@ -22,7 +22,7 @@ public class PlayerJumpState : IplayerState
     }
     public void Enter()
     {
-        Debug.Log("Jumped");
+        // Debug.Log("Jumped");
 
         if (playerMovement.IsGrounded() || playerMovement.isDoubleJump)
         {
@@ -44,7 +44,7 @@ public class PlayerJumpState : IplayerState
 
         if (rigidbody.linearVelocityY > 0)
         {
-            Debug.Log("Jump");
+            // Debug.Log("Jump");
 
         }
         else
