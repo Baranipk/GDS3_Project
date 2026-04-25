@@ -18,9 +18,9 @@ TagManager:
   - IgnorePlayer
   - MidGround
   - Player
+  - Enemy
+  - 
   - Background
-  - 
-  - 
   - 
   - 
   - 

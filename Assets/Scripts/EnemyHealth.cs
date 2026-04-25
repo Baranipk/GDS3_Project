@@ -41,6 +41,10 @@ public class EnemyHealth : MonoBehaviour
             {
                 skeleton.StateMachine.ChangeState(skeleton.hurtState);
             }
+            else if (_controller is SatyrController satyr) // BUNU EKLEDİK
+            {
+                satyr.StateMachine.ChangeState(satyr.hurtState);
+            }
         }
     }
 
@@ -58,6 +62,10 @@ public class EnemyHealth : MonoBehaviour
         else if (_controller is SkeletonController skeleton)
         {
             skeleton.StateMachine.ChangeState(skeleton.deathState);
+        }
+        else if (_controller is SatyrController satyr) // BUNU EKLEDİK
+        {
+            satyr.StateMachine.ChangeState(satyr.deathState);
         }
     }
 }
