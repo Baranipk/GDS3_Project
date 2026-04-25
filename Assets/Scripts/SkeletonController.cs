@@ -20,10 +20,6 @@ public class SkeletonController : EnemyController
     public float attackCooldown = 2.5f;
     [HideInInspector] public float lastAttackTime;
 
-    [Header("Temas Hasarı Ayarları")]
-    public int contactDamage = 1;            // Dokunduğunda vereceği hasar
-    public float contactDamageCooldown = 1f; // Hasar verme sıklığı (saniye)
-    private float nextContactDamageTime;
 
     // State'ler
     public SkeletonIdleState idleState;
@@ -109,41 +105,6 @@ public class SkeletonController : EnemyController
         if (StateMachine.CurrentState == attackState)
         {
             StateMachine.ChangeState(chaseState);
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        HandleContactDamage(collision.collider);
-    }
-
-    // Eğer iskeletin collider'ı "Is Trigger" SE bu metod çalışır
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        HandleContactDamage(other);
-    }
-
-    private void HandleContactDamage(Collider2D other)
-    {
-        // 1. Çarptığımız obje Player mı? (Tag kontrolü)
-        // İpucu: Player collider'ın child objede olduğu için CompareTag'i dikkatli kullanmalıyız.
-        if (other.CompareTag("Player") || other.transform.root.CompareTag("Player"))
-        {
-            // 2. Hasar verme zamanı geldi mi?
-            if (Time.time >= nextContactDamageTime)
-            {
-                // 3. Health bileşenine ulaş
-                Health playerHealth = other.GetComponentInParent<Health>();
-
-                if (playerHealth != null)
-                {
-                    playerHealth.TakeDamage(contactDamage);
-                    Debug.Log("İskelet temas yoluyla hasar verdi!");
-
-                    // Bekleme süresini güncelle
-                    nextContactDamageTime = Time.time + contactDamageCooldown;
-                }
-            }
         }
     }
 }

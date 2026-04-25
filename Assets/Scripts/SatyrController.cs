@@ -46,16 +46,22 @@ public class SatyrController : EnemyController
     }
 
     // --- SALDIRI METODU (Animation Event ile çağrılacak) ---
+    // --- SALDIRI METODU (Animation Event ile çağrılacak) ---
     public void ShootProjectile()
     {
         if (GetComponent<EnemyHealth>().IsDead) return;
 
         if (projectilePrefab != null && throwPoint != null)
         {
+            // Mermiyi oluştur
             GameObject projectile = Instantiate(projectilePrefab, throwPoint.position, throwPoint.rotation);
 
-            Vector2 shootDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+            // HATALI OLAN SATIR: Vector2 shootDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
 
+            // DOĞRU OLAN SATIR: (Ana sınıftaki isFacingRight değerini kullanıyoruz)
+            Vector2 shootDirection = isFacingRight ? Vector2.right : Vector2.left;
+
+            // Mermi scriptine yönü gönder
             if (projectile.TryGetComponent(out EnemyProjectile projScript))
             {
                 projScript.Setup(shootDirection);
@@ -74,7 +80,7 @@ public class SatyrController : EnemyController
     // --- GÖRSELLEŞTİRME (Sadece Unity Editöründe Çalışır) ---
     private void OnDrawGizmosSelected()
     {
-        // Devriye menzilini yeşil bir çizgi olarak göster
+        // 1. Devriye menzilini yeşil bir çizgi olarak göster
         Gizmos.color = Color.green;
         Vector3 leftBound = new Vector3(transform.position.x - patrolDistance, transform.position.y, transform.position.z);
         Vector3 rightBound = new Vector3(transform.position.x + patrolDistance, transform.position.y, transform.position.z);
@@ -82,5 +88,12 @@ public class SatyrController : EnemyController
         Gizmos.DrawLine(leftBound, rightBound);
         Gizmos.DrawWireSphere(leftBound, 0.2f);
         Gizmos.DrawWireSphere(rightBound, 0.2f);
+
+        // 2. Oyuncuyu Fark Etme Menzili (Sarı Daire)
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        // 3. Oyuncuyu Kaybetme / İlgiyi Kesme Menzili (Kırmızı Daire)
+        Gizmos.color = Color.red;
     }
 }

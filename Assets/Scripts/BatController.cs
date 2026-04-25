@@ -11,10 +11,6 @@ public class BatController : EnemyController
     public float chaseSpeed = 5f;
     public Transform[] waypoints; // Yarasanın devriye gezeceği noktalar
 
-    [Header("Saldırı Zamanlaması")]
-    [SerializeField] private float damageInterval = 1.0f; // Ne kadar sürede bir hasar versin?
-    private float _nextDamageTime;
-
     // State'leri tanımlıyoruz
     public BatPatrolState patrolState;
     public BatChaseState chaseState;
@@ -40,27 +36,5 @@ public class BatController : EnemyController
 
         // Oyuna Devriye (Patrol) durumunda başla
         StateMachine.Initialize(patrolState);
-    }
-
-    // Temas hasarı (Yarasa oyuncuya değerse hasar verir)
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") || collision.transform.root.CompareTag("Player"))
-        {
-            // Zaman kontrolü: Belirlenen süre dolmadan tekrar hasar verme
-            if (Time.time >= _nextDamageTime)
-            {
-                Health playerHealth = collision.GetComponentInParent<Health>();
-
-                if (playerHealth != null)
-                {
-                    playerHealth.TakeDamage(1);
-                    Debug.Log("Yarasa temas hasarı verdi!");
-
-                    // Bir sonraki hasar vuruş zamanını güncelle
-                    _nextDamageTime = Time.time + damageInterval;
-                }
-            }
-        }
-    }
+    }    
 }

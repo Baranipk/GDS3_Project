@@ -232,12 +232,14 @@ MonoBehaviour:
   player: {fileID: 0}
   detectionRadius: 6
   loseRadius: 10
+  contactDamage: 1
+  contactDamageCooldown: 1
   isFacingRight: 1
   patrolSpeed: 2
   patrolDistance: 6
   leftBoundary: 0
   rightBoundary: 0
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 654005926560966143, guid: 0a9c12f6eb27a5b4a9784324629b9295, type: 3}
   throwPoint: {fileID: 5912336362142293790}
   attackCooldown: 2
   lastAttackTime: 0

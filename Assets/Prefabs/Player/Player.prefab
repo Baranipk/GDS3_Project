@@ -146,7 +146,7 @@ MonoBehaviour:
   deceleration: 16
   turnSpeed: 10
   velPower: 0.9
-  jumpForce: 12
+  jumpForce: 20
   groundCheckRadius: 0.3
   groundCheckTransform: {fileID: 2802640032002516446}
   groundLayer:
