@@ -11,6 +11,8 @@ public class Sound
     [Range(0f, 3f)] public float pitch = 1.2f;
     public bool loop;
 
+    public AudioMixerGroup mixerGroup;
+
     [HideInInspector]
     public AudioSource source;
 

@@ -34,6 +34,21 @@ public class HealthUI : MonoBehaviour
 
     private void Start()
     {
+        // 1. Önce Player'ı bulmaya çalış
+        if (playerHealth == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                playerHealth = playerObj.GetComponent<Health>();
+            }
+        }
+
+        // 2. Eğer Player GERÇEKTEN o an sahnede yoksa, Start'ı durdur (Çökmeyi önler).
+        // Merak etme, Update metodu Player sahneye girdiği an bu kurulumu (SetupHearts) kendisi yapacak!
+        if (playerHealth == null) return;
+
+        // 3. Player varsa normal kuruluma devam et
         _lastMaxHealth = playerHealth.maxHealth;
         _lastHealth = playerHealth.currentHealth;
         _lastShield = playerHealth.currentShield;
@@ -45,20 +60,49 @@ public class HealthUI : MonoBehaviour
 
     private void Update()
     {
-        // 1. MAKSİMUM CAN DEĞİŞİMİ (Yeni kalp eklendi mi?)
+        // --- YENİ EKLENEN GÜVENLİK VE OTOMATİK REFERANS BULUCU ---
+        if (playerHealth == null)
+        {
+            // Sahnede Player etiketli objeyi ara
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                playerHealth = playerObj.GetComponent<Health>();
+
+                // Yeni Player bulundu! Değerleri güncelle ve UI'ı baştan çiz
+                if (playerHealth != null)
+                {
+                    _lastMaxHealth = playerHealth.maxHealth;
+                    _lastHealth = playerHealth.currentHealth;
+                    _lastShield = playerHealth.currentShield;
+
+                    ResetAllHeartsScale();
+                    SetupHearts();
+                    InstantUpdateHearts();
+                    InstantUpdateShields();
+                }
+            }
+            // Player henüz sahnede yoksa veya bulunamadıysa aşağıdaki kodları çalıştırma (Çökmeyi önler)
+            return;
+        }
+
+        // 1. MAKSİMUM CAN DEĞİŞİMİ
         if (_lastMaxHealth != playerHealth.maxHealth)
         {
-            SetupHearts(); // Tüm yapıyı (kalp + kalkan) baştan kur
-            InstantUpdateShields(); // Kalkanları tekrar çiz
-            PlayHealWave(); // Yeni kalp şerefine dalga efekti oynat
+            ResetAllHeartsScale();
+            SetupHearts();
+            InstantUpdateShields();
+            PlayHealWave();
             _lastMaxHealth = playerHealth.maxHealth;
-            _lastHealth = playerHealth.currentHealth; // Can değişimini de güncellemiş sayalım
+            _lastHealth = playerHealth.currentHealth;
             return;
         }
 
         // 2. MEVCUT CAN DEĞİŞİMİ
         if (_lastHealth != playerHealth.currentHealth)
         {
+            ResetAllHeartsScale();
+
             if (playerHealth.currentHealth > _lastHealth)
                 PlayHealWave();
             else
@@ -89,6 +133,8 @@ public class HealthUI : MonoBehaviour
         {
             GameObject newHeart = Instantiate(heartPrefab, mainContainer);
             _heartImages.Add(newHeart.GetComponent<Image>());
+            // Yeni oluşturulan kalbin boyutunun 1 olduğundan emin ol
+            newHeart.transform.localScale = Vector3.one;
         }
     }
 
@@ -118,11 +164,27 @@ public class HealthUI : MonoBehaviour
             else
             {
                 _heartImages[i].sprite = emptyHeartSprite;
+                // Hasar alan (boşalan) kalbin büyümesini engellemek için:
                 if (isDamage && i == playerHealth.currentHealth)
                 {
-                    _heartImages[i].transform.DOKill();
-                    _heartImages[i].transform.DOPunchScale(Vector3.one * damagePunchStrength, 0.4f, 5, 0.5f).SetLink(_heartImages[i].gameObject);
+                    Transform heartT = _heartImages[i].transform;
+                    heartT.DOKill();
+                    heartT.localScale = Vector3.one;
+                    heartT.DOPunchScale(Vector3.one * damagePunchStrength, 0.4f, 5, 0.5f)
+                        .SetLink(heartT.gameObject);
                 }
+            }
+        }
+    }
+
+    private void ResetAllHeartsScale()
+    {
+        foreach (var heartImg in _heartImages)
+        {
+            if (heartImg != null)
+            {
+                heartImg.transform.DOKill(); // Devam eden animasyonu durdur
+                heartImg.transform.localScale = Vector3.one; // Boyutu tam 1.0 yap
             }
         }
     }
@@ -136,7 +198,12 @@ public class HealthUI : MonoBehaviour
             if (i < _heartImages.Count)
             {
                 Transform heartT = _heartImages[i].transform;
-                healSequence.Insert(i * waveInterval, heartT.DOPunchScale(Vector3.one * bounceStrength, bounceDuration, 10, 1f).SetLink(heartT.gameObject));
+                heartT.DOKill();
+                heartT.localScale = Vector3.one;
+
+                healSequence.Insert(i * waveInterval,
+                    heartT.DOPunchScale(Vector3.one * bounceStrength, bounceDuration, 10, 1f)
+                    .SetLink(heartT.gameObject));
             }
         }
     }
@@ -180,7 +247,10 @@ public class HealthUI : MonoBehaviour
 
     private void AnimateIconPunch(Transform iconTransform, float duration)
     {
+        // BUG ÇÖZÜMÜ BURADA
         iconTransform.DOKill();
+        iconTransform.localScale = Vector3.one;
+
         iconTransform.DOPunchScale(Vector3.one * bounceStrength, duration, 10, 1f).SetLink(iconTransform.gameObject);
     }
 }

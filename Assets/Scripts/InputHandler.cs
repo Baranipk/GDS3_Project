@@ -48,10 +48,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void JumpPressed(InputAction.CallbackContext context)
     {
-        if (context.ReadValueAsButton())
+        if (context.performed)
         {
-            _playerController.playerStateMachine.ChangeState(_playerController.jumpState);
-        }    
+            PlayerMovement movement = _playerController.GetComponent<PlayerMovement>();
+            movement.jumpBufferCounter = movement.jumpBufferTime;
+        }
     }
 
     public void PausePressed(InputAction.CallbackContext context)
