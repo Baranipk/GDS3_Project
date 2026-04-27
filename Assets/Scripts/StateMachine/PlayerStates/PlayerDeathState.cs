@@ -25,6 +25,9 @@ public class PlayerDeathState : IplayerState
 
         controller.GetComponentInChildren<Collider2D>().enabled = false;
         await UniTask.Delay(2000);
+
+        if (controller == null || controller.gameObject == null) return;
+
         controller.Respawn();
     }
 

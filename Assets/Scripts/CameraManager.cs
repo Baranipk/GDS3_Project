@@ -22,6 +22,8 @@ public class CameraManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.buildIndex == 0) return;
+
         // 1. Oyuncuyu Bulma
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)

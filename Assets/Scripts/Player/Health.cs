@@ -26,9 +26,17 @@ public class Health : MonoBehaviour
 
         if (data != null)
         {
-            currentHealth = data.currentHealth;
+            // 1. Maksimum canı veri dosyasından oku
             maxHealth = data.maxHealth;
+
+            // 2. KRİTİK ADIM: Mevcut canı datadan okumak yerine direkt maksimuma eşitle
+            currentHealth = maxHealth;
+
+            // Kalkanı istersen datadan (kaldığı yerden) yüklemeye devam edebilirsin
             currentShield = data.currentShield;
+
+            // 3. Veriyi hemen güncelle ki UI ve diğer sistemler dolu canı görsün
+            UpdateData();
         }
         else
         {

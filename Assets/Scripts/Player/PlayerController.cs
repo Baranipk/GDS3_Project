@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour
 
     public void Respawn()
     {
+        if (this == null || gameObject == null) return;
         // 1. Pozisyonu başlangıca çek
         transform.position = spawnPoint.position;
 

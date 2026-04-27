@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.SceneManagement; // YENİ: Sahne takibi için
 
 public class HealthUI : MonoBehaviour
 {
@@ -30,79 +31,58 @@ public class HealthUI : MonoBehaviour
 
     private int _lastHealth;
     private int _lastShield;
-    private int _lastMaxHealth; // YENİ TAKİP DEĞİŞKENİ
+    private int _lastMaxHealth;
+
+    // --- YENİ: SAHNE TAKİBİ İÇİN SUBSCRIPTION ---
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // Her restart atıldığında veya sahne değiştiğinde burası çalışır
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 1. Önceki sahneden kalan tüm animasyonları temizle (Hataları önler)
+        DOTween.KillAll();
+
+        // 2. Referansları temizle (Update içindeki bulucuyu tetikler)
+        playerHealth = null;
+
+        // 3. Mevcut UI'ı temizle
+        ClearUI();
+    }
 
     private void Start()
     {
-        // 1. Önce Player'ı bulmaya çalış
-        if (playerHealth == null)
-        {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-            {
-                playerHealth = playerObj.GetComponent<Health>();
-            }
-        }
-
-        // 2. Eğer Player GERÇEKTEN o an sahnede yoksa, Start'ı durdur (Çökmeyi önler).
-        // Merak etme, Update metodu Player sahneye girdiği an bu kurulumu (SetupHearts) kendisi yapacak!
-        if (playerHealth == null) return;
-
-        // 3. Player varsa normal kuruluma devam et
-        _lastMaxHealth = playerHealth.maxHealth;
-        _lastHealth = playerHealth.currentHealth;
-        _lastShield = playerHealth.currentShield;
-
-        SetupHearts();
-        InstantUpdateHearts();
-        InstantUpdateShields();
+        FindAndSetupPlayer();
     }
 
     private void Update()
     {
-        // --- YENİ EKLENEN GÜVENLİK VE OTOMATİK REFERANS BULUCU ---
+        // Eğer Player yoksa bulmaya çalış
         if (playerHealth == null)
         {
-            // Sahnede Player etiketli objeyi ara
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-            {
-                playerHealth = playerObj.GetComponent<Health>();
-
-                // Yeni Player bulundu! Değerleri güncelle ve UI'ı baştan çiz
-                if (playerHealth != null)
-                {
-                    _lastMaxHealth = playerHealth.maxHealth;
-                    _lastHealth = playerHealth.currentHealth;
-                    _lastShield = playerHealth.currentShield;
-
-                    ResetAllHeartsScale();
-                    SetupHearts();
-                    InstantUpdateHearts();
-                    InstantUpdateShields();
-                }
-            }
-            // Player henüz sahnede yoksa veya bulunamadıysa aşağıdaki kodları çalıştırma (Çökmeyi önler)
+            FindAndSetupPlayer();
             return;
         }
 
         // 1. MAKSİMUM CAN DEĞİŞİMİ
         if (_lastMaxHealth != playerHealth.maxHealth)
         {
-            ResetAllHeartsScale();
-            SetupHearts();
-            InstantUpdateShields();
-            PlayHealWave();
             _lastMaxHealth = playerHealth.maxHealth;
             _lastHealth = playerHealth.currentHealth;
-            return;
+            SetupHearts();
+            InstantUpdateHearts();
         }
 
         // 2. MEVCUT CAN DEĞİŞİMİ
         if (_lastHealth != playerHealth.currentHealth)
         {
-            ResetAllHeartsScale();
-
             if (playerHealth.currentHealth > _lastHealth)
                 PlayHealWave();
             else
@@ -123,17 +103,38 @@ public class HealthUI : MonoBehaviour
         }
     }
 
-    public void SetupHearts()
+    private void FindAndSetupPlayer()
+    {
+        // Etikete bakmak yerine sahnede Health scripti takılı olan objeyi bul
+        playerHealth = Object.FindAnyObjectByType<Health>();
+
+        if (playerHealth != null)
+        {
+            Debug.Log("HealthUI: Health scripti doğrudan bulundu ve bağlandı!");
+            _lastMaxHealth = playerHealth.maxHealth;
+            _lastHealth = playerHealth.currentHealth;
+            _lastShield = playerHealth.currentShield;
+            SetupHearts();
+            InstantUpdateHearts();
+            InstantUpdateShields();
+        }
+    }
+
+    private void ClearUI()
     {
         foreach (Transform child in mainContainer) Destroy(child.gameObject);
         _heartImages.Clear();
         _shieldIcons.Clear();
+    }
+
+    public void SetupHearts()
+    {
+        ClearUI(); // Önce temizle
 
         for (int i = 0; i < playerHealth.maxHealth; i++)
         {
             GameObject newHeart = Instantiate(heartPrefab, mainContainer);
             _heartImages.Add(newHeart.GetComponent<Image>());
-            // Yeni oluşturulan kalbin boyutunun 1 olduğundan emin ol
             newHeart.transform.localScale = Vector3.one;
         }
     }
@@ -142,7 +143,8 @@ public class HealthUI : MonoBehaviour
     {
         for (int i = 0; i < _heartImages.Count; i++)
         {
-            _heartImages[i].sprite = i < playerHealth.currentHealth ? fullHeartSprite : emptyHeartSprite;
+            if (i < _heartImages.Count)
+                _heartImages[i].sprite = i < playerHealth.currentHealth ? fullHeartSprite : emptyHeartSprite;
         }
     }
 
@@ -164,27 +166,13 @@ public class HealthUI : MonoBehaviour
             else
             {
                 _heartImages[i].sprite = emptyHeartSprite;
-                // Hasar alan (boşalan) kalbin büyümesini engellemek için:
                 if (isDamage && i == playerHealth.currentHealth)
                 {
                     Transform heartT = _heartImages[i].transform;
                     heartT.DOKill();
                     heartT.localScale = Vector3.one;
-                    heartT.DOPunchScale(Vector3.one * damagePunchStrength, 0.4f, 5, 0.5f)
-                        .SetLink(heartT.gameObject);
+                    heartT.DOPunchScale(Vector3.one * damagePunchStrength, 0.4f, 5, 0.5f).SetLink(heartT.gameObject);
                 }
-            }
-        }
-    }
-
-    private void ResetAllHeartsScale()
-    {
-        foreach (var heartImg in _heartImages)
-        {
-            if (heartImg != null)
-            {
-                heartImg.transform.DOKill(); // Devam eden animasyonu durdur
-                heartImg.transform.localScale = Vector3.one; // Boyutu tam 1.0 yap
             }
         }
     }
@@ -247,10 +235,8 @@ public class HealthUI : MonoBehaviour
 
     private void AnimateIconPunch(Transform iconTransform, float duration)
     {
-        // BUG ÇÖZÜMÜ BURADA
         iconTransform.DOKill();
         iconTransform.localScale = Vector3.one;
-
         iconTransform.DOPunchScale(Vector3.one * bounceStrength, duration, 10, 1f).SetLink(iconTransform.gameObject);
     }
 }

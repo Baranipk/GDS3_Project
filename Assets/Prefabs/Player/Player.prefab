@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 3
-  currentHealth: 1
+  currentHealth: 3
   currentShield: 0
   maxShield: 3
   isInvincible: 0

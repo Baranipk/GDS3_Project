@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -48,6 +49,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void JumpPressed(InputAction.CallbackContext context)
     {
+        // GÜVENLİK DUVARI: Oyun duraklatılmışsa veya menü kapanma aşamasındaysa zıplamayı iptal et!
+        if (PauseManager.Instance != null && PauseManager.Instance.isPaused) return;
+
         if (context.performed)
         {
             PlayerMovement movement = _playerController.GetComponent<PlayerMovement>();
@@ -57,14 +61,22 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void PausePressed(InputAction.CallbackContext context)
     {
-        if (context.ReadValueAsButton())
+        // Tuşa tam olarak basıldığında (basılı tutma veya bırakma değil)
+        if (context.performed)
         {
-            GetComponent<Health>().TakeDamage(5);
+            // Eğer sahnede PauseManager varsa, durumu tersine çevir (Açıksa kapat, kapalıysa aç)
+            if (PauseManager.Instance != null)
+            {
+                PauseManager.Instance.TogglePause();
+            }
         }
     }
 
     public void ThrowPressed(InputAction.CallbackContext context)
     {
+        // GÜVENLİK DUVARI
+        if (PauseManager.Instance != null && PauseManager.Instance.isPaused) return;
+
         if (context.performed)
         {
             if (_playerController.playerStateMachine.CurrentState == _playerController.idleState ||
@@ -77,11 +89,13 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void AttackPressed(InputAction.CallbackContext context)
     {
+        // GÜVENLİK DUVARI
+        if (PauseManager.Instance != null && PauseManager.Instance.isPaused) return;
+
         if (context.performed)
         {
             var attackScript = _playerController.GetComponent<PlayerAttack>();
 
-            
             if (attackScript.CanAttack())
             {
                 _playerController.playerStateMachine.ChangeState(_playerController.attackState);

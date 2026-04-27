@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-using UnityEngine.UI; // Image bileşeni için gerekli
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, IPointerDownHandler, ISubmitHandler
 {
     [Header("Referanslar (Opsiyonel)")]
     public TextMeshProUGUI buttonText;
-    public Image buttonImage; // Kare butonlar veya slider görselleri için
+    public Image buttonImage;
 
     [Header("Renk Ayarları")]
     public bool changeColor = true;
@@ -21,17 +21,56 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public float animDuration = 0.15f;
 
     private Vector3 defaultScale;
+    private bool isInitialized = false;
 
-    private void Start()
+    private void Awake()
     {
-        // Eğer atanmamışsa otomatik bulmaya çalış
+        // Boyutu Start yerine Awake'te alıyoruz ki en başından kesinleşsin
+        defaultScale = transform.localScale;
+
         if (buttonText == null) buttonText = GetComponentInChildren<TextMeshProUGUI>();
         if (buttonImage == null) buttonImage = GetComponent<Image>();
 
-        defaultScale = transform.localScale;
+        isInitialized = true;
+    }
+
+    private void Start()
+    {
         SetInitialColors();
     }
 
+    private void OnEnable()
+    {
+        // Menü her görünür olduğunda (açıldığında) boyutları güvenceye al
+        if (isInitialized)
+        {
+            transform.localScale = defaultScale;
+            SetInitialColors();
+        }
+    }
+
+    private void OnDisable()
+    {
+        // Menü kapandığında yarıda kalan animasyonları sil ve SIFIRLA
+        transform.DOKill();
+        transform.localScale = defaultScale;
+
+        if (changeColor)
+        {
+            if (buttonText != null)
+            {
+                buttonText.DOKill();
+                buttonText.color = normalColor;
+            }
+            if (buttonImage != null)
+            {
+                buttonImage.DOKill();
+                buttonImage.color = normalColor;
+            }
+        }
+    }
+
+    
     private void SetInitialColors()
     {
         if (!changeColor) return;
@@ -39,34 +78,22 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (buttonImage != null) buttonImage.color = normalColor;
     }
 
-    private void OnDisable()
-    {
-        transform.DOKill();
-        if (buttonText != null) buttonText.DOKill();
-        if (buttonImage != null) buttonImage.DOKill(); // Uzantı metodu yoksa aşağıdakini kullanın
-    }
-
-    // --- SEÇİLME / ÜZERİNE GELME ---
     public void OnPointerEnter(PointerEventData eventData) { SelectEffect(); }
     public void OnSelect(BaseEventData eventData) { SelectEffect(); }
-
-    // --- SEÇİMDEN ÇIKMA ---
     public void OnPointerExit(PointerEventData eventData) { DeselectEffect(); }
     public void OnDeselect(BaseEventData eventData) { DeselectEffect(); }
-
-    // --- TIKLAMA / BUMP ---
     public void OnPointerDown(PointerEventData eventData) { BumpEffect(); }
     public void OnSubmit(BaseEventData eventData) { BumpEffect(); }
 
     private void SelectEffect()
     {
         transform.DOKill();
-        transform.DOScale(defaultScale * selectedScale, animDuration).SetEase(Ease.OutBack);
+        transform.DOScale(defaultScale * selectedScale, animDuration).SetEase(Ease.OutBack).SetUpdate(true);
 
         if (changeColor)
         {
-            if (buttonText != null) buttonText.DOColor(selectedColor, animDuration);
-            if (buttonImage != null) buttonImage.DOColor(selectedColor, animDuration);
+            if (buttonText != null) buttonText.DOColor(selectedColor, animDuration).SetUpdate(true);
+            if (buttonImage != null) buttonImage.DOColor(selectedColor, animDuration).SetUpdate(true);
         }
 
         SoundManager.Instance?.Get("Hover")?.PlayOneShot();
@@ -75,12 +102,12 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private void DeselectEffect()
     {
         transform.DOKill();
-        transform.DOScale(defaultScale, animDuration).SetEase(Ease.OutQuad);
+        transform.DOScale(defaultScale, animDuration).SetEase(Ease.OutQuad).SetUpdate(true);
 
         if (changeColor)
         {
-            if (buttonText != null) buttonText.DOColor(normalColor, animDuration);
-            if (buttonImage != null) buttonImage.DOColor(normalColor, animDuration);
+            if (buttonText != null) buttonText.DOColor(normalColor, animDuration).SetUpdate(true);
+            if (buttonImage != null) buttonImage.DOColor(normalColor, animDuration).SetUpdate(true);
         }
     }
 
@@ -89,9 +116,9 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
         transform.DOKill();
         SoundManager.Instance?.Get("Click")?.PlayOneShot();
 
-        transform.DOScale(defaultScale * bumpScale, 0.1f).OnComplete(() =>
+        transform.DOScale(defaultScale * bumpScale, 0.1f).SetUpdate(true).OnComplete(() =>
         {
-            transform.DOScale(defaultScale * selectedScale, 0.15f).SetEase(Ease.OutBack);
+            transform.DOScale(defaultScale * selectedScale, 0.15f).SetEase(Ease.OutBack).SetUpdate(true);
         });
     }
 }
