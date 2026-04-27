@@ -1,80 +1,93 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-using DG.Tweening; // --- DOTWEEN KÜTÜPHANESİ ---
+using UnityEngine.UI; // Image bileşeni için gerekli
+using DG.Tweening;
 
 public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, IPointerDownHandler, ISubmitHandler
 {
-    [Header("Referanslar")]
+    [Header("Referanslar (Opsiyonel)")]
     public TextMeshProUGUI buttonText;
+    public Image buttonImage; // Kare butonlar veya slider görselleri için
 
     [Header("Renk Ayarları")]
+    public bool changeColor = true;
     public Color normalColor = Color.white;
     public Color selectedColor = Color.yellow;
 
     [Header("Boyut Ayarları")]
-    public float selectedScale = 1.2f; // Üzerine gelince ne kadar büyüyecek?
-    public float bumpScale = 0.9f;     // Tıklayınca ne kadar içeri göçecek?
-    public float animDuration = 0.2f;  // Animasyonun gerçekleşme süresi
+    public float selectedScale = 1.15f;
+    public float bumpScale = 0.9f;
+    public float animDuration = 0.15f;
 
     private Vector3 defaultScale;
 
     private void Start()
     {
+        // Eğer atanmamışsa otomatik bulmaya çalış
         if (buttonText == null) buttonText = GetComponentInChildren<TextMeshProUGUI>();
+        if (buttonImage == null) buttonImage = GetComponent<Image>();
 
         defaultScale = transform.localScale;
-        buttonText.color = normalColor;
+        SetInitialColors();
+    }
+
+    private void SetInitialColors()
+    {
+        if (!changeColor) return;
+        if (buttonText != null) buttonText.color = normalColor;
+        if (buttonImage != null) buttonImage.color = normalColor;
     }
 
     private void OnDisable()
     {
-        // Obje aniden kapanırsa arkada çalışan DoTween animasyonlarını temizle (Hata önleyici)
         transform.DOKill();
         if (buttonText != null) buttonText.DOKill();
+        if (buttonImage != null) buttonImage.DOKill(); // Uzantı metodu yoksa aşağıdakini kullanın
     }
 
-    // --- FARE (MOUSE) KONTROLLERİ ---
-    public void OnPointerEnter(PointerEventData eventData) { SelectButton(); }
-    public void OnPointerExit(PointerEventData eventData) { DeselectButton(); }
+    // --- SEÇİLME / ÜZERİNE GELME ---
+    public void OnPointerEnter(PointerEventData eventData) { SelectEffect(); }
+    public void OnSelect(BaseEventData eventData) { SelectEffect(); }
 
-    // --- KLAVYE / OYUN KOLU KONTROLLERİ ---
-    public void OnSelect(BaseEventData eventData) { SelectButton(); }
-    public void OnDeselect(BaseEventData eventData) { DeselectButton(); }
+    // --- SEÇİMDEN ÇIKMA ---
+    public void OnPointerExit(PointerEventData eventData) { DeselectEffect(); }
+    public void OnDeselect(BaseEventData eventData) { DeselectEffect(); }
 
-    // --- TIKLAMA / ONAYLAMA (BUMP EFEKTİ) ---
-    public void OnPointerDown(PointerEventData eventData) { BumpEffect(); } // Fare ile tıklayınca
-    public void OnSubmit(BaseEventData eventData) { BumpEffect(); }         // Enter veya oyun kolu (A/X) ile basınca
+    // --- TIKLAMA / BUMP ---
+    public void OnPointerDown(PointerEventData eventData) { BumpEffect(); }
+    public void OnSubmit(BaseEventData eventData) { BumpEffect(); }
 
-    private void SelectButton()
+    private void SelectEffect()
     {
         transform.DOKill();
-        buttonText.DOKill();
-
         transform.DOScale(defaultScale * selectedScale, animDuration).SetEase(Ease.OutBack);
-        buttonText.DOColor(selectedColor, animDuration);
 
-        // --- YENİ: ÜZERİNE GELİNCE SES ÇAL ---
-        // Üst üste hızlı geçişlerde ses kesilmesin diye PlayOneShot kullanıyoruz
-        SoundManager.Instance.Get("Hover")?.PlayOneShot();
+        if (changeColor)
+        {
+            if (buttonText != null) buttonText.DOColor(selectedColor, animDuration);
+            if (buttonImage != null) buttonImage.DOColor(selectedColor, animDuration);
+        }
+
+        SoundManager.Instance?.Get("Hover")?.PlayOneShot();
     }
 
-    private void DeselectButton()
+    private void DeselectEffect()
     {
         transform.DOKill();
-        buttonText.DOKill();
-
-        // Ease.OutQuad: Sakin ve pürüzsüz bir şekilde küçülür
         transform.DOScale(defaultScale, animDuration).SetEase(Ease.OutQuad);
-        buttonText.DOColor(normalColor, animDuration);
+
+        if (changeColor)
+        {
+            if (buttonText != null) buttonText.DOColor(normalColor, animDuration);
+            if (buttonImage != null) buttonImage.DOColor(normalColor, animDuration);
+        }
     }
 
     private void BumpEffect()
     {
         transform.DOKill();
-
-        // --- YENİ: TIKLANINCA SES ÇAL ---
-        SoundManager.Instance.Get("Click")?.PlayOneShot();
+        SoundManager.Instance?.Get("Click")?.PlayOneShot();
 
         transform.DOScale(defaultScale * bumpScale, 0.1f).OnComplete(() =>
         {

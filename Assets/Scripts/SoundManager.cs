@@ -52,13 +52,11 @@ public class SoundManager : MonoBehaviour
 
     public void SetVolume(string parameterName, float sliderValue)
     {
-        // Slider değeri (0 ile 1 arası) Logaritmik desibel (dB) değerine çevrilir (-80dB ile 0dB arası)
-        // Log10(0) tanımsız olduğu için minimum 0.0001f veriyoruz
         float val = Mathf.Clamp(sliderValue, 0.0001f, 1f);
         float dbValue = Mathf.Log10(val) * 20f;
 
-        mainMixer.SetFloat(parameterName, dbValue); // Anlık olarak sesi değiştir
-        PlayerPrefs.SetFloat(parameterName, sliderValue); // Değeri hafızaya (PC'ye) kaydet
+        mainMixer.SetFloat(parameterName, dbValue);
+        PlayerPrefs.SetFloat(parameterName, sliderValue);
     }
 
     private void LoadVolumeSettings()
@@ -78,4 +76,19 @@ public class SoundManager : MonoBehaviour
         if (s == null) Debug.LogWarning("Ses bulunamadı: " + name);
         return s;
     }
+
+    public void ToggleMute(string parameterName, bool isMuted, float lastSliderValue)
+    {
+        if (isMuted)
+        {
+            mainMixer.SetFloat(parameterName, -80f); // Tamamen sustur
+        }
+        else
+        {
+            // Susturma kalkınca slider'daki değere geri dön
+            SetVolume(parameterName, lastSliderValue);
+        }
+    }
+
+
 }
