@@ -53,6 +53,11 @@ public class EnemyHealth : MonoBehaviour
         if (_isDead) return;
         _isDead = true;
 
+        if (_controller != null)
+        {
+            _controller.DropLoot();
+        }
+
         // Debug.Log($"{gameObject.name} öldü!");
 
         if (_controller is BatController bat)

@@ -99,7 +99,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0045108795, y: 0.013531685}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -109,7 +109,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.88271904, y: 0.8105488}
   m_EdgeRadius: 0
 --- !u!212 &8402664962918036047
 SpriteRenderer:
@@ -187,6 +187,10 @@ MonoBehaviour:
   player: {fileID: 0}
   detectionRadius: 12
   loseRadius: 20
+  contactDamage: 1
+  contactDamageCooldown: 1
+  lootTable: {fileID: 11400000, guid: d47bde2e1b02b204099c1edf4af39c1f, type: 2}
+  dropChance: 20
   isFacingRight: 1
   leftLimitX: 0
   rightLimitX: 0
@@ -195,7 +199,6 @@ MonoBehaviour:
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
-  damageInterval: 1
 --- !u!114 &8083474715707001581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011c1de6b2b638242b7f78828b392756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 5
+  maxHealth: 2
 --- !u!95 &2551367094006570385
 Animator:
   serializedVersion: 7

@@ -1,5 +1,13 @@
 using UnityEngine;
 
+[System.Serializable]
+public class LootItem
+{
+    public GameObject itemPrefab; // Düşecek Collectible (Can, Kalkan vb.) prefabı
+    [Range(0f, 100f)]
+    public float dropChance;      // % kaç ihtimalle düşecek (Örn: 25 = %25)
+}
+
 public abstract class EnemyController : MonoBehaviour
 {
     public EnemyStateMachine StateMachine { get; private set; }
@@ -16,6 +24,11 @@ public abstract class EnemyController : MonoBehaviour
     public int contactDamage = 1;            // Dokunduğunda vereceği hasar
     public float contactDamageCooldown = 1f; // Hasar verme sıklığı (saniye)
     private float _nextContactDamageTime;    // Bir sonraki hasar zamanını tutar
+
+    [Header("Loot (Ganimet) Ayarları")]
+    public LootTable lootTable;
+    [Range(0f, 100f)]
+    public float dropChance = 100f; // Varsayılan olarak %100
 
     public bool isFacingRight = true;
 
@@ -98,5 +111,27 @@ public abstract class EnemyController : MonoBehaviour
         // Temas hasarı menzilini göster
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, 0.5f);
+    }
+
+    public void DropLoot()
+    {
+        if (lootTable == null) return;
+
+        // 1. ÖNCE ŞANS KONTROLÜ: Düşman loot verecek mi vermeyecek mi?
+        float roll = Random.Range(0f, 100f);
+
+        // Eğer atılan zar (Örn: 65), bizim şansımızdan (Örn: 30) büyükse hiçbir şey düşürme
+        if (roll > dropChance)
+        {
+            return;
+        }
+
+        // 2. Şans tuttuysa tablodan ağırlıklı rastgele bir eşya çek
+        GameObject itemToDrop = lootTable.GetRandomLoot();
+
+        if (itemToDrop != null)
+        {
+            Instantiate(itemToDrop, transform.position, Quaternion.identity);
+        }
     }
 }

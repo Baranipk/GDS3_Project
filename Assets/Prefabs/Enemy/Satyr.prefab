@@ -234,6 +234,8 @@ MonoBehaviour:
   loseRadius: 10
   contactDamage: 1
   contactDamageCooldown: 1
+  lootTable: {fileID: 11400000, guid: d47bde2e1b02b204099c1edf4af39c1f, type: 2}
+  dropChance: 20
   isFacingRight: 1
   patrolSpeed: 2
   patrolDistance: 6
@@ -255,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011c1de6b2b638242b7f78828b392756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 5
+  maxHealth: 3
 --- !u!114 &7340525843428432437
 MonoBehaviour:
   m_ObjectHideFlags: 0

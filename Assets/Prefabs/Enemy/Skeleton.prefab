@@ -316,6 +316,10 @@ MonoBehaviour:
   player: {fileID: 0}
   detectionRadius: 15
   loseRadius: 25
+  contactDamage: 1
+  contactDamageCooldown: 1
+  lootTable: {fileID: 11400000, guid: d47bde2e1b02b204099c1edf4af39c1f, type: 2}
+  dropChance: 20
   isFacingRight: 1
   patrolSpeed: 2
   chaseSpeed: 3.5
@@ -331,8 +335,6 @@ MonoBehaviour:
   attackDamage: 1
   attackCooldown: 2.5
   lastAttackTime: 0
-  contactDamage: 1
-  contactDamageCooldown: 1
 --- !u!114 &6285483848659421864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011c1de6b2b638242b7f78828b392756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 7
+  maxHealth: 4
 --- !u!114 &5005638794775256762
 MonoBehaviour:
   m_ObjectHideFlags: 0
