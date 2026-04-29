@@ -20,18 +20,28 @@ public class PlayerDeathState : IplayerState
         rb.bodyType = RigidbodyType2D.Static;
         pAnim.Death();
 
-        // --- YENİ: ÖLÜM SESİ ---
         SoundManager.Instance?.Get("Death")?.PlayOneShot();
 
         controller.GetComponentInChildren<Collider2D>().enabled = false;
+
+        // Karakter öldükten 1.5 - 2 saniye sonra ekran gelsin (animasyon bitsin diye)
         await UniTask.Delay(2000);
 
         if (controller == null || controller.gameObject == null) return;
 
-        controller.Respawn();
+        // ARTIK OTOMATİK RESPAWN YOK! Ölüm ekranını çağırıyoruz.
+        if (DeathManager.Instance != null)
+        {
+            DeathManager.Instance.ShowDeathScreen();
+        }
+        else
+        {
+            // Eğer DeathManager yoksa oyun takılmasın diye eski usul devam et (Güvenlik önlemi)
+            controller.Respawn();
+        }
     }
 
-    public void Update() { } // Ölüyken input almasın diye boş bırakıyoruz
+    public void Update() { }
     public void FixedUpdate() { }
     public void Exit() { }
 }

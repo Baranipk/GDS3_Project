@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1795c94c0d6557e45860deb4918ec319
+guid: 1f347557669380d46b1cb3078159af18
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5730420304054655485
-    second: Canvas_0
+      213: 5293984118713991687
+    second: Level5Icon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +52,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
-  spriteBorder: {x: 64, y: 64, z: 64, w: 64}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Canvas_0
+      name: Level5Icon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 192
-        height: 192
+        width: 11
+        height: 11
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 306e22338157970b0800000000000000
-      internalID: -5730420304054655485
+      spriteID: 702c18ad182087940800000000000000
+      internalID: 5293984118713991687
       vertices: []
       indices: 
       edges: []
@@ -139,7 +139,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Canvas_0: -5730420304054655485
+      Level5Icon_0: 5293984118713991687
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

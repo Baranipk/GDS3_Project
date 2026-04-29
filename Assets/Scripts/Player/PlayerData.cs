@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic; // List kullanmak için bu kütüphane şart
 
 [CreateAssetMenu(fileName = "NewPlayerData", menuName = "Game/Player Data")]
 public class PlayerData : ScriptableObject
@@ -8,11 +9,17 @@ public class PlayerData : ScriptableObject
     public int currentHealth = 3;
     public int currentShield = 0;
 
-    // Oyunu tamamen kapattığında veya baştan başladığında verileri sıfırlamak için
+    [Header("Toplanan Eşyalar")]
+    // YENİ: Toplanan Max Health objelerinin ID'lerini burada tutacağız
+    public List<string> collectedHealthUpgrades = new List<string>();
+
     public void ResetToDefaults()
     {
         maxHealth = 3;
         currentHealth = 3;
         currentShield = 0;
+
+        // Oyunu tamamen sıfırladığında toplanan eşya hafızası da temizlensin
+        collectedHealthUpgrades.Clear();
     }
 }

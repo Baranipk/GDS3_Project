@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1795c94c0d6557e45860deb4918ec319
+guid: a1c1134d158bc6541aa8efcbc8024a32
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5730420304054655485
-    second: Canvas_0
+      213: 2889239194090659830
+    second: DeathCanvas_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Canvas_0
+      name: DeathCanvas_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 192
-        height: 192
+        x: 12
+        y: 13
+        width: 168
+        height: 166
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 306e22338157970b0800000000000000
-      internalID: -5730420304054655485
+      spriteID: 6ffd8ea3db3a81820800000000000000
+      internalID: 2889239194090659830
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Canvas_0: -5730420304054655485
+      DeathCanvas_0: 2889239194090659830
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

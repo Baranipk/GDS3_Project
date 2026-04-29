@@ -29,19 +29,20 @@ public class Health : MonoBehaviour
             // 1. Maksimum canı veri dosyasından oku
             maxHealth = data.maxHealth;
 
-            // 2. KRİTİK ADIM: Mevcut canı datadan okumak yerine direkt maksimuma eşitle
+            // 2. Mevcut canı direkt maksimuma eşitle
             currentHealth = maxHealth;
 
-            // Kalkanı istersen datadan (kaldığı yerden) yüklemeye devam edebilirsin
-            currentShield = data.currentShield;
+            // 3. YENİ EKLENEN/DEĞİŞEN KISIM: Kalkanı datadan okuma, her sahnede sıfırla!
+            currentShield = 0;
 
-            // 3. Veriyi hemen güncelle ki UI ve diğer sistemler dolu canı görsün
+            // 4. Veriyi hemen güncelle ki UI ve diğer sistemler dolu canı ve sıfırlanmış kalkanı görsün
             UpdateData();
         }
         else
         {
             Debug.LogWarning("PlayerData atanmadı! Inspector üzerinden dosyayı sürüklemeyi unutmayın.");
             currentHealth = maxHealth;
+            currentShield = 0; // Eğer data yoksa da kalkanı sıfırla
         }
     }
 
@@ -146,4 +147,23 @@ public class Health : MonoBehaviour
             data.currentShield = currentShield;
         }
     }
+    // ID daha önce alınmış mı diye kontrol eder
+    public bool HasCollectedUpgrade(string id)
+    {
+        if (data != null)
+        {
+            return data.collectedHealthUpgrades.Contains(id);
+        }
+        return false;
+    }
+
+    // ID'yi alınmışlar listesine ekler
+    public void RecordUpgrade(string id)
+    {
+        if (data != null && !data.collectedHealthUpgrades.Contains(id))
+        {
+            data.collectedHealthUpgrades.Add(id);
+        }
+    }
+
 }

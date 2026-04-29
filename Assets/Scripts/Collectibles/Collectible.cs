@@ -5,7 +5,7 @@ public enum CollectibleType
     Shield,
     SmallHealth,
     FullHealth,
-    MaxHealthIncrease // YENİ EKLENDİ
+    MaxHealthIncrease
 }
 
 public class Collectible : MonoBehaviour
@@ -13,6 +13,10 @@ public class Collectible : MonoBehaviour
     [Header("Eşya Ayarları")]
     public CollectibleType type;
     public int amount = 1;
+
+    [Header("Benzersiz Kimlik (Sadece MaxHealth için)")]
+    // YENİ: Unity Editör'den her bir objeye özel bir ID yazacaksın (Örn: "Level1_GizliKutu")
+    public string uniqueID;
 
     [Header("Görsel Efekt")]
     public float floatSpeed = 3f;
@@ -66,9 +70,24 @@ public class Collectible : MonoBehaviour
                         }
                         break;
 
-                    case CollectibleType.MaxHealthIncrease: // YENİ MANTIK
-                        playerHealth.IncreaseMaxHealth(amount);
-                        isCollected = true;
+                    case CollectibleType.MaxHealthIncrease:
+                        // 1. Eğer benzersiz bir ID girildiyse
+                        if (!string.IsNullOrEmpty(uniqueID))
+                        {
+                            // 2. Bu ID daha ÖNCE ALINMADIYSA canı artır ve hafızaya kaydet
+                            if (!playerHealth.HasCollectedUpgrade(uniqueID))
+                            {
+                                playerHealth.IncreaseMaxHealth(amount);
+                                playerHealth.RecordUpgrade(uniqueID);
+                            }
+
+                            // 3. Her halükarda (daha önce alınmış olsa bile) objeyi toplanmış sayıp yok edeceğiz
+                            isCollected = true;
+                        }
+                        else
+                        {
+                            Debug.LogWarning("MaxHealthIncrease objesinin ID'si boş! Eşya alınamadı.");
+                        }
                         break;
                 }
 
