@@ -10,7 +10,7 @@ public class ShieldItem : MonoBehaviour
         // Çarpan obje Player mı?
         if (collision.CompareTag("Player") || collision.transform.root.CompareTag("Player"))
         {
-            Health playerHealth = collision.GetComponentInParent<Health>();
+            PlayerHealth playerHealth = collision.GetComponentInParent<PlayerHealth>();
 
             if (playerHealth != null)
             {

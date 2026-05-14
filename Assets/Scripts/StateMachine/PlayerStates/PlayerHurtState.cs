@@ -6,14 +6,14 @@ public class PlayerHurtState : IplayerState
     PlayerController controller;
     PlayerAnimation pAnim;
     Rigidbody2D rb;
-    Health health;
+    PlayerHealth health;
 
     public PlayerHurtState(PlayerController controller)
     {
         this.controller = controller;
         this.pAnim = controller.GetComponent<PlayerAnimation>();
         this.rb = controller.GetComponent<Rigidbody2D>();
-        this.health = controller.GetComponent<Health>();
+        this.health = controller.GetComponent<PlayerHealth>();
     }
 
     public async void Enter()

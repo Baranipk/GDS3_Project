@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement; // YENİ: Sahne takibi için
 public class HealthUI : MonoBehaviour
 {
     [Header("Referanslar")]
-    [SerializeField] private Health playerHealth;
+    [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private Transform mainContainer;
 
     [Header("Kalp Ayarları")]
@@ -106,11 +106,11 @@ public class HealthUI : MonoBehaviour
     private void FindAndSetupPlayer()
     {
         // Etikete bakmak yerine sahnede Health scripti takılı olan objeyi bul
-        playerHealth = Object.FindAnyObjectByType<Health>();
+        playerHealth = Object.FindAnyObjectByType<PlayerHealth>();
 
         if (playerHealth != null)
         {
-            Debug.Log("HealthUI: Health scripti doğrudan bulundu ve bağlandı!");
+            Debug.Log("HealthUI: PlayerHealth scripti doğrudan bulundu ve bağlandı!");
             _lastMaxHealth = playerHealth.maxHealth;
             _lastHealth = playerHealth.currentHealth;
             _lastShield = playerHealth.currentShield;

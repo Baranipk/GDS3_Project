@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
         GetComponent<PlayerAnimation>().PlayIdleForce();
 
         // 4. Canı ve State'i sıfırla
-        GetComponent<Health>().ResetHealth();
+        GetComponent<PlayerHealth>().ResetHealth();
         playerStateMachine.ChangeState(idleState);     
     }
 }

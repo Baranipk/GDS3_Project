@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5695058739397700066}
   - component: {fileID: 8742387196791468781}
   - component: {fileID: 6103868272765820287}
-  - component: {fileID: 3614514414585550354}
+  - component: {fileID: 1578503579467846633}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -240,7 +240,7 @@ MonoBehaviour:
   attackPoint: {fileID: 7728376855880207463}
   javelinPrefab: {fileID: 3761454665237241500, guid: 0768cc6c30e223d4890461ddeea6a139, type: 3}
   throwPoint: {fileID: 7728376855880207463}
---- !u!114 &3614514414585550354
+--- !u!114 &1578503579467846633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,11 +249,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3107420404618434065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d9bb20ed26a87743a9d1b98525b64a3, type: 3}
+  m_Script: {fileID: 11500000, guid: d687bf7f438ab5c49b08c041f0989920, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 3
-  currentHealth: 3
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 5
+  currentHealth: 0
   currentShield: 0
   maxShield: 3
   isInvincible: 0

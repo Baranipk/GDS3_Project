@@ -1033,18 +1033,6 @@ PrefabInstance:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 2072652050}
-    - target: {fileID: 3243786733797575023, guid: a23b03368215813409ff5aebd6132af4, type: 3}
-      propertyPath: orthographic size
-      value: 8.4375
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879600165337098767, guid: a23b03368215813409ff5aebd6132af4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 67.827545
-      objectReference: {fileID: 0}
-    - target: {fileID: 3879600165337098767, guid: a23b03368215813409ff5aebd6132af4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -13.850499
-      objectReference: {fileID: 0}
     - target: {fileID: 6924729121926364739, guid: a23b03368215813409ff5aebd6132af4, type: 3}
       propertyPath: playerHealth
       value: 
@@ -1052,10 +1040,6 @@ PrefabInstance:
     - target: {fileID: 7367458082004941145, guid: a23b03368215813409ff5aebd6132af4, type: 3}
       propertyPath: m_Name
       value: '[PersistantSystems]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7367458082004941145, guid: a23b03368215813409ff5aebd6132af4, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8444084169498280043, guid: a23b03368215813409ff5aebd6132af4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1098,8 +1082,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5522214110497416265, guid: a23b03368215813409ff5aebd6132af4, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a23b03368215813409ff5aebd6132af4, type: 3}

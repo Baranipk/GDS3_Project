@@ -1915,7 +1915,7 @@ MonoBehaviour:
   uiContainer: {fileID: 4575744435518843129}
   eventSystemObject: {fileID: 0}
   playerObject: {fileID: 0}
-  cameraObject: {fileID: 0}
+  cameraObject: {fileID: 9199144838813620535}
 --- !u!1 &8355352208568334400
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,7 +2110,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 16.90999
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -62,7 +62,7 @@ public class SkeletonController : EnemyController
         {
             Debug.Log("Oyuncu tespit edildi: " + hitPlayer.name); // 2. Kontrol: Menzil ve Layer doğru mu?
 
-            Health playerHealth = hitPlayer.GetComponentInParent<Health>();
+            PlayerHealth playerHealth = hitPlayer.GetComponentInParent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(attackDamage);

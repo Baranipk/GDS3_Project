@@ -25,7 +25,7 @@ public class SkeletonSlash : MonoBehaviour
     {
         if (collision.CompareTag("Player") || collision.transform.root.CompareTag("Player"))
         {
-            Health playerHealth = collision.GetComponentInParent<Health>();
+            PlayerHealth playerHealth = collision.GetComponentInParent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);

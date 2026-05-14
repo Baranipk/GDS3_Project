@@ -29,7 +29,7 @@ public class EnemyProjectile : MonoBehaviour
         // 1. Eğer oyuncuya çarparsa
         if (collision.CompareTag("Player") || collision.transform.root.CompareTag("Player"))
         {
-            Health playerHealth = collision.GetComponentInParent<Health>();
+            PlayerHealth playerHealth = collision.GetComponentInParent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);

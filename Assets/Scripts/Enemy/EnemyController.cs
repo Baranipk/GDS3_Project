@@ -88,7 +88,7 @@ public abstract class EnemyController : MonoBehaviour
 
         if (playerHit != null && (playerHit.CompareTag("Player") || playerHit.transform.root.CompareTag("Player")))
         {
-            Health playerHealth = playerHit.GetComponentInParent<Health>();
+            PlayerHealth playerHealth = playerHit.GetComponentInParent<PlayerHealth>();
 
             if (playerHealth != null && !playerHealth.isInvincible) // isInvincible (I-Frame) kontrolü
             {
