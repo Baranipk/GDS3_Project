@@ -19,20 +19,27 @@ public class SwordSlash : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Çarptığımız obje veya ebeveyni "Enemy" tag'ine mi sahip?
+        // 1. DÜŞMAN ETKİLEŞİMİ (Mevcut kodun)
         if (collision.CompareTag("Enemy") || collision.transform.root.CompareTag("Enemy"))
         {
-            // GetComponentInParent: Alt objeye (collider) çarpsak bile 
-            // gidip ana objedeki EnemyHealth scriptini bulur.
             EnemyHealth enemyHealth = collision.GetComponentInParent<EnemyHealth>();
-
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(damage);
                 Debug.Log($"Sabit slash {collision.name} objesine {damage} hasar verdi!");
+            }
+        }
 
-                // Sabit duran slash'larda genellikle çarptığında yok etmeyiz,
-                // animasyonun (0.3s) tamamlanması daha profesyonel görünür.
+        // 2. YENİ: ŞALTER (LEVER) ETKİLEŞİMİ
+        // 2. YENİ: ŞALTER (LEVER) ETKİLEŞİMİ
+        if (collision.CompareTag("Lever"))
+        {
+            ElevatorLever lever = collision.GetComponent<ElevatorLever>();
+            if (lever != null)
+            {
+                lever.Interact();
+                // Not: Kılıç darbesi şaltere değdiğinde yok olmasını istemiyorsan
+                // Destroy(gameObject) eklemene gerek yok, lifeTime dolana kadar sahnede kalır.
             }
         }
     }

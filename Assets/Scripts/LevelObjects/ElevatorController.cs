@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class ElevatorController : MonoBehaviour
 {
+    [Header("Kimlik (ID) Ayarları")]
+    public string elevatorID = "Elevator_1"; // Hangi lever ile eşleşeceğini belirleyen ID
+
     [Header("Asansör Ayarları")]
     public float speed = 2f;
     public float distanceInTiles = 5f;
