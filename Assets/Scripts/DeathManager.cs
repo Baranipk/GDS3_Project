@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 
 public class DeathManager : MonoBehaviour
 {
@@ -23,35 +24,43 @@ public class DeathManager : MonoBehaviour
 
     private void Start()
     {
-        if (deathScreenUI != null) deathScreenUI.SetActive(false);
+        if (deathScreenUI != null)
+            deathScreenUI.SetActive(false);
     }
 
-    // --- ÖLÜM EKRANINI AÇ ---
-    public async void ShowDeathScreen()
+    // ── Ölüm Ekranını Göster ───────────────────────────────────
+    // async KALDIRILDI: PlayerDeathState içinde zaten 2 saniyelik bekleme var.
+    // async + timeScale=0 kombinasyonu UniTask'ı askıya alıyordu → ölüm ekranı açılmıyordu.
+    public void ShowDeathScreen()
     {
-        // Ölüm ekranı açıldığında zamanı durdurabiliriz
+        if (deathScreenUI == null)
+        {
+            Debug.LogError("[DeathManager] deathScreenUI atanmamış! Inspector'dan sürükleyin.", this);
+            return;
+        }
+
         Time.timeScale = 0f;
+        deathScreenUI.SetActive(true);
 
-        if (deathScreenUI != null) deathScreenUI.SetActive(true);
-
-        // EventSystem'in butonu seçmesi için minik bir bekleme
-        await UniTask.Yield();
-
-        if (UnityEngine.EventSystems.EventSystem.current != null && firstSelectedButton != null)
+        // timeScale = 0 olduğu için Invoke çalışmaz, direkt seç
+        if (EventSystem.current != null && firstSelectedButton != null)
         {
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         }
     }
 
-    // --- BUTON FONKSİYONLARI ---
+    // ── Buton Fonksiyonları ────────────────────────────────────
 
     public async void RestartLevel()
     {
-        Time.timeScale = 1f; // Zamanı geri al
-        deathScreenUI.SetActive(false);
+        Time.timeScale = 1f;
 
-        // Sahneyi yeniden yükle
+        if (deathScreenUI != null)
+            deathScreenUI.SetActive(false);
+
+        DOTween.KillAll(complete: false);
+
         await UniTask.Delay(100, ignoreTimeScale: true);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -59,9 +68,13 @@ public class DeathManager : MonoBehaviour
     public async void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        deathScreenUI.SetActive(false);
+
+        if (deathScreenUI != null)
+            deathScreenUI.SetActive(false);
+
+        DOTween.KillAll(complete: false);
 
         await UniTask.Delay(100, ignoreTimeScale: true);
-        SceneManager.LoadScene(0); // Main Menu indexi 0 demiştik
+        SceneManager.LoadScene(0);
     }
 }

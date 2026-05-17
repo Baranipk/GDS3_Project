@@ -22,7 +22,7 @@ public class ElevatorLever : MonoBehaviour
 
     private void ConnectToElevator()
     {
-        ElevatorController[] allElevators = Object.FindObjectsByType<ElevatorController>(FindObjectsSortMode.None);
+        ElevatorController[] allElevators = Object.FindObjectsByType<ElevatorController>(FindObjectsInactive.Exclude);
 
         foreach (var elevator in allElevators)
         {

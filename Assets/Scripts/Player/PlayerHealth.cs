@@ -3,6 +3,16 @@ using System;
 
 public class PlayerHealth : MonoBehaviour
 {
+    // ── Statik Referans & Event ────────────────────────────────
+    public static PlayerHealth Instance { get; private set; }
+
+    /// <summary>
+    /// PlayerHealth.Start() tamamlandığında, veriler yüklendikten SONRA tetiklenir.
+    /// HealthUI bu event'e subscribe olarak timing sorununu tamamen çözer.
+    /// OnSceneLoaded → Start()'tan önce gelir; bu event Start()'tan sonra gelir.
+    /// </summary>
+    public static event Action<PlayerHealth> OnPlayerReady;
+
     [Header("Can Ayarları")]
     public int maxHealth = 5;
     public int currentHealth;
@@ -20,32 +30,42 @@ public class PlayerHealth : MonoBehaviour
     private PlayerController _controller;
     private bool _isDead = false;
 
+    // ─────────────────────────────────────────────────────────── 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
     private void Start()
     {
         _controller = GetComponent<PlayerController>();
 
         if (data != null)
         {
-            // 1. Maksimum canı veri dosyasından oku
             maxHealth = data.maxHealth;
-
-            // 2. Mevcut canı direkt maksimuma eşitle
             currentHealth = maxHealth;
-
-            // 3. YENİ EKLENEN/DEĞİŞEN KISIM: Kalkanı datadan okuma, her sahnede sıfırla!
             currentShield = 0;
-
-            // 4. Veriyi hemen güncelle ki UI ve diğer sistemler dolu canı ve sıfırlanmış kalkanı görsün
             UpdateData();
         }
         else
         {
-            Debug.LogWarning("PlayerData atanmadı! Inspector üzerinden dosyayı sürüklemeyi unutmayın.");
+            Debug.LogWarning("[PlayerHealth] PlayerData atanmamış! Inspector üzerinden sürüklemeyi unutmayın.");
             currentHealth = maxHealth;
-            currentShield = 0; // Eğer data yoksa da kalkanı sıfırla
+            currentShield = 0;
         }
+
+        // Veriler yüklendi, UI'a hazır olduğumuzu bildir.
+        // OnSceneLoaded'dan SONRA geldiği için UI doğru değerleri alır.
+        OnPlayerReady?.Invoke(this);
     }
 
+    // ─────────────────────────────────────────────────────────── 
     public void TakeDamage(int damage)
     {
         if (_isDead || isInvincible) return;
@@ -54,10 +74,7 @@ public class PlayerHealth : MonoBehaviour
         if (_controller.playerStateMachine.CurrentState == _controller.blockState)
         {
             damage = 0;
-
-            // YENİ: Blok yaparken darbe alınca BlockHit sesini çal
             SoundManager.Instance?.Get("BlockHit")?.PlayOneShot();
-
             _controller.ApplyKnockback(_controller.blockKnockbackMultiplier);
             return;
         }
@@ -66,23 +83,16 @@ public class PlayerHealth : MonoBehaviour
         if (currentShield > 0)
         {
             int damageToShield = Mathf.Min(currentShield, damage);
-
             currentShield -= damageToShield;
             damage -= damageToShield;
-
             UpdateData();
-
-            // İSTEĞE BAĞLI: Kalkan darbe emdiğinde bir ses çalmak istersen:
-            // SoundManager.Instance?.Get("ShieldHit")?.PlayOneShot();
 
             if (damage <= 0) return;
         }
 
-        // 1. Kalan hasarı candan düşür
         currentHealth -= damage;
         UpdateData();
 
-        // 2. ÖLÜM KONTROLÜ
         if (currentHealth <= 0)
         {
             currentHealth = 0;
@@ -91,7 +101,6 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            // 3. Hasar alma state'i (Hurt sesi zaten bu state'in Enter'ında çalıyor)
             _controller.playerStateMachine.ChangeState(_controller.hurtState);
         }
     }
@@ -101,15 +110,6 @@ public class PlayerHealth : MonoBehaviour
         if (_isDead) return;
         currentShield = Mathf.Min(currentShield + amount, maxShield);
         UpdateData();
-
-        // İSTEĞE BAĞLI: Kalkan kazanma sesi
-        // SoundManager.Instance?.Get("ShieldUp")?.PlayOneShot();
-    }
-
-    private void Die()
-    {
-        _isDead = true;
-        _controller.playerStateMachine.ChangeState(_controller.deathState);
     }
 
     public void Heal(int amount)
@@ -117,9 +117,6 @@ public class PlayerHealth : MonoBehaviour
         if (_isDead) return;
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         UpdateData();
-
-        // İSTEĞE BAĞLI: Canlanma/İksir içme sesi
-        // SoundManager.Instance?.Get("Heal")?.PlayOneShot();
     }
 
     public void ResetHealth()
@@ -138,6 +135,34 @@ public class PlayerHealth : MonoBehaviour
         UpdateData();
     }
 
+    public void InstantKill()
+    {
+        if (_isDead) return;
+        currentShield = 0;
+        currentHealth = 0;
+        UpdateData();
+        Die();
+    }
+
+    public bool HasCollectedUpgrade(string id)
+    {
+        if (data != null)
+            return data.collectedHealthUpgrades.Contains(id);
+        return false;
+    }
+
+    public void RecordUpgrade(string id)
+    {
+        if (data != null && !data.collectedHealthUpgrades.Contains(id))
+            data.collectedHealthUpgrades.Add(id);
+    }
+
+    private void Die()
+    {
+        _isDead = true;
+        _controller.playerStateMachine.ChangeState(_controller.deathState);
+    }
+
     private void UpdateData()
     {
         if (data != null)
@@ -147,36 +172,4 @@ public class PlayerHealth : MonoBehaviour
             data.currentShield = currentShield;
         }
     }
-    // ID daha önce alınmış mı diye kontrol eder
-    public bool HasCollectedUpgrade(string id)
-    {
-        if (data != null)
-        {
-            return data.collectedHealthUpgrades.Contains(id);
-        }
-        return false;
-    }
-
-    // ID'yi alınmışlar listesine ekler
-    public void RecordUpgrade(string id)
-    {
-        if (data != null && !data.collectedHealthUpgrades.Contains(id))
-        {
-            data.collectedHealthUpgrades.Add(id);
-        }
-    }
-
-    public void InstantKill()
-    {
-        if (_isDead) return;
-
-        // Kalkanı ve canı sıfırla ki UI ekranında da boş görünsün
-        currentShield = 0;
-        currentHealth = 0;
-        UpdateData();
-
-        // Direkt ölümü çağır (Blok veya I-Frame umursamaz)
-        Die();
-    }
-
 }

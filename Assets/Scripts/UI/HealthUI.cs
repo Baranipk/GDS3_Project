@@ -1,9 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 using DG.Tweening;
-using UnityEngine.SceneManagement; // YENİ: Sahne takibi için
 
+/// <summary>
+/// Kalp ve Kalkan UI'ını yönetir.
+///
+/// Düzeltilen Buglar:
+/// 1. _isInitializing flag'i: Update() her frame yeni coroutine başlatamaz → restart donması gitti.
+/// 2. PlayerHealth.OnPlayerReady event'i: timing sorununu köküyle çözer.
+///    OnSceneLoaded → Start()'tan önce gelir → HealthUI yanlış değerleri (default) okurdu.
+///    OnPlayerReady → Start()'tan sonra gelir → veriler kesinlikle yüklü, UI doğru kurulur.
+/// 3. OnSceneLoaded'da StopAllCoroutines + _isInitializing reset: hızlı geçişlerde coroutine
+///    birikimini önler.
+/// 4. FindObjectsByType ile inactive objeler de aranır (Unity 6 uyumlu).
+/// </summary>
 public class HealthUI : MonoBehaviour
 {
     [Header("Referanslar")]
@@ -26,61 +39,203 @@ public class HealthUI : MonoBehaviour
     [SerializeField] private float fallDistance = 150f;
     [SerializeField] private float fallDuration = 0.5f;
 
+    // ── Durum ──────────────────────────────────────────────────
     private List<Image> _heartImages = new List<Image>();
     private List<GameObject> _shieldIcons = new List<GameObject>();
 
-    private int _lastHealth;
-    private int _lastShield;
-    private int _lastMaxHealth;
+    private int _lastHealth = -1;
+    private int _lastShield = -1;
+    private int _lastMaxHealth = -1;
 
-    // --- YENİ: SAHNE TAKİBİ İÇİN SUBSCRIPTION ---
+    private bool _isUIReady = false;
+    private bool _isInitializing = false;
+
+    // ─────────────────────────────────────────────────────────── 
+    #region Unity Lifecycle
+
+    private void Start()
+    {
+        if (mainContainer == null)
+        {
+            Debug.LogError("[HealthUI] mainContainer atanmamış! Inspector'dan sürükleyin.", this);
+            return;
+        }
+
+        // HealthUI ilk kez oluşturulduğunda (DontDestroyOnLoad ilk sahne)
+        // OnPlayerReady zaten subscribe, ek bir şey yapmaya gerek yok.
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        // ÇÖZÜM: PlayerHealth.Start() bitince bu event tetiklenir.
+        // OnSceneLoaded timing sorununu tamamen bypass eder.
+        PlayerHealth.OnPlayerReady += OnPlayerHealthReady;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        PlayerHealth.OnPlayerReady -= OnPlayerHealthReady;
     }
 
-    // Her restart atıldığında veya sahne değiştiğinde burası çalışır
+    private void OnDestroy()
+    {
+        DOTween.Kill(this);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 1. Önceki sahneden kalan tüm animasyonları temizle (Hataları önler)
-        DOTween.KillAll();
+        // Eski tweenleri temizle
+        DOTween.KillAll(complete: false);
 
-        // 2. Referansları temizle (Update içindeki bulucuyu tetikler)
-        playerHealth = null;
+        // Önceki coroutine'i durdur ve flag'i sıfırla.
+        // (Hızlı sahne geçişlerinde eski coroutine _isInitializing=true bırakabiliyordu)
+        StopAllCoroutines();
+        _isInitializing = false;
+        _isUIReady = false;
 
-        // 3. Mevcut UI'ı temizle
+        // UI içeriğini temizle — OnPlayerReady event'i gelince yeniden kurulacak.
         ClearUI();
+
+        // NOT: Ana menüde (buildIndex 0) player yok, StartInitUI() çağırmıyoruz.
+        // OnPlayerReady event'i zaten oyun sahnelerinde tetiklenecek.
     }
 
-    private void Start()
+    /// <summary>
+    /// PlayerHealth.Start() tamamlandığında çağrılır.
+    /// Bu noktada maxHealth ve currentHealth kesinlikle doğru değerlere sahip.
+    /// </summary>
+    private void OnPlayerHealthReady(PlayerHealth health)
     {
-        FindAndSetupPlayer();
+        if (mainContainer == null) return;
+
+        // Önceki coroutine'i durdur — artık gerek yok
+        StopAllCoroutines();
+        _isInitializing = false;
+
+        playerHealth = health;
+        ForceUpdateUI();
+        _isUIReady = true;
     }
 
     private void Update()
     {
-        // Eğer Player yoksa bulmaya çalış
+        if (!_isUIReady || mainContainer == null) return;
+
         if (playerHealth == null)
         {
-            FindAndSetupPlayer();
+            _isUIReady = false;
+            StartInitUI(); // Fallback: player kaybolursa coroutine ile tekrar ara
             return;
         }
 
-        // 1. MAKSİMUM CAN DEĞİŞİMİ
+        if (_lastMaxHealth != playerHealth.maxHealth ||
+            _lastHealth != playerHealth.currentHealth ||
+            _lastShield != playerHealth.currentShield)
+        {
+            HandleChanges();
+        }
+    }
+
+    #endregion
+
+    // ─────────────────────────────────────────────────────────── 
+    #region Initialization (Fallback)
+
+    // Bu coroutine artık yalnızca yedek olarak kullanılır.
+    // Normal akış: OnPlayerReady event'i → OnPlayerHealthReady() → ForceUpdateUI()
+    private void StartInitUI()
+    {
+        if (_isInitializing) return;
+        _isInitializing = true;
+        StartCoroutine(InitUI());
+    }
+
+    private IEnumerator InitUI()
+    {
+        playerHealth = null;
+        float elapsed = 0f;
+        float timeout = 5f;
+
+        while (playerHealth == null && elapsed < timeout)
+        {
+            FindPlayer();
+            if (playerHealth == null)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+        }
+
+        _isInitializing = false;
+
+        if (playerHealth == null)
+        {
+            Debug.LogWarning("[HealthUI] 5 saniye içinde PlayerHealth bulunamadı! " +
+                             "Player objesinin 'Player' tag'ine sahip olduğundan ve " +
+                             "PlayerHealth script'inin eklendiğinden emin ol.");
+            yield break;
+        }
+
+        ForceUpdateUI();
+        _isUIReady = true;
+    }
+
+    private void FindPlayer()
+    {
+        // 1. Statik referans (en hızlı)
+        if (PlayerHealth.Instance != null)
+        {
+            playerHealth = PlayerHealth.Instance;
+            return;
+        }
+
+        // 2. Tag ile ara
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            playerHealth = playerObj.GetComponent<PlayerHealth>();
+            if (playerHealth != null) return;
+        }
+
+        // 3. Inactive objeler dahil tüm sahnede ara (Unity 6 uyumlu)
+        var all = Object.FindObjectsByType<PlayerHealth>(FindObjectsInactive.Include);
+        if (all.Length > 0)
+            playerHealth = all[0];
+    }
+
+    private void ForceUpdateUI()
+    {
+        if (playerHealth == null || mainContainer == null) return;
+
+        _lastMaxHealth = playerHealth.maxHealth;
+        _lastHealth = playerHealth.currentHealth;
+        _lastShield = playerHealth.currentShield;
+
+        ClearUI();
+        SetupHearts();
+        InstantUpdateHearts();
+        InstantUpdateShields();
+    }
+
+    #endregion
+
+    // ─────────────────────────────────────────────────────────── 
+    #region Change Handling
+
+    private void HandleChanges()
+    {
         if (_lastMaxHealth != playerHealth.maxHealth)
         {
             _lastMaxHealth = playerHealth.maxHealth;
-            _lastHealth = playerHealth.currentHealth;
+            ClearUI();
             SetupHearts();
             InstantUpdateHearts();
+            InstantUpdateShields();
         }
 
-        // 2. MEVCUT CAN DEĞİŞİMİ
         if (_lastHealth != playerHealth.currentHealth)
         {
             if (playerHealth.currentHealth > _lastHealth)
@@ -91,45 +246,39 @@ public class HealthUI : MonoBehaviour
             _lastHealth = playerHealth.currentHealth;
         }
 
-        // 3. KALKAN DEĞİŞİMİ
         if (_lastShield != playerHealth.currentShield)
         {
             if (playerHealth.currentShield > _lastShield)
                 OnShieldAdded(playerHealth.currentShield - _lastShield);
-            else if (playerHealth.currentShield < _lastShield)
+            else
                 OnShieldBroken(_lastShield - playerHealth.currentShield);
 
             _lastShield = playerHealth.currentShield;
         }
     }
 
-    private void FindAndSetupPlayer()
-    {
-        // Etikete bakmak yerine sahnede Health scripti takılı olan objeyi bul
-        playerHealth = Object.FindAnyObjectByType<PlayerHealth>();
+    #endregion
 
-        if (playerHealth != null)
-        {
-            Debug.Log("HealthUI: PlayerHealth scripti doğrudan bulundu ve bağlandı!");
-            _lastMaxHealth = playerHealth.maxHealth;
-            _lastHealth = playerHealth.currentHealth;
-            _lastShield = playerHealth.currentShield;
-            SetupHearts();
-            InstantUpdateHearts();
-            InstantUpdateShields();
-        }
-    }
+    // ─────────────────────────────────────────────────────────── 
+    #region UI Build & Update
 
     private void ClearUI()
     {
-        foreach (Transform child in mainContainer) Destroy(child.gameObject);
+        if (mainContainer == null) return;
+
+        foreach (Transform child in mainContainer)
+        {
+            DOTween.Kill(child);
+            Destroy(child.gameObject);
+        }
+
         _heartImages.Clear();
         _shieldIcons.Clear();
     }
 
     public void SetupHearts()
     {
-        ClearUI(); // Önce temizle
+        if (heartPrefab == null || mainContainer == null) return;
 
         for (int i = 0; i < playerHealth.maxHealth; i++)
         {
@@ -143,13 +292,16 @@ public class HealthUI : MonoBehaviour
     {
         for (int i = 0; i < _heartImages.Count; i++)
         {
-            if (i < _heartImages.Count)
-                _heartImages[i].sprite = i < playerHealth.currentHealth ? fullHeartSprite : emptyHeartSprite;
+            _heartImages[i].sprite = (i < playerHealth.currentHealth)
+                ? fullHeartSprite
+                : emptyHeartSprite;
         }
     }
 
     private void InstantUpdateShields()
     {
+        if (shieldPrefab == null || mainContainer == null) return;
+
         for (int i = 0; i < playerHealth.currentShield; i++)
         {
             GameObject newShield = Instantiate(shieldPrefab, mainContainer);
@@ -162,16 +314,21 @@ public class HealthUI : MonoBehaviour
         for (int i = 0; i < _heartImages.Count; i++)
         {
             if (i < playerHealth.currentHealth)
+            {
                 _heartImages[i].sprite = fullHeartSprite;
+            }
             else
             {
                 _heartImages[i].sprite = emptyHeartSprite;
+
                 if (isDamage && i == playerHealth.currentHealth)
                 {
                     Transform heartT = _heartImages[i].transform;
                     heartT.DOKill();
                     heartT.localScale = Vector3.one;
-                    heartT.DOPunchScale(Vector3.one * damagePunchStrength, 0.4f, 5, 0.5f).SetLink(heartT.gameObject);
+                    heartT.DOPunchScale(
+                        Vector3.one * damagePunchStrength, 0.4f, 5, 0.5f)
+                        .SetLink(heartT.gameObject);
                 }
             }
         }
@@ -181,31 +338,46 @@ public class HealthUI : MonoBehaviour
     {
         InstantUpdateHearts();
         Sequence healSequence = DOTween.Sequence();
+
         for (int i = 0; i < playerHealth.currentHealth; i++)
         {
-            if (i < _heartImages.Count)
-            {
-                Transform heartT = _heartImages[i].transform;
-                heartT.DOKill();
-                heartT.localScale = Vector3.one;
+            if (i >= _heartImages.Count) break;
 
-                healSequence.Insert(i * waveInterval,
-                    heartT.DOPunchScale(Vector3.one * bounceStrength, bounceDuration, 10, 1f)
-                    .SetLink(heartT.gameObject));
-            }
+            Transform heartT = _heartImages[i].transform;
+            heartT.DOKill();
+            heartT.localScale = Vector3.one;
+
+            healSequence.Insert(
+                i * waveInterval,
+                heartT.DOPunchScale(Vector3.one * bounceStrength, bounceDuration, 10, 1f)
+                      .SetLink(heartT.gameObject));
         }
     }
 
+    #endregion
+
+    // ─────────────────────────────────────────────────────────── 
+    #region Shield Animations
+
     private void OnShieldAdded(int amount)
     {
+        if (shieldPrefab == null || mainContainer == null) return;
+
         for (int i = 0; i < amount; i++)
         {
             GameObject newShield = Instantiate(shieldPrefab, mainContainer);
             _shieldIcons.Add(newShield);
+
             RectTransform shieldRect = newShield.GetComponent<RectTransform>();
-            Vector2 finalPos = shieldRect.anchoredPosition;
-            shieldRect.anchoredPosition = finalPos + new Vector2(0, fallDistance);
-            shieldRect.DOAnchorPos(finalPos, fallDuration).SetEase(Ease.OutBounce).SetLink(newShield);
+            if (shieldRect != null)
+            {
+                Vector2 finalPos = shieldRect.anchoredPosition;
+                shieldRect.anchoredPosition = finalPos + new Vector2(0, fallDistance);
+                shieldRect.DOAnchorPos(finalPos, fallDuration)
+                          .SetEase(Ease.OutBounce)
+                          .SetLink(newShield);
+            }
+
             AnimateIconPunch(newShield.transform, bounceDuration);
         }
     }
@@ -215,6 +387,7 @@ public class HealthUI : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             if (_shieldIcons.Count == 0) break;
+
             int index = _shieldIcons.Count - 1;
             GameObject obj = _shieldIcons[index];
             _shieldIcons.RemoveAt(index);
@@ -224,19 +397,39 @@ public class HealthUI : MonoBehaviour
 
     private void AnimateShieldBreak(GameObject shieldObj)
     {
+        if (shieldObj == null) return;
+
         RectTransform rt = shieldObj.GetComponent<RectTransform>();
         CanvasGroup cg = shieldObj.GetComponent<CanvasGroup>();
-        if (rt == null || cg == null) { Destroy(shieldObj); return; }
-        rt.DOKill(); cg.DOKill();
+
+        if (rt == null || cg == null)
+        {
+            Destroy(shieldObj);
+            return;
+        }
+
+        rt.DOKill();
+        cg.DOKill();
+
         shieldObj.transform.SetParent(mainContainer.parent, true);
-        rt.DOAnchorPos(rt.anchoredPosition - new Vector2(0, fallDistance), fallDuration).SetEase(Ease.InQuad).SetLink(shieldObj);
-        cg.DOFade(0f, fallDuration).SetEase(Ease.Linear).SetLink(shieldObj).OnComplete(() => Destroy(shieldObj));
+        rt.DOAnchorPos(rt.anchoredPosition - new Vector2(0, fallDistance), fallDuration)
+          .SetEase(Ease.InQuad)
+          .SetLink(shieldObj);
+        cg.DOFade(0f, fallDuration)
+          .SetEase(Ease.Linear)
+          .SetLink(shieldObj)
+          .OnComplete(() => { if (shieldObj != null) Destroy(shieldObj); });
     }
 
     private void AnimateIconPunch(Transform iconTransform, float duration)
     {
+        if (iconTransform == null) return;
+
         iconTransform.DOKill();
         iconTransform.localScale = Vector3.one;
-        iconTransform.DOPunchScale(Vector3.one * bounceStrength, duration, 10, 1f).SetLink(iconTransform.gameObject);
+        iconTransform.DOPunchScale(Vector3.one * bounceStrength, duration, 10, 1f)
+                     .SetLink(iconTransform.gameObject);
     }
+
+    #endregion
 }

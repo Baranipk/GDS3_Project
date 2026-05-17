@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 
 public class PauseManager : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class PauseManager : MonoBehaviour
     public GameObject pauseMenuScreen;
     public GameObject firstSelectedButton;
 
-    // İŞTE BURASI ÇOK ÖNEMLİ: Artık public! Böylece karakterin oyunun durduğunu bilebilecek.
     public bool isPaused = false;
 
     private void Awake()
@@ -25,7 +25,6 @@ public class PauseManager : MonoBehaviour
         Instance = this;
     }
 
-    // --- SAHNE TAKİBİ ---
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -38,15 +37,22 @@ public class PauseManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Sahne yüklenince tüm DOTween tweenlerini temizle
+        // (restart donması ve HealthUI tween çakışması önlenir)
+        DOTween.KillAll(complete: false);
+
         isPaused = false;
-        if (pauseMenuScreen != null) pauseMenuScreen.SetActive(false);
         Time.timeScale = 1f;
+
+        if (pauseMenuScreen != null)
+            pauseMenuScreen.SetActive(false);
     }
-    // ----------------------------------------
 
     private void Start()
     {
-        if (pauseMenuScreen != null) pauseMenuScreen.SetActive(false);
+        if (pauseMenuScreen != null)
+            pauseMenuScreen.SetActive(false);
+
         Time.timeScale = 1f;
     }
 
@@ -60,30 +66,32 @@ public class PauseManager : MonoBehaviour
             Pause();
     }
 
-    public async void Pause()
+    public void Pause()
     {
-        // Obje yok ediliyorsa metottan çık
         if (this == null || gameObject == null) return;
 
         isPaused = true;
-        if (pauseMenuScreen != null) pauseMenuScreen.SetActive(true);
+
+        if (pauseMenuScreen != null)
+            pauseMenuScreen.SetActive(true);
+
         Time.timeScale = 0f;
 
-        await UniTask.Yield();
-
-        // EventSystem kontrolü (73. satır hatası için kesin çözüm)
-        if (UnityEngine.EventSystems.EventSystem.current != null && firstSelectedButton != null)
+        // timeScale = 0 olduğu için direkt seç (async gerekmez)
+        if (EventSystem.current != null && firstSelectedButton != null)
         {
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         }
     }
 
     public async void Resume()
     {
-        pauseMenuScreen.SetActive(false);
+        if (pauseMenuScreen != null)
+            pauseMenuScreen.SetActive(false);
 
-        // Input Bleed çözümü için bekleme
+        // Input bleed önlemek için kısa bekleme
+        // ignoreTimeScale: timeScale=0'dayken de çalışır
         await UniTask.Delay(100, ignoreTimeScale: true);
 
         isPaused = false;
@@ -92,21 +100,29 @@ public class PauseManager : MonoBehaviour
 
     public async void RestartLevel()
     {
-        pauseMenuScreen.SetActive(false);
+        if (pauseMenuScreen != null)
+            pauseMenuScreen.SetActive(false);
+
         Time.timeScale = 1f;
         isPaused = false;
 
-        await UniTask.Delay(200);
+        DOTween.KillAll(complete: false);
+
+        await UniTask.Delay(200, ignoreTimeScale: true);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public async void GoToMainMenu()
     {
-        pauseMenuScreen.SetActive(false);
+        if (pauseMenuScreen != null)
+            pauseMenuScreen.SetActive(false);
+
         Time.timeScale = 1f;
         isPaused = false;
 
-        await UniTask.Delay(200);
+        DOTween.KillAll(complete: false);
+
+        await UniTask.Delay(200, ignoreTimeScale: true);
         SceneManager.LoadScene(0);
     }
 }

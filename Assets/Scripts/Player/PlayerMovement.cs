@@ -11,25 +11,27 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Zıplama & Yerçekimi (Game Feel)")]
     [SerializeField] private float jumpForce = 10f;
-    public float fallMultiplier = 2.5f; // Düşerken yerçekimini artırır (Ayda yürüme hissini yok eder)
+    public float fallMultiplier = 2.5f;
     private float defaultGravity;
 
     [Header("Platformer Asistanları (Affedicilik)")]
-    public float coyoteTime = 0.15f;    // Platformdan düştükten sonra zıplanabilen süre
+    public float coyoteTime = 0.15f;
     [HideInInspector] public float coyoteTimeCounter;
 
-    public float jumpBufferTime = 0.15f; // Yere inmeden basılan zıplamayı hafızada tutma süresi
+    public float jumpBufferTime = 0.15f;
     [HideInInspector] public float jumpBufferCounter;
 
     [Header("Çevre Kontrol Ayarları")]
-    [SerializeField] private float groundCheckRadius = 0.2f;
+    [SerializeField] private float groundCheckRadius = 0.05f; // Box yüksekliği için kullanılır
+    [SerializeField] private float groundCheckWidth = 0.4f;  // Karakter genişliğine göre ayarla
     [SerializeField] private Transform groundCheckTransform;
-    [SerializeField] private Transform wallCheckTransform; // YENİ: Duvar kontrol noktası
-    [SerializeField] private float wallCheckDistance = 0.2f; // YENİ: Duvara olan mesafe
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform wallCheckTransform;
+    [SerializeField] private float wallCheckDistance = 0.2f;
+
+    // PUBLIC — PlayerDeathState ve PlayerJumpState erişebilsin
+    [SerializeField] public LayerMask groundLayer;
 
     public bool isDoubleJump = false;
-    private int _remainingJumps;
 
     public PlayerInputHandler _playerInputHandler;
     private Rigidbody2D _rb;
@@ -45,22 +47,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // --- COYOTE TIME SAYACI ---
         if (IsGrounded())
             coyoteTimeCounter = coyoteTime;
         else
             coyoteTimeCounter -= Time.deltaTime;
 
-        // --- JUMP BUFFER SAYACI ---
-        // Tuşa basıldığı an PlayerInputHandler bu değeri yükseltecek.
-        // Biz burada sadece zamanla bu süreyi sıfırlıyoruz.
         jumpBufferCounter -= Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
-        // --- AĞIR ÇEKİM DÜŞÜŞ (FALL MULTIPLIER) ---
-        // Karakter zirveye ulaşıp aşağı düşmeye başladığında yerçekimini artır
         if (_rb.linearVelocityY < 0)
             _rb.gravityScale = defaultGravity * fallMultiplier;
         else
@@ -75,7 +71,9 @@ public class PlayerMovement : MonoBehaviour
         float accelRate;
 
         if (Mathf.Abs(targetSpeed) > 0.01f)
-            accelRate = (Mathf.Sign(targetSpeed) != Mathf.Sign(_rb.linearVelocityX) && Mathf.Abs(_rb.linearVelocityX) > 0.1f) ? turnSpeed : acceleration;
+            accelRate = (Mathf.Sign(targetSpeed) != Mathf.Sign(_rb.linearVelocityX)
+                         && Mathf.Abs(_rb.linearVelocityX) > 0.1f)
+                        ? turnSpeed : acceleration;
         else
             accelRate = deceleration;
 
@@ -86,40 +84,68 @@ public class PlayerMovement : MonoBehaviour
             ApplyFriction();
     }
 
-    // YENİ: Kaymayı önleyen asıl sürtünme / durdurma metodu
     public void ApplyFriction()
     {
-        float amount = Mathf.Min(Mathf.Abs(_rb.linearVelocityX), Mathf.Abs(deceleration * Time.fixedDeltaTime));
+        float amount = Mathf.Min(Mathf.Abs(_rb.linearVelocityX),
+                                 Mathf.Abs(deceleration * Time.fixedDeltaTime));
         amount *= Mathf.Sign(_rb.linearVelocityX);
         _rb.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
     }
 
     public void Jump()
     {
-        _rb.linearVelocityY = 0; // Önceki dikey hızı sıfırla ki zıplama her zaman tutarlı olsun
+        _rb.linearVelocityY = 0;
         _rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        jumpBufferCounter = 0f; // Zıpladık, hafızadaki tuşu temizle
+        jumpBufferCounter = 0f;
     }
 
-    public bool IsGrounded() => Physics2D.OverlapCircle(groundCheckTransform.position, groundCheckRadius, groundLayer);
-
-    // YENİ: Duvara dayanıp dayanmadığımızı kontrol eder
-    public bool IsTouchingWall(float facingDirection)
+    /// <summary>
+    /// OverlapBox ile zemin kontrolü — OverlapCircle'dan daha geniş alan tarar.
+    /// Karakter platform kenarına oturduğunda da doğru sonuç verir.
+    ///
+    /// groundCheckWidth: karakterin collider genişliğiyle eşleştir (Inspector'dan ayarla)
+    /// groundCheckRadius: kutunun yarı yüksekliği (ince tutulmalı)
+    /// </summary>
+    public bool IsGrounded()
     {
-        return Physics2D.Raycast(wallCheckTransform.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
+        return Physics2D.OverlapBox(
+            groundCheckTransform.position,
+            new Vector2(groundCheckWidth, groundCheckRadius * 2f),
+            0f,
+            groundLayer);
     }
+
+    /// <summary>
+    /// Ground check transform'un dünya pozisyonunu döndürür.
+    /// PlayerJumpState'in raycast kontrolü için kullanılır.
+    /// </summary>
+    public Vector2 GroundCheckPosition()
+        => groundCheckTransform.position;
+
+    public bool IsTouchingWall(float facingDirection)
+        => Physics2D.Raycast(
+            wallCheckTransform.position,
+            Vector2.right * facingDirection,
+            wallCheckDistance,
+            groundLayer);
 
     private void OnDrawGizmos()
     {
         if (groundCheckTransform != null)
         {
+            // Box gizmo — sahne görünümünde tarama alanını gösterir
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheckTransform.position, groundCheckRadius);
+            Gizmos.DrawWireCube(
+                groundCheckTransform.position,
+                new Vector3(groundCheckWidth, groundCheckRadius * 2f, 0f));
         }
+
         if (wallCheckTransform != null)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(wallCheckTransform.position, wallCheckTransform.position + (Vector3.right * wallCheckDistance));
+            Gizmos.DrawLine(
+                wallCheckTransform.position,
+                wallCheckTransform.position + (Vector3.right * wallCheckDistance));
         }
     }
 }
