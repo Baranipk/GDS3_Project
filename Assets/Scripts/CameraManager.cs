@@ -38,7 +38,16 @@ public class CameraManager : MonoBehaviour
 
         // 2. Sınırları Bulma
         GameObject newBounds = GameObject.FindGameObjectWithTag("CameraBounds");
-        if (newBounds != null && _confiner != null)
+        
+        if (newBounds == null)
+        {
+            Debug.LogWarning("Kamera Uyarısı: Bu sahnede 'CameraBounds' bulunamadı.");
+        }
+        else if (_confiner == null)
+        {
+            Debug.LogError("Kamera Hatası: Sınır objesi bulundu ancak Kameranızda 'CinemachineConfiner2D' bileşeni EKSİK!");
+        }
+        else
         {
             PolygonCollider2D poly = newBounds.GetComponent<PolygonCollider2D>();
             if (poly != null)
@@ -51,10 +60,6 @@ public class CameraManager : MonoBehaviour
             {
                 Debug.LogError("<color=red>Kamera Hatası: 'CameraBounds' objesinde PolygonCollider2D yok!</color>");
             }
-        }
-        else
-        {
-            Debug.LogWarning("Kamera Uyarısı: Bu sahnede 'CameraBounds' bulunamadı.");
         }
     }
 }

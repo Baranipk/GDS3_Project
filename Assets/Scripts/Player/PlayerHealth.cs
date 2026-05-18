@@ -30,6 +30,8 @@ public class PlayerHealth : MonoBehaviour
     private PlayerController _controller;
     private bool _isDead = false;
 
+    private bool _hasInitialized = false;
+
     // ─────────────────────────────────────────────────────────── 
     private void Awake()
     {
@@ -39,6 +41,16 @@ public class PlayerHealth : MonoBehaviour
     private void OnDestroy()
     {
         if (Instance == this) Instance = null;
+    }
+
+    private void OnEnable()
+    {
+        // Eğer obje Start() ile daha önceden kurulduysa (örn. ana menüden oyuna dönüldüyse)
+        // UI'ın kendini tekrar kurabilmesi için hazır olduğumuzu bildiriyoruz.
+        if (_hasInitialized)
+        {
+            OnPlayerReady?.Invoke(this);
+        }
     }
 
     private void Start()
@@ -58,6 +70,8 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
             currentShield = 0;
         }
+
+        _hasInitialized = true;
 
         // Veriler yüklendi — UI'ı kur
         OnPlayerReady?.Invoke(this);
