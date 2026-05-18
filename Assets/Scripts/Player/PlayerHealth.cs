@@ -3,8 +3,15 @@ using System;
 
 public class PlayerHealth : MonoBehaviour
 {
+    // ── Statik Referans & Eventler ─────────────────────────────
     public static PlayerHealth Instance { get; private set; }
+
+    /// PlayerHealth.Start() bitince tetiklenir — HealthUI ilk kurulumu için
     public static event Action<PlayerHealth> OnPlayerReady;
+
+    /// Her can/kalkan değişiminde tetiklenir — HealthUI güncellemesi için
+    /// Update() polling yerine bu event kullanılır → güvenilir ve anlık
+    public static event Action<PlayerHealth> OnHealthChanged;
 
     [Header("Can Ayarları")]
     public int maxHealth = 5;
@@ -23,6 +30,7 @@ public class PlayerHealth : MonoBehaviour
     private PlayerController _controller;
     private bool _isDead = false;
 
+    // ─────────────────────────────────────────────────────────── 
     private void Awake()
     {
         Instance = this;
@@ -51,23 +59,22 @@ public class PlayerHealth : MonoBehaviour
             currentShield = 0;
         }
 
+        // Veriler yüklendi — UI'ı kur
         OnPlayerReady?.Invoke(this);
     }
 
+    // ─────────────────────────────────────────────────────────── 
     public void TakeDamage(int damage)
     {
         if (_isDead || isInvincible) return;
 
-        // --- BLOK KONTROLÜ ---
         if (_controller.playerStateMachine.CurrentState == _controller.blockState)
         {
-            damage = 0;
             SoundManager.Instance?.Get("BlockHit")?.PlayOneShot();
             _controller.ApplyKnockback(_controller.blockKnockbackMultiplier);
             return;
         }
 
-        // --- KALKAN KONTROLÜ ---
         if (currentShield > 0)
         {
             int damageToShield = Mathf.Min(currentShield, damage);
@@ -75,19 +82,22 @@ public class PlayerHealth : MonoBehaviour
             damage -= damageToShield;
             UpdateData();
 
-            // Kalkan hasar VFX → "-1 Shield"
             if (damageToShield > 0)
                 VFXManager.Instance?.PlayDamage(transform.position, damageToShield, "Shield");
+
+            // Kalkan değişti — UI'ı bildir
+            OnHealthChanged?.Invoke(this);
 
             if (damage <= 0) return;
         }
 
-        // --- CAN HASARI ---
         currentHealth -= damage;
         UpdateData();
 
-        // Can hasar VFX → "-1 HP"
         VFXManager.Instance?.PlayDamage(transform.position, damage);
+
+        // Can değişti — UI'ı bildir
+        OnHealthChanged?.Invoke(this);
 
         if (currentHealth <= 0)
         {
@@ -101,7 +111,6 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    /// <summary>Kalkan ekler ve mavi halka ShieldVFX'i tetikler.</summary>
     public void AddShield(int amount)
     {
         if (_isDead) return;
@@ -109,9 +118,9 @@ public class PlayerHealth : MonoBehaviour
         UpdateData();
 
         VFXManager.Instance?.PlayShield(transform.position, amount);
+        OnHealthChanged?.Invoke(this);
     }
 
-    /// <summary>Can iyileştirir ve yeşil "+" HealVFX'i tetikler.</summary>
     public void Heal(int amount)
     {
         if (_isDead) return;
@@ -119,6 +128,7 @@ public class PlayerHealth : MonoBehaviour
         UpdateData();
 
         VFXManager.Instance?.PlayHeal(transform.position, amount);
+        OnHealthChanged?.Invoke(this);
     }
 
     public void ResetHealth()
@@ -128,6 +138,9 @@ public class PlayerHealth : MonoBehaviour
         _isDead = false;
         isInvincible = false;
         UpdateData();
+
+        // Respawn sonrası UI'ı zorla güncelle
+        OnHealthChanged?.Invoke(this);
     }
 
     public void IncreaseMaxHealth(int amount)
@@ -135,6 +148,8 @@ public class PlayerHealth : MonoBehaviour
         maxHealth += amount;
         currentHealth += amount;
         UpdateData();
+
+        OnHealthChanged?.Invoke(this);
     }
 
     public void InstantKill()
@@ -143,6 +158,7 @@ public class PlayerHealth : MonoBehaviour
         currentShield = 0;
         currentHealth = 0;
         UpdateData();
+        OnHealthChanged?.Invoke(this);
         Die();
     }
 

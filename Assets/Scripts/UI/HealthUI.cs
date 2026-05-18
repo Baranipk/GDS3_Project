@@ -8,14 +8,11 @@ using DG.Tweening;
 /// <summary>
 /// Kalp ve Kalkan UI'ını yönetir.
 ///
-/// Düzeltilen Buglar:
-/// 1. _isInitializing flag'i: Update() her frame yeni coroutine başlatamaz → restart donması gitti.
-/// 2. PlayerHealth.OnPlayerReady event'i: timing sorununu köküyle çözer.
-///    OnSceneLoaded → Start()'tan önce gelir → HealthUI yanlış değerleri (default) okurdu.
-///    OnPlayerReady → Start()'tan sonra gelir → veriler kesinlikle yüklü, UI doğru kurulur.
-/// 3. OnSceneLoaded'da StopAllCoroutines + _isInitializing reset: hızlı geçişlerde coroutine
-///    birikimini önler.
-/// 4. FindObjectsByType ile inactive objeler de aranır (Unity 6 uyumlu).
+/// DÜZELTME: Update() polling kaldırıldı.
+/// Artık PlayerHealth.OnHealthChanged event'i ile çalışır:
+///   - Her can/kalkan değişiminde anında tetiklenir
+///   - Sahne yeniden yüklenince OnPlayerReady ile sıfırdan kurulur
+///   - _lastXxx değerleri artık sadece animasyon kararları için kullanılır
 /// </summary>
 public class HealthUI : MonoBehaviour
 {
@@ -43,6 +40,7 @@ public class HealthUI : MonoBehaviour
     private List<Image> _heartImages = new List<Image>();
     private List<GameObject> _shieldIcons = new List<GameObject>();
 
+    // Animasyon kararları için — hangi yönde değişti?
     private int _lastHealth = -1;
     private int _lastShield = -1;
     private int _lastMaxHealth = -1;
@@ -58,26 +56,21 @@ public class HealthUI : MonoBehaviour
         if (mainContainer == null)
         {
             Debug.LogError("[HealthUI] mainContainer atanmamış! Inspector'dan sürükleyin.", this);
-            return;
         }
-
-        // HealthUI ilk kez oluşturulduğunda (DontDestroyOnLoad ilk sahne)
-        // OnPlayerReady zaten subscribe, ek bir şey yapmaya gerek yok.
     }
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-
-        // ÇÖZÜM: PlayerHealth.Start() bitince bu event tetiklenir.
-        // OnSceneLoaded timing sorununu tamamen bypass eder.
         PlayerHealth.OnPlayerReady += OnPlayerHealthReady;
+        PlayerHealth.OnHealthChanged += OnHealthChanged;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         PlayerHealth.OnPlayerReady -= OnPlayerHealthReady;
+        PlayerHealth.OnHealthChanged -= OnHealthChanged;
     }
 
     private void OnDestroy()
@@ -87,56 +80,50 @@ public class HealthUI : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Eski tweenleri temizle
         DOTween.KillAll(complete: false);
-
-        // Önceki coroutine'i durdur ve flag'i sıfırla.
-        // (Hızlı sahne geçişlerinde eski coroutine _isInitializing=true bırakabiliyordu)
         StopAllCoroutines();
+
         _isInitializing = false;
         _isUIReady = false;
 
-        // UI içeriğini temizle — OnPlayerReady event'i gelince yeniden kurulacak.
-        ClearUI();
+        // BUG FIX: _lastXxx sıfırlanmazsa ForceUpdateUI aynı değerlerde
+        // "değişiklik yok" zannedip UI'ı güncellemiyordu
+        ResetLastValues();
 
-        // NOT: Ana menüde (buildIndex 0) player yok, StartInitUI() çağırmıyoruz.
-        // OnPlayerReady event'i zaten oyun sahnelerinde tetiklenecek.
+        ClearUI();
     }
 
+    #endregion
+
+    // ─────────────────────────────────────────────────────────── 
+    #region Event Handlers
+
     /// <summary>
-    /// PlayerHealth.Start() tamamlandığında çağrılır.
-    /// Bu noktada maxHealth ve currentHealth kesinlikle doğru değerlere sahip.
+    /// PlayerHealth.Start() tamamlandığında — UI'ı sıfırdan kur.
     /// </summary>
     private void OnPlayerHealthReady(PlayerHealth health)
     {
         if (mainContainer == null) return;
 
-        // Önceki coroutine'i durdur — artık gerek yok
         StopAllCoroutines();
         _isInitializing = false;
 
         playerHealth = health;
+        ResetLastValues();
         ForceUpdateUI();
         _isUIReady = true;
     }
 
-    private void Update()
+    /// <summary>
+    /// Her can/kalkan değişiminde tetiklenir (TakeDamage, Heal, AddShield, ResetHealth...).
+    /// Update() polling yerine bu event kullanılır — anlık ve güvenilir.
+    /// </summary>
+    private void OnHealthChanged(PlayerHealth health)
     {
         if (!_isUIReady || mainContainer == null) return;
+        if (health != playerHealth) return; // Başka bir player'ın eventi ise yoksay
 
-        if (playerHealth == null)
-        {
-            _isUIReady = false;
-            StartInitUI(); // Fallback: player kaybolursa coroutine ile tekrar ara
-            return;
-        }
-
-        if (_lastMaxHealth != playerHealth.maxHealth ||
-            _lastHealth != playerHealth.currentHealth ||
-            _lastShield != playerHealth.currentShield)
-        {
-            HandleChanges();
-        }
+        HandleChanges();
     }
 
     #endregion
@@ -144,8 +131,10 @@ public class HealthUI : MonoBehaviour
     // ─────────────────────────────────────────────────────────── 
     #region Initialization (Fallback)
 
-    // Bu coroutine artık yalnızca yedek olarak kullanılır.
-    // Normal akış: OnPlayerReady event'i → OnPlayerHealthReady() → ForceUpdateUI()
+    /// <summary>
+    /// Player bulunamazsa yedek coroutine başlatır.
+    /// Normal akış: OnPlayerReady event'i üzerinden.
+    /// </summary>
     private void StartInitUI()
     {
         if (_isInitializing) return;
@@ -173,26 +162,23 @@ public class HealthUI : MonoBehaviour
 
         if (playerHealth == null)
         {
-            Debug.LogWarning("[HealthUI] 5 saniye içinde PlayerHealth bulunamadı! " +
-                             "Player objesinin 'Player' tag'ine sahip olduğundan ve " +
-                             "PlayerHealth script'inin eklendiğinden emin ol.");
+            Debug.LogWarning("[HealthUI] 5 saniye içinde PlayerHealth bulunamadı!");
             yield break;
         }
 
+        ResetLastValues();
         ForceUpdateUI();
         _isUIReady = true;
     }
 
     private void FindPlayer()
     {
-        // 1. Statik referans (en hızlı)
         if (PlayerHealth.Instance != null)
         {
             playerHealth = PlayerHealth.Instance;
             return;
         }
 
-        // 2. Tag ile ara
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -200,10 +186,16 @@ public class HealthUI : MonoBehaviour
             if (playerHealth != null) return;
         }
 
-        // 3. Inactive objeler dahil tüm sahnede ara (Unity 6 uyumlu)
         var all = Object.FindObjectsByType<PlayerHealth>(FindObjectsInactive.Include);
         if (all.Length > 0)
             playerHealth = all[0];
+    }
+
+    private void ResetLastValues()
+    {
+        _lastMaxHealth = -1;
+        _lastHealth = -1;
+        _lastShield = -1;
     }
 
     private void ForceUpdateUI()
@@ -227,33 +219,45 @@ public class HealthUI : MonoBehaviour
 
     private void HandleChanges()
     {
+        if (playerHealth == null) return;
+
+        // Maksimum can değiştiyse — UI'ı sıfırdan kur
         if (_lastMaxHealth != playerHealth.maxHealth)
         {
             _lastMaxHealth = playerHealth.maxHealth;
+            _lastHealth = playerHealth.currentHealth;
+            _lastShield = playerHealth.currentShield;
+
             ClearUI();
             SetupHearts();
             InstantUpdateHearts();
             InstantUpdateShields();
+            return;
         }
 
+        // Can değiştiyse
         if (_lastHealth != playerHealth.currentHealth)
         {
-            if (playerHealth.currentHealth > _lastHealth)
+            bool isHeal = playerHealth.currentHealth > _lastHealth;
+            _lastHealth = playerHealth.currentHealth;
+
+            if (isHeal)
                 PlayHealWave();
             else
-                UpdateHearts(true);
-
-            _lastHealth = playerHealth.currentHealth;
+                UpdateHearts(isDamage: true);
         }
 
+        // Kalkan değiştiyse
         if (_lastShield != playerHealth.currentShield)
         {
-            if (playerHealth.currentShield > _lastShield)
-                OnShieldAdded(playerHealth.currentShield - _lastShield);
-            else
-                OnShieldBroken(_lastShield - playerHealth.currentShield);
-
+            bool isAdded = playerHealth.currentShield > _lastShield;
+            int diff = Mathf.Abs(playerHealth.currentShield - _lastShield);
             _lastShield = playerHealth.currentShield;
+
+            if (isAdded)
+                OnShieldAdded(diff);
+            else
+                OnShieldBroken(diff);
         }
     }
 
@@ -278,7 +282,7 @@ public class HealthUI : MonoBehaviour
 
     public void SetupHearts()
     {
-        if (heartPrefab == null || mainContainer == null) return;
+        if (heartPrefab == null || mainContainer == null || playerHealth == null) return;
 
         for (int i = 0; i < playerHealth.maxHealth; i++)
         {
@@ -290,8 +294,11 @@ public class HealthUI : MonoBehaviour
 
     private void InstantUpdateHearts()
     {
+        if (playerHealth == null) return;
+
         for (int i = 0; i < _heartImages.Count; i++)
         {
+            if (_heartImages[i] == null) continue;
             _heartImages[i].sprite = (i < playerHealth.currentHealth)
                 ? fullHeartSprite
                 : emptyHeartSprite;
@@ -300,7 +307,7 @@ public class HealthUI : MonoBehaviour
 
     private void InstantUpdateShields()
     {
-        if (shieldPrefab == null || mainContainer == null) return;
+        if (shieldPrefab == null || mainContainer == null || playerHealth == null) return;
 
         for (int i = 0; i < playerHealth.currentShield; i++)
         {
@@ -311,8 +318,12 @@ public class HealthUI : MonoBehaviour
 
     public void UpdateHearts(bool isDamage)
     {
+        if (playerHealth == null) return;
+
         for (int i = 0; i < _heartImages.Count; i++)
         {
+            if (_heartImages[i] == null) continue;
+
             if (i < playerHealth.currentHealth)
             {
                 _heartImages[i].sprite = fullHeartSprite;
@@ -328,7 +339,7 @@ public class HealthUI : MonoBehaviour
                     heartT.localScale = Vector3.one;
                     heartT.DOPunchScale(
                         Vector3.one * damagePunchStrength, 0.4f, 5, 0.5f)
-                        .SetLink(heartT.gameObject);
+                          .SetLink(heartT.gameObject);
                 }
             }
         }
@@ -336,12 +347,14 @@ public class HealthUI : MonoBehaviour
 
     private void PlayHealWave()
     {
+        if (playerHealth == null) return;
+
         InstantUpdateHearts();
         Sequence healSequence = DOTween.Sequence();
 
         for (int i = 0; i < playerHealth.currentHealth; i++)
         {
-            if (i >= _heartImages.Count) break;
+            if (i >= _heartImages.Count || _heartImages[i] == null) break;
 
             Transform heartT = _heartImages[i].transform;
             heartT.DOKill();
@@ -402,11 +415,7 @@ public class HealthUI : MonoBehaviour
         RectTransform rt = shieldObj.GetComponent<RectTransform>();
         CanvasGroup cg = shieldObj.GetComponent<CanvasGroup>();
 
-        if (rt == null || cg == null)
-        {
-            Destroy(shieldObj);
-            return;
-        }
+        if (rt == null || cg == null) { Destroy(shieldObj); return; }
 
         rt.DOKill();
         cg.DOKill();
