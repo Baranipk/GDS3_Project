@@ -3,14 +3,7 @@ using System;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // ── Statik Referans & Event ────────────────────────────────
     public static PlayerHealth Instance { get; private set; }
-
-    /// <summary>
-    /// PlayerHealth.Start() tamamlandığında, veriler yüklendikten SONRA tetiklenir.
-    /// HealthUI bu event'e subscribe olarak timing sorununu tamamen çözer.
-    /// OnSceneLoaded → Start()'tan önce gelir; bu event Start()'tan sonra gelir.
-    /// </summary>
     public static event Action<PlayerHealth> OnPlayerReady;
 
     [Header("Can Ayarları")]
@@ -30,7 +23,6 @@ public class PlayerHealth : MonoBehaviour
     private PlayerController _controller;
     private bool _isDead = false;
 
-    // ─────────────────────────────────────────────────────────── 
     private void Awake()
     {
         Instance = this;
@@ -38,8 +30,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (Instance == this)
-            Instance = null;
+        if (Instance == this) Instance = null;
     }
 
     private void Start()
@@ -55,17 +46,14 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[PlayerHealth] PlayerData atanmamış! Inspector üzerinden sürüklemeyi unutmayın.");
+            Debug.LogWarning("[PlayerHealth] PlayerData atanmamış!");
             currentHealth = maxHealth;
             currentShield = 0;
         }
 
-        // Veriler yüklendi, UI'a hazır olduğumuzu bildir.
-        // OnSceneLoaded'dan SONRA geldiği için UI doğru değerleri alır.
         OnPlayerReady?.Invoke(this);
     }
 
-    // ─────────────────────────────────────────────────────────── 
     public void TakeDamage(int damage)
     {
         if (_isDead || isInvincible) return;
@@ -87,11 +75,19 @@ public class PlayerHealth : MonoBehaviour
             damage -= damageToShield;
             UpdateData();
 
+            // Kalkan hasar VFX → "-1 Shield"
+            if (damageToShield > 0)
+                VFXManager.Instance?.PlayDamage(transform.position, damageToShield, "Shield");
+
             if (damage <= 0) return;
         }
 
+        // --- CAN HASARI ---
         currentHealth -= damage;
         UpdateData();
+
+        // Can hasar VFX → "-1 HP"
+        VFXManager.Instance?.PlayDamage(transform.position, damage);
 
         if (currentHealth <= 0)
         {
@@ -105,18 +101,24 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    /// <summary>Kalkan ekler ve mavi halka ShieldVFX'i tetikler.</summary>
     public void AddShield(int amount)
     {
         if (_isDead) return;
         currentShield = Mathf.Min(currentShield + amount, maxShield);
         UpdateData();
+
+        VFXManager.Instance?.PlayShield(transform.position, amount);
     }
 
+    /// <summary>Can iyileştirir ve yeşil "+" HealVFX'i tetikler.</summary>
     public void Heal(int amount)
     {
         if (_isDead) return;
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         UpdateData();
+
+        VFXManager.Instance?.PlayHeal(transform.position, amount);
     }
 
     public void ResetHealth()
@@ -146,8 +148,7 @@ public class PlayerHealth : MonoBehaviour
 
     public bool HasCollectedUpgrade(string id)
     {
-        if (data != null)
-            return data.collectedHealthUpgrades.Contains(id);
+        if (data != null) return data.collectedHealthUpgrades.Contains(id);
         return false;
     }
 

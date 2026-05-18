@@ -31,7 +31,7 @@ public class PlayerDeathState : IplayerState
 
         // ── 3. Animasyon + ses ────────────────────────────────────────────
         pAnim.Death();
-        SoundManager.Instance?.Get("Death")?.PlayOneShot();
+        SoundManager.Instance?.Get("Death")?.PlayOneShot(); 
 
         // ── 4. Yere inene kadar bekle (max 2 saniye timeout) ─────────────
         float elapsed = 0f;

@@ -9,7 +9,6 @@ public class EnemyHealth : MonoBehaviour
     private EnemyController _controller;
     private bool _isDead = false;
 
-    // KRİTİK SATIR: Dışarıdaki scriptlerin (HurtState gibi) ölümü kontrol etmesini sağlar
     public bool IsDead => _isDead;
 
     private void Awake()
@@ -23,7 +22,9 @@ public class EnemyHealth : MonoBehaviour
         if (_isDead) return;
 
         currentHealth -= damage;
-        // Debug.Log($"{gameObject.name} hasar aldı! Kalan Can: {currentHealth}");
+
+        // Hit Spark VFX — her hasar alışta düşmanın üzerinde çıkar
+        VFXManager.Instance?.PlayHitSpark(transform.position);
 
         if (currentHealth <= 0)
         {
@@ -32,19 +33,13 @@ public class EnemyHealth : MonoBehaviour
         }
         else
         {
-            // Ölmediyse sarsılma (Hurt) durumuna geç
+            // Hurt state'e geç
             if (_controller is BatController bat)
-            {
                 bat.StateMachine.ChangeState(bat.hurtState);
-            }
             else if (_controller is SkeletonController skeleton)
-            {
                 skeleton.StateMachine.ChangeState(skeleton.hurtState);
-            }
-            else if (_controller is SatyrController satyr) // BUNU EKLEDİK
-            {
+            else if (_controller is SatyrController satyr)
                 satyr.StateMachine.ChangeState(satyr.hurtState);
-            }
         }
     }
 
@@ -54,23 +49,13 @@ public class EnemyHealth : MonoBehaviour
         _isDead = true;
 
         if (_controller != null)
-        {
             _controller.DropLoot();
-        }
-
-        // Debug.Log($"{gameObject.name} öldü!");
 
         if (_controller is BatController bat)
-        {
             bat.StateMachine.ChangeState(bat.deathState);
-        }
         else if (_controller is SkeletonController skeleton)
-        {
             skeleton.StateMachine.ChangeState(skeleton.deathState);
-        }
-        else if (_controller is SatyrController satyr) // BUNU EKLEDİK
-        {
+        else if (_controller is SatyrController satyr)
             satyr.StateMachine.ChangeState(satyr.deathState);
-        }
     }
 }
