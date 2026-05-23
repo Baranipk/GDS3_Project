@@ -34,11 +34,13 @@ public class EnemyProjectile : MonoBehaviour
             {
                 playerHealth.TakeDamage(damage);
             }
+            SoundManager.Instance?.TryPlayOneShot("EnemyProjectileHit");
             Destroy(gameObject); // Hasar verdikten sonra yok ol
         }
         // 2. Eğer duvara veya yere çarparsa (Ground layer'ı)
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
+            SoundManager.Instance?.TryPlayOneShot("EnemyProjectileHit");
             Destroy(gameObject); // Duvara çarpınca da yok ol
         }
     }

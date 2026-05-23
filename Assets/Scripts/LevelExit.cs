@@ -18,6 +18,7 @@ public class LevelExit : MonoBehaviour
         {
             _hasTriggered = true; // Kapıyı kilitliyoruz ki aynı anda iki kere sahne yüklemeye çalışmasın
 
+            SoundManager.Instance?.TryPlayOneShot("LevelComplete");
             Debug.Log("Level bitti! Yeni sahne yükleniyor...");
 
             // Eğer otomatik geçiş seçiliyse LevelManager'daki sıradaki sahne fonksiyonunu çağır

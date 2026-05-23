@@ -30,6 +30,11 @@ public abstract class EnemyController : MonoBehaviour
     [Range(0f, 100f)]
     public float dropChance = 100f; // Varsayılan olarak %100
 
+    [Header("Knockback")]
+    public Vector2 knockbackForce = new Vector2(6f, 4f);  // Hasar alınca temel itme
+    public float deathKnockbackMultiplier = 2.5f;          // Ölüm anında çarpan (daha güçlü)
+    public float hurtKnockbackMultiplier = 1f;             // Normal hasar çarpanı
+
     public bool isFacingRight = true;
 
     protected virtual void Awake()
@@ -93,6 +98,7 @@ public abstract class EnemyController : MonoBehaviour
             if (playerHealth != null && !playerHealth.isInvincible) // isInvincible (I-Frame) kontrolü
             {
                 playerHealth.TakeDamage(contactDamage);
+                SoundManager.Instance?.TryPlayOneShot("EnemyContactHit");
                 Debug.Log($"{gameObject.name} (Ortak Sistem) temas hasarı verdi!");
 
                 // Bekleme süresini güncelle
@@ -111,6 +117,22 @@ public abstract class EnemyController : MonoBehaviour
         // Temas hasarı menzilini göster
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, 0.5f);
+    }
+
+    /// <summary>
+    /// Düşmanı verilen kaynak pozisyonundan uzaklaştıracak yönde iter.
+    /// sourcePos atayanın (silahın/player'ın) pozisyonu.
+    /// </summary>
+    public void ApplyKnockback(Vector2 sourcePos, float multiplier = 1f)
+    {
+        if (rb == null) return;
+
+        float dirX = Mathf.Sign(transform.position.x - sourcePos.x);
+        if (dirX == 0f) dirX = isFacingRight ? -1f : 1f; // Aynı x'teyse arkaya at
+
+        rb.linearVelocity = Vector2.zero;
+        Vector2 force = new Vector2(dirX * knockbackForce.x, knockbackForce.y) * multiplier;
+        rb.AddForce(force, ForceMode2D.Impulse);
     }
 
     public void DropLoot()

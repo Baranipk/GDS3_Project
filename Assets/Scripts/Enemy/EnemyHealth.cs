@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -19,23 +20,31 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector2? sourcePos = null)
     {
         if (_isDead) return;
 
         currentHealth -= damage;
 
-        // Hit Spark VFX — her hasar alışta düşmanın üzerinde çıkar
         VFXManager.Instance?.PlayHitSpark(transform.position);
 
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Die();
+            Die(sourcePos);
         }
         else
         {
-            // Hurt state'e geç
+            SoundManager.Instance?.TryPlayOneShot("EnemyHurt");
+
+            // Knockback uygula (hafif)
+            if (_controller != null && sourcePos.HasValue)
+                _controller.ApplyKnockback(sourcePos.Value, _controller.hurtKnockbackMultiplier);
+
+            // Küçük scale punch — vuruşun ağırlık hissi
+            transform.DOKill(true);
+            transform.DOPunchScale(new Vector3(0.15f, 0.15f, 0f), 0.18f, 8, 0.6f);
+
             if (_controller is BatController bat)
                 bat.StateMachine.ChangeState(bat.hurtState);
             else if (_controller is SkeletonController skeleton)
@@ -45,10 +54,20 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private void Die()
+    private void Die(Vector2? sourcePos = null)
     {
         if (_isDead) return;
         _isDead = true;
+
+        SoundManager.Instance?.TryPlayOneShot("EnemyDeath");
+
+        // Ölüm knockback'i — çok daha güçlü, yukarı doğru fırlatma
+        if (_controller != null && sourcePos.HasValue)
+            _controller.ApplyKnockback(sourcePos.Value, _controller.deathKnockbackMultiplier);
+
+        // Büyük scale punch — ölüm dramatize
+        transform.DOKill(true);
+        transform.DOPunchScale(new Vector3(0.3f, 0.3f, 0f), 0.3f, 6, 0.7f);
 
         if (_controller != null)
             _controller.DropLoot();

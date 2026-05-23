@@ -44,6 +44,8 @@ public class ElevatorLever : MonoBehaviour
 
         lastInteractTime = Time.time; // Süreyi güncelle
 
+        SoundManager.Instance?.TryPlayOneShot("LeverPull");
+
         // TEST LOGU: Konsolda bunu görüyorsan kılıç şaltere sorunsuz çarpıyor demektir.
         Debug.Log("Kılıç şaltere başarıyla çarptı! Şalter tetikleniyor...");
 

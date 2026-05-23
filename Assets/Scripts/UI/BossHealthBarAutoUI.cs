@@ -420,6 +420,8 @@ public class BossHealthBarAutoUI : MonoBehaviour
 
         _canvasGroup.DOKill();
         _canvasGroup.DOFade(1f, fadeInDuration).SetEase(Ease.OutQuad);
+
+        SoundManager.Instance?.TryPlayOneShot("BossUIAppear");
     }
 
     private void HandleHealthChanged(int current, int max)
@@ -448,6 +450,9 @@ public class BossHealthBarAutoUI : MonoBehaviour
 
         _canvasGroup.DOKill();
         _canvasGroup.DOFade(0f, fadeOutDuration).SetDelay(fadeOutDelay).SetEase(Ease.InQuad);
+
+        // Fade-out tamamlanırken disappear sesi çal
+        DOVirtual.DelayedCall(fadeOutDelay, () => SoundManager.Instance?.TryPlayOneShot("BossUIDisappear"));
     }
 
     private void SetFillImmediate(int current, int max)

@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [Header("Knockback Ayarları")]
     public Vector2 knockbackForce = new Vector2(5f, 5f); // Normal hasar geri tepmesi
     public float blockKnockbackMultiplier = 0.4f; // Blok anındaki geri tepme oranı (%40)
+    public float deathKnockbackMultiplier = 2.2f; // Ölüm anında güçlü itme
 
     public PlayerIdleState idleState;
     public PlayerMoveState moveState;

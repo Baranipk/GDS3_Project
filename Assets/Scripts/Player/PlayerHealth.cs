@@ -99,6 +99,10 @@ public class PlayerHealth : MonoBehaviour
             if (damageToShield > 0)
                 VFXManager.Instance?.PlayDamage(transform.position, damageToShield, "Shield");
 
+            // Kalkan kırıldıysa özel ses
+            if (currentShield == 0)
+                SoundManager.Instance?.TryPlayOneShot("ShieldBreak");
+
             // Kalkan değişti — UI'ı bildir
             OnHealthChanged?.Invoke(this);
 
@@ -132,6 +136,7 @@ public class PlayerHealth : MonoBehaviour
         UpdateData();
 
         VFXManager.Instance?.PlayShield(transform.position, amount);
+        SoundManager.Instance?.TryPlayOneShot("PlayerShieldUp");
         OnHealthChanged?.Invoke(this);
     }
 
@@ -142,6 +147,7 @@ public class PlayerHealth : MonoBehaviour
         UpdateData();
 
         VFXManager.Instance?.PlayHeal(transform.position, amount);
+        SoundManager.Instance?.TryPlayOneShot("PlayerHeal");
         OnHealthChanged?.Invoke(this);
     }
 
@@ -163,6 +169,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth += amount;
         UpdateData();
 
+        SoundManager.Instance?.TryPlayOneShot("PlayerMaxHpUp");
         OnHealthChanged?.Invoke(this);
     }
 
@@ -191,6 +198,8 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         _isDead = true;
+        // Ölüm anında güçlü geri tepme — dramatize
+        _controller.ApplyKnockback(_controller.deathKnockbackMultiplier);
         _controller.playerStateMachine.ChangeState(_controller.deathState);
     }
 

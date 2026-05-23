@@ -54,6 +54,7 @@ public class SkeletonController : EnemyController
     {
         if (GetComponent<EnemyHealth>().IsDead) return;
 
+        SoundManager.Instance?.TryPlayOneShot("SkeletonAttack");
         Debug.Log("Saldırı metodu çalıştı!"); // 1. Kontrol: Event çalışıyor mu?
 
         Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);

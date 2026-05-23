@@ -15,6 +15,7 @@ public class Spike : MonoBehaviour
             {
                 // Affetme, anında öldür!
                 playerHealth.InstantKill();
+                SoundManager.Instance?.TryPlayOneShot("SpikeHit");
                 Debug.Log("Karakter dikene çarptı ve öldü!");
             }
         }

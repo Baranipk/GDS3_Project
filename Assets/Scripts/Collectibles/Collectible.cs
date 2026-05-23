@@ -50,6 +50,7 @@ public class Collectible : MonoBehaviour
                         if (playerHealth.currentShield < playerHealth.maxShield)
                         {
                             playerHealth.AddShield(amount);
+                            SoundManager.Instance?.TryPlayOneShot("PickupShield");
                             isCollected = true;
                         }
                         break;
@@ -58,6 +59,7 @@ public class Collectible : MonoBehaviour
                         if (playerHealth.currentHealth < playerHealth.maxHealth)
                         {
                             playerHealth.Heal(amount);
+                            SoundManager.Instance?.TryPlayOneShot("PickupHealthSmall");
                             isCollected = true;
                         }
                         break;
@@ -66,6 +68,7 @@ public class Collectible : MonoBehaviour
                         if (playerHealth.currentHealth < playerHealth.maxHealth)
                         {
                             playerHealth.Heal(playerHealth.maxHealth);
+                            SoundManager.Instance?.TryPlayOneShot("PickupHealthFull");
                             isCollected = true;
                         }
                         break;
@@ -79,6 +82,7 @@ public class Collectible : MonoBehaviour
                             {
                                 playerHealth.IncreaseMaxHealth(amount);
                                 playerHealth.RecordUpgrade(uniqueID);
+                                SoundManager.Instance?.TryPlayOneShot("PickupMaxHealth");
                             }
 
                             // 3. Her halükarda (daha önce alınmış olsa bile) objeyi toplanmış sayıp yok edeceğiz

@@ -53,6 +53,7 @@ public class SatyrController : EnemyController
 
         if (projectilePrefab != null && throwPoint != null)
         {
+            SoundManager.Instance?.TryPlayOneShot("SatyrShoot");
             // Mermiyi oluştur
             GameObject projectile = Instantiate(projectilePrefab, throwPoint.position, throwPoint.rotation);
 

@@ -26,8 +26,11 @@ public class BossController : MonoBehaviour
     public float patternThinkInterval = 0.25f;          // Karar verme sıklığı (saniye)
     [Range(0f, 1f)] public float aggressiveness = 0.6f; // Yüksek = saldırı tercih, düşük = mesafe koru
 
-    [Header("Hurt")]
+    [Header("Hurt / Knockback")]
     public float hurtDuration = 0.35f;        // Hasar alınca kaç sn donsun
+    public Vector2 knockbackForce = new Vector2(3f, 2f); // Boss ağır olduğu için küçük
+    public float hurtKnockbackMultiplier = 1f;
+    public float deathKnockbackMultiplier = 2f;
 
     [Header("Tespit")]
     public float activationRadius = 12f;   // Boss bu menzilde oyuncuyu görünce intro tetiklenir
@@ -155,6 +158,7 @@ public class BossController : MonoBehaviour
 
         Debug.Log($"[Boss {name}] Activate çağrıldı. startWithIntro={startWithIntro}", this);
 
+        SoundManager.Instance?.TryPlayOneShot("BossRoar");
         onActivated?.Invoke();
 
         if (startWithIntro)
@@ -260,6 +264,16 @@ public class BossController : MonoBehaviour
     public void AnimEvent_Footstep()
     {
         SoundManager.Instance?.TryPlayOneShot(footstepSoundName);
+    }
+
+    public void ApplyKnockback(Vector2 sourcePos, float multiplier = 1f)
+    {
+        if (rb == null) return;
+        float dirX = Mathf.Sign(transform.position.x - sourcePos.x);
+        if (dirX == 0f) dirX = isFacingRight ? -1f : 1f;
+
+        Vector2 force = new Vector2(dirX * knockbackForce.x, knockbackForce.y) * multiplier;
+        rb.AddForce(force, ForceMode2D.Impulse);
     }
 
     public void DropLoot()

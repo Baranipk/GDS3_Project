@@ -39,8 +39,9 @@ public class Javelin : MonoBehaviour
             EnemyHealth enemyHealth = collision.GetComponentInParent<EnemyHealth>();
             BossHealth  bossHealth  = collision.GetComponentInParent<BossHealth>();
 
-            if (enemyHealth != null) enemyHealth.TakeDamage(damage);
-            if (bossHealth  != null) bossHealth.TakeDamage(damage);
+            Vector2 src = transform.position;
+            if (enemyHealth != null) enemyHealth.TakeDamage(damage, src);
+            if (bossHealth  != null) bossHealth.TakeDamage(damage, src);
 
             if (enemyHealth != null || bossHealth != null)
                 SoundManager.Instance?.Get("JavelinHitEnemy")?.PlayOneShot();
