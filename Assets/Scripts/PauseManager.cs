@@ -106,10 +106,16 @@ public class PauseManager : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
 
+        // LevelTransition tween'lerini öldürme — DOTween.KillAll bars'ı da öldürür
         DOTween.KillAll(complete: false);
 
         await UniTask.Delay(200, ignoreTimeScale: true);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        int idx = SceneManager.GetActiveScene().buildIndex;
+        if (LevelTransition.Instance != null)
+            LevelTransition.Instance.PlayClose(() => SceneManager.LoadScene(idx));
+        else
+            SceneManager.LoadScene(idx);
     }
 
     public async void GoToMainMenu()
@@ -123,6 +129,10 @@ public class PauseManager : MonoBehaviour
         DOTween.KillAll(complete: false);
 
         await UniTask.Delay(200, ignoreTimeScale: true);
-        SceneManager.LoadScene(0);
+
+        if (LevelTransition.Instance != null)
+            LevelTransition.Instance.PlayClose(() => SceneManager.LoadScene(0));
+        else
+            SceneManager.LoadScene(0);
     }
 }

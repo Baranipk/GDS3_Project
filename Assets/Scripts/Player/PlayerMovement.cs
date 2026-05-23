@@ -12,7 +12,17 @@ public class PlayerMovement : MonoBehaviour
     [Header("Zıplama & Yerçekimi (Game Feel)")]
     [SerializeField] private float jumpForce = 10f;
     public float fallMultiplier = 2.5f;
+    [Tooltip("Açıksa: tuş erken bırakıldığında yukarı hız kesilir (variable jump height). Kapalıysa: her zıplama tam yükseklik.")]
+    public bool enableVariableJumpHeight = true;
+    [Tooltip("Tuş erken bırakıldığında yukarı hız bu oranla kesilir (0.4-0.6 önerilir)")]
+    public float jumpCutMultiplier = 0.5f;
     private float defaultGravity;
+
+    [Header("Apex Hang Time (Zirvede hafif yerçekimi)")]
+    [Tooltip("velY mutlak değeri bu eşiğin altındaysa karakter apex'te sayılır")]
+    public float apexThreshold = 1.8f;
+    [Tooltip("Apex'te yerçekimi çarpanı — küçük = uzun süzülme")]
+    public float apexGravityMultiplier = 0.5f;
 
     [Header("Platformer Asistanları (Affedicilik)")]
     public float coyoteTime = 0.15f;
@@ -57,10 +67,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        float absVelY = Mathf.Abs(_rb.linearVelocityY);
+
         if (_rb.linearVelocityY < 0)
+        {
+            // Düşüş — daha ağır
             _rb.gravityScale = defaultGravity * fallMultiplier;
+        }
+        else if (absVelY < apexThreshold && !IsGrounded())
+        {
+            // Zirvede süzülme — hafif yerçekimi
+            _rb.gravityScale = defaultGravity * apexGravityMultiplier;
+        }
         else
+        {
             _rb.gravityScale = defaultGravity;
+        }
+    }
+
+    /// <summary>
+    /// Zıplama tuşu erken bırakıldığında çağrılır — yukarı hızı keser.
+    /// Sonuç: kısa basış = küçük zıplama, uzun basış = tam zıplama.
+    /// </summary>
+    public void CutJump()
+    {
+        if (!enableVariableJumpHeight) return;
+        if (_rb.linearVelocityY > 0f)
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _rb.linearVelocity.y * jumpCutMultiplier);
     }
 
     public void Move()

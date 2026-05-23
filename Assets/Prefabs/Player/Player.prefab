@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 8742387196791468781}
   - component: {fileID: 6103868272765820287}
   - component: {fileID: 1578503579467846633}
-  - component: {fileID: 1665468270987339856}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -150,11 +149,16 @@ MonoBehaviour:
   velPower: 1
   jumpForce: 12.25
   fallMultiplier: 2.5
-  coyoteTime: 0.4
+  enableVariableJumpHeight: 1
+  jumpCutMultiplier: 0.5
+  apexThreshold: 1.8
+  apexGravityMultiplier: 0.5
+  coyoteTime: 0.7
   coyoteTimeCounter: 0
   jumpBufferTime: 0.2
   jumpBufferCounter: 0
   groundCheckRadius: 0.3
+  groundCheckWidth: 0.4
   groundCheckTransform: {fileID: 2802640032002516446}
   wallCheckTransform: {fileID: 8741899799334993099}
   wallCheckDistance: 0.2
@@ -189,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   knockbackForce: {x: 5, y: 5}
   blockKnockbackMultiplier: 0.3
+  deathKnockbackMultiplier: 2.2
   spawnPoint: {fileID: 0}
 --- !u!114 &5695058739397700066
 MonoBehaviour:
@@ -242,24 +247,6 @@ MonoBehaviour:
   javelinPrefab: {fileID: 3761454665237241500, guid: 0768cc6c30e223d4890461ddeea6a139, type: 3}
   throwPoint: {fileID: 7728376855880207463}
 --- !u!114 &1578503579467846633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3107420404618434065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d687bf7f438ab5c49b08c041f0989920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 5
-  currentHealth: 0
-  currentShield: 0
-  maxShield: 3
-  isInvincible: 0
-  data: {fileID: 11400000, guid: a4b5d7de4965c7749837887a7e7c6efd, type: 2}
---- !u!114 &1665468270987339856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -333,7 +320,7 @@ Transform:
   m_GameObject: {fileID: 4933564610146562662}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: -1.316, z: 0}
+  m_LocalPosition: {x: 0.01, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -436,7 +423,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.1519258, y: -0.26182175}
+  m_Offset: {x: 0.15192574, y: -0.25775242}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -446,5 +433,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.9721122, y: 2.479557}
+  m_Size: {x: 0.9433998, y: 2.4714184}
   m_EdgeRadius: 0

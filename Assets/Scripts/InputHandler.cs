@@ -19,6 +19,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _playerInput.Player.Enable();
         _playerInput.Player.Jump.performed += JumpPressed;
+        _playerInput.Player.Jump.canceled  += JumpReleased;
         _playerInput.Player.Pause.performed += PausePressed;
         _playerInput.Player.Throw.performed += ThrowPressed;
         _playerInput.Player.Attack.performed += AttackPressed;
@@ -31,6 +32,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _playerInput.Player.Disable();
         _playerInput.Player.Jump.performed -= JumpPressed;
+        _playerInput.Player.Jump.canceled  -= JumpReleased;
         _playerInput.Player.Pause.performed -= PausePressed;
         _playerInput.Player.Throw.performed -= ThrowPressed;
         _playerInput.Player.Attack.performed -= AttackPressed;
@@ -57,6 +59,15 @@ public class PlayerInputHandler : MonoBehaviour
             PlayerMovement movement = _playerController.GetComponent<PlayerMovement>();
             movement.jumpBufferCounter = movement.jumpBufferTime;
         }
+    }
+
+    public void JumpReleased(InputAction.CallbackContext context)
+    {
+        if (PauseManager.Instance != null && PauseManager.Instance.isPaused) return;
+
+        // Zıplama tuşu bırakıldı — yukarı hızı kes (variable jump height)
+        PlayerMovement movement = _playerController.GetComponent<PlayerMovement>();
+        movement.CutJump();
     }
 
     public void PausePressed(InputAction.CallbackContext context)

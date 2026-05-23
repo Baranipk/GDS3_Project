@@ -19,7 +19,11 @@ public class LevelManager : MonoBehaviour
     // 1. Belirli bir ismi olan sahneyi yüklemek için
     public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        // Önce barları kapat, sonra sahneyi yükle
+        if (LevelTransition.Instance != null)
+            LevelTransition.Instance.PlayClose(() => SceneManager.LoadScene(sceneName));
+        else
+            SceneManager.LoadScene(sceneName);
     }
 
     // 2. Build Settings'teki bir sonraki sahneyi otomatik yüklemek için
@@ -27,22 +31,27 @@ public class LevelManager : MonoBehaviour
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
-        // Eğer son sahnede değilsek bir sonrakine geç
         if (currentSceneIndex + 1 < SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene(currentSceneIndex + 1);
+            int next = currentSceneIndex + 1;
+            if (LevelTransition.Instance != null)
+                LevelTransition.Instance.PlayClose(() => SceneManager.LoadScene(next));
+            else
+                SceneManager.LoadScene(next);
         }
         else
         {
             Debug.LogWarning("Sıradaki sahne yok! Ana menüye veya ilk sahneye dönülebilir.");
-            // İstersen burada oyunu bitirebilir veya 0. sahneye döndürebilirsin:
-            // SceneManager.LoadScene(0);
         }
     }
 
     // 3. Mevcut bölümü yeniden başlatmak için (Karakter ölünce vb.)
     public void RestartLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        int idx = SceneManager.GetActiveScene().buildIndex;
+        if (LevelTransition.Instance != null)
+            LevelTransition.Instance.PlayClose(() => SceneManager.LoadScene(idx));
+        else
+            SceneManager.LoadScene(idx);
     }
 }

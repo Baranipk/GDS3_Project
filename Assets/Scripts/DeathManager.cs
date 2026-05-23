@@ -62,7 +62,12 @@ public class DeathManager : MonoBehaviour
         DOTween.KillAll(complete: false);
 
         await UniTask.Delay(100, ignoreTimeScale: true);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        int idx = SceneManager.GetActiveScene().buildIndex;
+        if (LevelTransition.Instance != null)
+            LevelTransition.Instance.PlayClose(() => SceneManager.LoadScene(idx));
+        else
+            SceneManager.LoadScene(idx);
     }
 
     public async void GoToMainMenu()
@@ -75,6 +80,10 @@ public class DeathManager : MonoBehaviour
         DOTween.KillAll(complete: false);
 
         await UniTask.Delay(100, ignoreTimeScale: true);
-        SceneManager.LoadScene(0);
+
+        if (LevelTransition.Instance != null)
+            LevelTransition.Instance.PlayClose(() => SceneManager.LoadScene(0));
+        else
+            SceneManager.LoadScene(0);
     }
 }

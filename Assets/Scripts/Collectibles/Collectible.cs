@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public enum CollectibleType
 {
@@ -15,13 +16,30 @@ public class Collectible : MonoBehaviour
     public int amount = 1;
 
     [Header("Benzersiz Kimlik (Sadece MaxHealth için)")]
-    // YENİ: Unity Editör'den her bir objeye özel bir ID yazacaksın (Örn: "Level1_GizliKutu")
     public string uniqueID;
 
-    [Header("Görsel Efekt")]
+    [Header("Görsel Efekt (Float)")]
     public float floatSpeed = 3f;
     public float floatHeight = 0.1f;
+
+    [Header("Toplama Animasyonu")]
+    public float pickupScaleTo = 1.6f;
+    public float pickupRiseY = 0.5f;
+    public float pickupDuration = 0.3f;
+    public Ease pickupScaleEase = Ease.OutBack;
+    public Ease pickupFadeEase = Ease.InQuad;
+    public Ease pickupRiseEase = Ease.OutCubic;
+
     private float _startY;
+    private bool _isCollected;
+    private SpriteRenderer _sr;
+    private Collider2D _col;
+
+    private void Awake()
+    {
+        _sr = GetComponentInChildren<SpriteRenderer>();
+        _col = GetComponent<Collider2D>();
+    }
 
     private void Start()
     {
@@ -30,6 +48,8 @@ public class Collectible : MonoBehaviour
 
     private void Update()
     {
+        if (_isCollected) return; // Toplama animasyonu sırasında float'ı durdur
+
         float newY = _startY + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
         transform.position = new Vector2(transform.position.x, newY);
     }
@@ -97,9 +117,47 @@ public class Collectible : MonoBehaviour
 
                 if (isCollected)
                 {
-                    Destroy(gameObject);
+                    PlayPickupAnimation();
                 }
             }
         }
+    }
+
+    private void PlayPickupAnimation()
+    {
+        if (_isCollected) return;
+        _isCollected = true;
+
+        // Tekrar tetiklenmesin
+        if (_col != null) _col.enabled = false;
+
+        // Mevcut transform tween'lerini durdur
+        transform.DOKill();
+
+        // Scale-up
+        transform.DOScale(transform.localScale * pickupScaleTo, pickupDuration)
+                 .SetEase(pickupScaleEase);
+
+        // Yukarı süzülme
+        transform.DOMoveY(transform.position.y + pickupRiseY, pickupDuration)
+                 .SetEase(pickupRiseEase);
+
+        // Fade out (sprite alpha)
+        if (_sr != null)
+        {
+            _sr.DOFade(0f, pickupDuration)
+               .SetEase(pickupFadeEase)
+               .OnComplete(() => Destroy(gameObject));
+        }
+        else
+        {
+            // Sprite yoksa yine de animasyon sonunda destroy
+            Invoke(nameof(DestroySelf), pickupDuration);
+        }
+    }
+
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }

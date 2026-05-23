@@ -24,6 +24,13 @@ public class PlayerHealth : MonoBehaviour
     [Header("I-Frame Durumu")]
     public bool isInvincible = false;
 
+    [Header("Screen Shake Şiddetleri")]
+    [Tooltip("Açıksa hasar/ölüm anlarında kamera sallanır.")]
+    public bool enableScreenShake = true;
+    [Range(0f, 2f)] public float shakeOnHurt = 0.3f;
+    [Range(0f, 2f)] public float shakeOnShieldBreak = 0.5f;
+    [Range(0f, 2f)] public float shakeOnDeath = 1.0f;
+
     [Header("Veri Kaydı")]
     public PlayerData data;
 
@@ -99,9 +106,12 @@ public class PlayerHealth : MonoBehaviour
             if (damageToShield > 0)
                 VFXManager.Instance?.PlayDamage(transform.position, damageToShield, "Shield");
 
-            // Kalkan kırıldıysa özel ses
+            // Kalkan kırıldıysa özel ses + güçlü shake
             if (currentShield == 0)
+            {
                 SoundManager.Instance?.TryPlayOneShot("ShieldBreak");
+                if (enableScreenShake) ScreenShake.Instance?.Shake(shakeOnShieldBreak);
+            }
 
             // Kalkan değişti — UI'ı bildir
             OnHealthChanged?.Invoke(this);
@@ -113,6 +123,7 @@ public class PlayerHealth : MonoBehaviour
         UpdateData();
 
         VFXManager.Instance?.PlayDamage(transform.position, damage);
+        if (enableScreenShake) ScreenShake.Instance?.Shake(shakeOnHurt);
 
         // Can değişti — UI'ı bildir
         OnHealthChanged?.Invoke(this);
@@ -198,8 +209,9 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         _isDead = true;
-        // Ölüm anında güçlü geri tepme — dramatize
+        // Ölüm anında güçlü geri tepme + büyük shake
         _controller.ApplyKnockback(_controller.deathKnockbackMultiplier);
+        if (enableScreenShake) ScreenShake.Instance?.Shake(shakeOnDeath);
         _controller.playerStateMachine.ChangeState(_controller.deathState);
     }
 

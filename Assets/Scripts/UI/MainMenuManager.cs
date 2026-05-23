@@ -220,7 +220,7 @@ public class MainMenuManager : MonoBehaviour
         // Butonun "Bump" animasyonunu ve tıklama sesini duymak için bekle
         await UniTask.Delay(300);
 
-        // Build Settings'deki sıraya (Index) göre sahneyi yükle
+        // Main menu'den çıkış: close animasyonu YOK, sadece level'da open animasyonu oynayacak
         SceneManager.LoadScene(levelIndex);
     }
 

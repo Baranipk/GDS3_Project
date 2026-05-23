@@ -57,9 +57,10 @@ public class BossHealth : MonoBehaviour
             if (sourcePos.HasValue)
                 _controller.ApplyKnockback(sourcePos.Value, _controller.hurtKnockbackMultiplier);
 
-            // Scale punch
+            // Scale punch + shake
             transform.DOKill(true);
             transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0f), 0.18f, 6, 0.5f);
+            ScreenShake.Instance?.Shake(0.4f);
 
             _controller.StateMachine.ChangeState(_controller.hurtState);
         }
@@ -75,9 +76,10 @@ public class BossHealth : MonoBehaviour
         if (sourcePos.HasValue)
             _controller.ApplyKnockback(sourcePos.Value, _controller.deathKnockbackMultiplier);
 
-        // Boss ölüm punch — daha dramatik
+        // Boss ölüm punch + büyük shake
         transform.DOKill(true);
         transform.DOPunchScale(new Vector3(0.25f, 0.25f, 0f), 0.4f, 4, 0.7f);
+        ScreenShake.Instance?.Shake(1.2f);
 
         _controller.DropLoot();
         _controller.StateMachine.ChangeState(_controller.deathState);
