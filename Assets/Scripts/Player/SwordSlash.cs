@@ -19,14 +19,26 @@ public class SwordSlash : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 1. DÜŞMAN ETKİLEŞİMİ (Mevcut kodun)
-        if (collision.CompareTag("Enemy") || collision.transform.root.CompareTag("Enemy"))
+        Debug.Log($"[SwordSlash] Çarpıştı: {collision.name} (tag={collision.tag}, rootTag={collision.transform.root.tag})");
+
+        // 1. DÜŞMAN veya BOSS ETKİLEŞİMİ
+        bool isEnemy = collision.CompareTag("Enemy") || collision.transform.root.CompareTag("Enemy");
+        bool isBoss  = collision.CompareTag("Boss")  || collision.transform.root.CompareTag("Boss");
+
+        if (isEnemy || isBoss)
         {
             EnemyHealth enemyHealth = collision.GetComponentInParent<EnemyHealth>();
+            BossHealth  bossHealth  = collision.GetComponentInParent<BossHealth>();
+
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(damage);
                 Debug.Log($"Sabit slash {collision.name} objesine {damage} hasar verdi!");
+            }
+            if (bossHealth != null)
+            {
+                bossHealth.TakeDamage(damage);
+                Debug.Log($"Sabit slash {collision.name} (Boss) objesine {damage} hasar verdi!");
             }
         }
 

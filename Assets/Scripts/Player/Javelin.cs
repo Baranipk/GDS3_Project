@@ -30,19 +30,20 @@ public class Javelin : MonoBehaviour
     {
         string hitLayerName = LayerMask.LayerToName(collision.gameObject.layer);
 
-        // 1. DÜŞMANA ÇARPMA
-        if (collision.CompareTag("Enemy") || collision.transform.root.CompareTag("Enemy"))
+        // 1. DÜŞMANA veya BOSS'A ÇARPMA
+        bool isEnemy = collision.CompareTag("Enemy") || collision.transform.root.CompareTag("Enemy");
+        bool isBoss  = collision.CompareTag("Boss")  || collision.transform.root.CompareTag("Boss");
+
+        if (isEnemy || isBoss)
         {
             EnemyHealth enemyHealth = collision.GetComponentInParent<EnemyHealth>();
+            BossHealth  bossHealth  = collision.GetComponentInParent<BossHealth>();
 
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(damage);
+            if (enemyHealth != null) enemyHealth.TakeDamage(damage);
+            if (bossHealth  != null) bossHealth.TakeDamage(damage);
 
-                // --- YENİ: Düşmana Çarpma Sesi ---
-                // Güvenlik kontrolü ile çağırıyoruz ki SoundManager yokken hata vermesin
+            if (enemyHealth != null || bossHealth != null)
                 SoundManager.Instance?.Get("JavelinHitEnemy")?.PlayOneShot();
-            }
 
             Destroy(gameObject);
         }

@@ -10,6 +10,8 @@ public class EnemyHealth : MonoBehaviour
     private bool _isDead = false;
 
     public bool IsDead => _isDead;
+    public bool malmal = false;
+    
 
     private void Awake()
     {

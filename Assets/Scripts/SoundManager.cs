@@ -78,6 +78,31 @@ public class SoundManager : MonoBehaviour
         return s;
     }
 
+    /// <summary>
+    /// İsimle ses arar, bulamazsa sessizce null döner (warning yok).
+    /// Opsiyonel sesler için kullan.
+    /// </summary>
+    public Sound TryGet(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return null;
+        return Array.Find(sounds, sound => sound.name == name);
+    }
+
+    /// <summary>Sesi varsa one-shot olarak çalar, yoksa hiçbir şey yapmaz.</summary>
+    public void TryPlayOneShot(string name)
+    {
+        Sound s = TryGet(name);
+        if (s != null && s.source != null && s.clip != null)
+            s.source.PlayOneShot(s.clip);
+    }
+
+    /// <summary>Sesi varsa Play() ile başlatır, yoksa hiçbir şey yapmaz.</summary>
+    public void TryPlay(string name)
+    {
+        Sound s = TryGet(name);
+        if (s != null) s.source?.Play();
+    }
+
     public void ToggleMute(string parameterName, bool isMuted, float lastSliderValue)
     {
         if (isMuted)

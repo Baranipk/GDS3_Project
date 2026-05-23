@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - CameraBounds
   - Lever
+  - Boss
   layers:
   - Default
   - TransparentFX

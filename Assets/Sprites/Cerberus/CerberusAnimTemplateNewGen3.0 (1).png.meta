@@ -1,0 +1,938 @@
+fileFormatVersion: 2
+guid: 06e33d815fa9a044f87682a6e8e487a8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1075685780540477262
+    second: CerberusAnimTemplateNewGen3.0 (1)_0
+  - first:
+      213: -2130520371457881113
+    second: CerberusAnimTemplateNewGen3.0 (1)_1
+  - first:
+      213: -2624326707838292167
+    second: CerberusAnimTemplateNewGen3.0 (1)_2
+  - first:
+      213: 7010224163845821354
+    second: CerberusAnimTemplateNewGen3.0 (1)_3
+  - first:
+      213: -6231727681801012684
+    second: CerberusAnimTemplateNewGen3.0 (1)_4
+  - first:
+      213: -1992832275008924050
+    second: CerberusAnimTemplateNewGen3.0 (1)_5
+  - first:
+      213: -1101810841595787612
+    second: CerberusAnimTemplateNewGen3.0 (1)_6
+  - first:
+      213: 8005354740611221415
+    second: CerberusAnimTemplateNewGen3.0 (1)_7
+  - first:
+      213: -6941601646431391803
+    second: CerberusAnimTemplateNewGen3.0 (1)_8
+  - first:
+      213: -3858298141739683257
+    second: CerberusAnimTemplateNewGen3.0 (1)_9
+  - first:
+      213: -8494333650122665391
+    second: CerberusAnimTemplateNewGen3.0 (1)_10
+  - first:
+      213: 2538707258645428252
+    second: CerberusAnimTemplateNewGen3.0 (1)_11
+  - first:
+      213: 637067072862501702
+    second: CerberusAnimTemplateNewGen3.0 (1)_12
+  - first:
+      213: -1575635429106824749
+    second: CerberusAnimTemplateNewGen3.0 (1)_13
+  - first:
+      213: -3758653576565897943
+    second: CerberusAnimTemplateNewGen3.0 (1)_14
+  - first:
+      213: 7223715438006919280
+    second: CerberusAnimTemplateNewGen3.0 (1)_15
+  - first:
+      213: 5216016692549284623
+    second: CerberusAnimTemplateNewGen3.0 (1)_16
+  - first:
+      213: 8585461424399156705
+    second: CerberusAnimTemplateNewGen3.0 (1)_17
+  - first:
+      213: 4851962120167227730
+    second: CerberusAnimTemplateNewGen3.0 (1)_18
+  - first:
+      213: 8493638985063209145
+    second: CerberusAnimTemplateNewGen3.0 (1)_19
+  - first:
+      213: 2715825768730190847
+    second: CerberusAnimTemplateNewGen3.0 (1)_20
+  - first:
+      213: -7153645902531915658
+    second: CerberusAnimTemplateNewGen3.0 (1)_21
+  - first:
+      213: 7803121038188442784
+    second: CerberusAnimTemplateNewGen3.0 (1)_22
+  - first:
+      213: -884995140158458350
+    second: CerberusAnimTemplateNewGen3.0 (1)_23
+  - first:
+      213: -731445942732430534
+    second: CerberusAnimTemplateNewGen3.0 (1)_24
+  - first:
+      213: -5813934294493970747
+    second: CerberusAnimTemplateNewGen3.0 (1)_25
+  - first:
+      213: 5736004622686745979
+    second: CerberusAnimTemplateNewGen3.0 (1)_26
+  - first:
+      213: -4884751752535952813
+    second: CerberusAnimTemplateNewGen3.0 (1)_27
+  - first:
+      213: -4667367384048226635
+    second: CerberusAnimTemplateNewGen3.0 (1)_28
+  - first:
+      213: 5035450380132069264
+    second: CerberusAnimTemplateNewGen3.0 (1)_29
+  - first:
+      213: -1291419189571025388
+    second: CerberusAnimTemplateNewGen3.0 (1)_30
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 282
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b032f85b756211f0800000000000000
+      internalID: -1075685780540477262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 235
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7eb0588920fde62e0800000000000000
+      internalID: -2130520371457881113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 235
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93f6ab473c4849bd0800000000000000
+      internalID: -2624326707838292167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_3
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 235
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa3d3e93cb1594160800000000000000
+      internalID: 7010224163845821354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 235
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43a3845c0b47489a0800000000000000
+      internalID: -6231727681801012684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 188
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e66d827ba990854e0800000000000000
+      internalID: -1992832275008924050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 188
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a6420190e495b0f0800000000000000
+      internalID: -1101810841595787612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 188
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a70f1fe8bbb81f60800000000000000
+      internalID: 8005354740611221415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_8
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 188
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cfa03ca41a7aaf90800000000000000
+      internalID: -6941601646431391803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 141
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7427e004842947ac0800000000000000
+      internalID: -3858298141739683257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 141
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1529ac4dc801e1a80800000000000000
+      internalID: -8494333650122665391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_11
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 141
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1834441dcc4b3320800000000000000
+      internalID: 2538707258645428252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_12
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 141
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64b3110a02157d800800000000000000
+      internalID: 637067072862501702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_13
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 141
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d94190ece7322ae0800000000000000
+      internalID: -1575635429106824749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_14
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 141
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 925c90f7c7496dbc0800000000000000
+      internalID: -3758653576565897943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 94
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07068e00beacf3460800000000000000
+      internalID: 7223715438006919280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_16
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 94
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0378e5db83036840800000000000000
+      internalID: 5216016692549284623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_17
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 94
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e581228dafa52770800000000000000
+      internalID: 8585461424399156705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_18
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 94
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 251083c67d1a55340800000000000000
+      internalID: 4851962120167227730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_19
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 94
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b81a1bd7a77fd570800000000000000
+      internalID: 8493638985063209145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_20
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 94
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff3e309c52d80b520800000000000000
+      internalID: 2715825768730190847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 47
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67018aa04f429bc90800000000000000
+      internalID: -7153645902531915658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_22
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 47
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a47994dd314a4c60800000000000000
+      internalID: 7803121038188442784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_23
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 47
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21678e2eb9dd7b3f0800000000000000
+      internalID: -884995140158458350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_24
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 47
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a33680b5ac169d5f0800000000000000
+      internalID: -731445942732430534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_25
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 47
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ceb93d0091c05fa0800000000000000
+      internalID: -5813934294493970747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_26
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 47
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b75fd3d40d16a9f40800000000000000
+      internalID: 5736004622686745979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 352b02e5920e53cb0800000000000000
+      internalID: -4884751752535952813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_28
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5beaf8dc71e2a3fb0800000000000000
+      internalID: -4667367384048226635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_29
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09fa0e7117381e540800000000000000
+      internalID: 5035450380132069264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CerberusAnimTemplateNewGen3.0 (1)_30
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4160f7dd615f31ee0800000000000000
+      internalID: -1291419189571025388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: f078804801fc3784b99de9ad91967b00
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":7.0},"gridSpriteSize":{"x":64.0,"y":47.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      CerberusAnimTemplateNewGen3.0 (1)_0: -1075685780540477262
+      CerberusAnimTemplateNewGen3.0 (1)_1: -2130520371457881113
+      CerberusAnimTemplateNewGen3.0 (1)_10: -8494333650122665391
+      CerberusAnimTemplateNewGen3.0 (1)_11: 2538707258645428252
+      CerberusAnimTemplateNewGen3.0 (1)_12: 637067072862501702
+      CerberusAnimTemplateNewGen3.0 (1)_13: -1575635429106824749
+      CerberusAnimTemplateNewGen3.0 (1)_14: -3758653576565897943
+      CerberusAnimTemplateNewGen3.0 (1)_15: 7223715438006919280
+      CerberusAnimTemplateNewGen3.0 (1)_16: 5216016692549284623
+      CerberusAnimTemplateNewGen3.0 (1)_17: 8585461424399156705
+      CerberusAnimTemplateNewGen3.0 (1)_18: 4851962120167227730
+      CerberusAnimTemplateNewGen3.0 (1)_19: 8493638985063209145
+      CerberusAnimTemplateNewGen3.0 (1)_2: -2624326707838292167
+      CerberusAnimTemplateNewGen3.0 (1)_20: 2715825768730190847
+      CerberusAnimTemplateNewGen3.0 (1)_21: -7153645902531915658
+      CerberusAnimTemplateNewGen3.0 (1)_22: 7803121038188442784
+      CerberusAnimTemplateNewGen3.0 (1)_23: -884995140158458350
+      CerberusAnimTemplateNewGen3.0 (1)_24: -731445942732430534
+      CerberusAnimTemplateNewGen3.0 (1)_25: -5813934294493970747
+      CerberusAnimTemplateNewGen3.0 (1)_26: 5736004622686745979
+      CerberusAnimTemplateNewGen3.0 (1)_27: -4884751752535952813
+      CerberusAnimTemplateNewGen3.0 (1)_28: -4667367384048226635
+      CerberusAnimTemplateNewGen3.0 (1)_29: 5035450380132069264
+      CerberusAnimTemplateNewGen3.0 (1)_3: 7010224163845821354
+      CerberusAnimTemplateNewGen3.0 (1)_30: -1291419189571025388
+      CerberusAnimTemplateNewGen3.0 (1)_4: -6231727681801012684
+      CerberusAnimTemplateNewGen3.0 (1)_5: -1992832275008924050
+      CerberusAnimTemplateNewGen3.0 (1)_6: -1101810841595787612
+      CerberusAnimTemplateNewGen3.0 (1)_7: 8005354740611221415
+      CerberusAnimTemplateNewGen3.0 (1)_8: -6941601646431391803
+      CerberusAnimTemplateNewGen3.0 (1)_9: -3858298141739683257
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
