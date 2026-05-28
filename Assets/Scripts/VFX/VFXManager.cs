@@ -8,6 +8,9 @@ public class VFXManager : MonoBehaviour
 {
     public static VFXManager Instance { get; private set; }
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() { Instance = null; }
+
     [Header("Karakter VFX Prefabları")]
     [SerializeField] private GameObject healVFXPrefab;
     [SerializeField] private GameObject shieldVFXPrefab;

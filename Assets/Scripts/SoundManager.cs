@@ -6,6 +6,9 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() { Instance = null; }
+
     [Header("Ses Ayarları")]
     public AudioMixer mainMixer; // Unity'deki Mixer dosyamız
     public Sound[] sounds;

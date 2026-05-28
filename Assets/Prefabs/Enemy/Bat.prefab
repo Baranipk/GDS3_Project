@@ -191,9 +191,16 @@ MonoBehaviour:
   contactDamageCooldown: 1
   lootTable: {fileID: 11400000, guid: d47bde2e1b02b204099c1edf4af39c1f, type: 2}
   dropChance: 20
+  knockbackForce: {x: 6, y: 4}
+  deathKnockbackMultiplier: 2.5
+  hurtKnockbackMultiplier: 1
+  hurtSoundName: BatHurt
+  deathSoundName: BatHurt
+  contactHitSoundName: EnemyContactHit
+  attackSoundName: BatAttack
   isFacingRight: 1
-  leftLimitX: 0
-  rightLimitX: 0
+  leftLimitX: 55
+  rightLimitX: 62
   patrolSpeed: 3
   chaseSpeed: 5
   waypoints:
@@ -212,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 2
+  malmal: 0
 --- !u!95 &2551367094006570385
 Animator:
   serializedVersion: 7

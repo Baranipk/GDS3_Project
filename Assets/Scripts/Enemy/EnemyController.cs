@@ -35,6 +35,12 @@ public abstract class EnemyController : MonoBehaviour
     public float deathKnockbackMultiplier = 2.5f;          // Ölüm anında çarpan (daha güçlü)
     public float hurtKnockbackMultiplier = 1f;             // Normal hasar çarpanı
 
+    [Header("Sesler (SoundManager isim) — boş bırakırsan ses çalmaz")]
+    public string hurtSoundName        = "EnemyHurt";
+    public string deathSoundName       = "EnemyDeath";
+    public string contactHitSoundName  = "EnemyContactHit";
+    public string attackSoundName      = "";   // Subclass'lar kullanır (Skeleton/Satyr)
+
     public bool isFacingRight = true;
 
     protected virtual void Awake()
@@ -98,7 +104,7 @@ public abstract class EnemyController : MonoBehaviour
             if (playerHealth != null && !playerHealth.isInvincible) // isInvincible (I-Frame) kontrolü
             {
                 playerHealth.TakeDamage(contactDamage);
-                SoundManager.Instance?.TryPlayOneShot("EnemyContactHit");
+                SoundManager.Instance?.TryPlayOneShot(contactHitSoundName);
                 Debug.Log($"{gameObject.name} (Ortak Sistem) temas hasarı verdi!");
 
                 // Bekleme süresini güncelle

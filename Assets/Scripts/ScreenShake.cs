@@ -54,7 +54,7 @@ public class ScreenShake : MonoBehaviour
     /// </summary>
     private void BindToActiveVirtualCamera()
     {
-        _vcam = FindObjectOfType<CinemachineVirtualCamera>();
+        _vcam = FindAnyObjectByType<CinemachineVirtualCamera>();
         if (_vcam == null)
         {
             if (DEBUG) Debug.LogWarning("[ScreenShake] CinemachineVirtualCamera bulunamadı");

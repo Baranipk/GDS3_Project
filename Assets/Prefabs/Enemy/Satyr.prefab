@@ -230,15 +230,22 @@ MonoBehaviour:
   rb: {fileID: 0}
   enemyAnim: {fileID: 0}
   player: {fileID: 0}
-  detectionRadius: 6
-  loseRadius: 10
+  detectionRadius: 28
+  loseRadius: 30
   contactDamage: 1
   contactDamageCooldown: 1
   lootTable: {fileID: 11400000, guid: d47bde2e1b02b204099c1edf4af39c1f, type: 2}
   dropChance: 20
+  knockbackForce: {x: 6, y: 4}
+  deathKnockbackMultiplier: 2.5
+  hurtKnockbackMultiplier: 1
+  hurtSoundName: SatyrHurt
+  deathSoundName: SatyrDeath
+  contactHitSoundName: EnemyContactHit
+  attackSoundName: SatyrAttack
   isFacingRight: 1
   patrolSpeed: 2
-  patrolDistance: 6
+  patrolDistance: 1
   leftBoundary: 0
   rightBoundary: 0
   projectilePrefab: {fileID: 654005926560966143, guid: 0a9c12f6eb27a5b4a9784324629b9295, type: 3}
@@ -258,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 3
+  malmal: 0
 --- !u!114 &7340525843428432437
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,6 +9,9 @@ public class PauseManager : MonoBehaviour
 {
     public static PauseManager Instance;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() { Instance = null; }
+
     [Header("UI Referansları")]
     public GameObject pauseMenuScreen;
     public GameObject firstSelectedButton;

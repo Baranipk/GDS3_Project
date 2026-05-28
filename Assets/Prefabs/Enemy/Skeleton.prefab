@@ -320,6 +320,13 @@ MonoBehaviour:
   contactDamageCooldown: 1
   lootTable: {fileID: 11400000, guid: d47bde2e1b02b204099c1edf4af39c1f, type: 2}
   dropChance: 20
+  knockbackForce: {x: 6, y: 4}
+  deathKnockbackMultiplier: 2.5
+  hurtKnockbackMultiplier: 1
+  hurtSoundName: SkeletonHurt
+  deathSoundName: SkeletonDeath
+  contactHitSoundName: EnemyContactHit
+  attackSoundName: SkeletonAttack
   isFacingRight: 1
   patrolSpeed: 2
   chaseSpeed: 3.5
@@ -348,6 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 4
+  malmal: 0
 --- !u!114 &5005638794775256762
 MonoBehaviour:
   m_ObjectHideFlags: 0

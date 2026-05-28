@@ -8,6 +8,9 @@ public class DeathManager : MonoBehaviour
 {
     public static DeathManager Instance;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() { Instance = null; }
+
     [Header("UI Referansları")]
     public GameObject deathScreenUI;
     public GameObject firstSelectedButton;

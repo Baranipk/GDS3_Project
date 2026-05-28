@@ -571,8 +571,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b77e259edfc951418a170cea33bdc78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ElevatorController
+  elevatorID: Elevator_1
   speed: 3
-  distanceInTiles: 8
+  distanceInTiles: 22
   startsAtBottom: 1
   board: {fileID: 7300369374628075594}
   pulley: {fileID: 7625408775255549321}

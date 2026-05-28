@@ -5,6 +5,9 @@ public class GlobalManager : MonoBehaviour
 {
     public static GlobalManager Instance;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() { Instance = null; }
+
     [Header("Gizlenecek Gruplar")]
     public GameObject uiContainer;      // HUD, Canlar, Pause Menüsü
     public GameObject eventSystemObject; // PersistentSystems içindeki EventSystem objesi

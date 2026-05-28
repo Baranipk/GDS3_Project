@@ -145,14 +145,27 @@ public class BossHealthBarAutoUI : MonoBehaviour
 
     // ─── Editor'de görsel önizleme için ────────────────────────
 #if UNITY_EDITOR
+    private bool _pendingRebuild;
+
     private void OnValidate()
     {
         if (!gameObject.activeInHierarchy) return;
-        UnityEditor.EditorApplication.delayCall += () =>
-        {
-            if (this == null) return;
-            Rebuild();
-        };
+        if (_pendingRebuild) return;
+        _pendingRebuild = true;
+        UnityEditor.EditorApplication.delayCall += OnDelayedRebuild;
+    }
+
+    private void OnDelayedRebuild()
+    {
+        UnityEditor.EditorApplication.delayCall -= OnDelayedRebuild;
+        _pendingRebuild = false;
+        if (this == null) return;
+        Rebuild();
+    }
+
+    private void OnDestroy_Editor()
+    {
+        UnityEditor.EditorApplication.delayCall -= OnDelayedRebuild;
     }
 #endif
 

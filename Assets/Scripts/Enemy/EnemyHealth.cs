@@ -35,7 +35,7 @@ public class EnemyHealth : MonoBehaviour
         }
         else
         {
-            SoundManager.Instance?.TryPlayOneShot("EnemyHurt");
+            SoundManager.Instance?.TryPlayOneShot(_controller != null ? _controller.hurtSoundName : "EnemyHurt");
 
             // Knockback uygula (hafif)
             if (_controller != null && sourcePos.HasValue)
@@ -59,7 +59,7 @@ public class EnemyHealth : MonoBehaviour
         if (_isDead) return;
         _isDead = true;
 
-        SoundManager.Instance?.TryPlayOneShot("EnemyDeath");
+        SoundManager.Instance?.TryPlayOneShot(_controller != null ? _controller.deathSoundName : "EnemyDeath");
 
         // Ölüm knockback'i — çok daha güçlü, yukarı doğru fırlatma
         if (_controller != null && sourcePos.HasValue)

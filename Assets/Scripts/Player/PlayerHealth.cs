@@ -6,6 +6,14 @@ public class PlayerHealth : MonoBehaviour
     // ── Statik Referans & Eventler ─────────────────────────────
     public static PlayerHealth Instance { get; private set; }
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        Instance = null;
+        OnPlayerReady = null;
+        OnHealthChanged = null;
+    }
+
     /// PlayerHealth.Start() bitince tetiklenir — HealthUI ilk kurulumu için
     public static event Action<PlayerHealth> OnPlayerReady;
 
@@ -104,11 +112,9 @@ public class PlayerHealth : MonoBehaviour
             UpdateData();
 
             if (damageToShield > 0)
-                VFXManager.Instance?.PlayDamage(transform.position, damageToShield, "Shield");
-
-            // Kalkan kırıldıysa özel ses + güçlü shake
-            if (currentShield == 0)
             {
+                VFXManager.Instance?.PlayDamage(transform.position, damageToShield, "Shield");
+                // Her kalkan kaybında ses + shake çalsın
                 SoundManager.Instance?.TryPlayOneShot("ShieldBreak");
                 if (enableScreenShake) ScreenShake.Instance?.Shake(shakeOnShieldBreak);
             }
