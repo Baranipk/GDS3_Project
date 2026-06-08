@@ -26,8 +26,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_6.unity
     guid: 555f141d788328c43a60d2d6c80e7795
-  - enabled: 0
-    path: Assets/Scenes/Z_Level_1_Yedek.unity
-    guid: 2c0a9c54da5c88d4e975e2b17a7f00d0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: e3bc743cd0b142045acc2c73a7fda206, type: 3}

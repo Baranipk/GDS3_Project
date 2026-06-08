@@ -96,6 +96,14 @@ public class ElevatorController : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        // Sahne restart/değişimde asansör hareket halinde kaldıysa loop sesi durmayabilir
+        // SoundManager DontDestroyOnLoad olduğu için ses devam eder — burada manuel durdur
+        if (isMoving)
+            SoundManager.Instance?.TryStop("ElevatorMove");
+    }
+
     public void ToggleElevator()
     {
         if (isMoving) return;
