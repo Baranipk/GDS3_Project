@@ -88,6 +88,9 @@ public class ElevatorController : MonoBehaviour
 
                 // Hedefe ulaştık, animasyonu durdur ve görseli sıfırla
                 StopPulleyAnimation();
+
+                // Loop'taki hareket sesini DURDUR + tek seferlik stop sesi çal
+                SoundManager.Instance?.TryStop("ElevatorMove");
                 SoundManager.Instance?.TryPlayOneShot("ElevatorStop");
             }
         }
@@ -100,7 +103,8 @@ public class ElevatorController : MonoBehaviour
         isMoving = true;
         targetPosition = isAtTop ? bottomPosition : topPosition;
 
-        SoundManager.Instance?.TryPlayOneShot("ElevatorMove");
+        // Loop'lu hareket sesini BAŞLAT (SoundManager'da Loop ✅ olmalı)
+        SoundManager.Instance?.TryPlay("ElevatorMove");
 
         // Hareket başladı, animasyonu aç
         if (pulleyAnimator != null)

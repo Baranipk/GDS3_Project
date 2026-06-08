@@ -328,6 +328,9 @@ MonoBehaviour:
   patternThinkInterval: 0.25
   aggressiveness: 0.704
   hurtDuration: 0.3
+  knockbackForce: {x: 3, y: 2}
+  hurtKnockbackMultiplier: 1
+  deathKnockbackMultiplier: 2
   activationRadius: 14
   autoActivate: 1
   meleeAttackPoint: {fileID: 3263842365170991077}
@@ -355,9 +358,9 @@ MonoBehaviour:
   lootTable: {fileID: 0}
   dropChance: 100
   introSoundName: BossIntro
-  meleeSoundName: BossMelee
-  rangedSoundName: BossRanged
-  footstepSoundName: 
+  meleeSoundName: CerberusBite
+  rangedSoundName: CerberusFire
+  footstepSoundName: CerberusFootstep
   musicSoundName: 
   isFacingRight: 1
   startWithIntro: 0
@@ -389,8 +392,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
   maxHealth: 20
-  hurtSoundName: BossHurt
-  deathSoundName: BossDeath
+  hurtSoundName: CerberusHurt
+  deathSoundName: CerberusDeath
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []

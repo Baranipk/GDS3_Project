@@ -36,14 +36,16 @@ public class Javelin : MonoBehaviour
 
         if (isEnemy || isBoss)
         {
-            EnemyHealth enemyHealth = collision.GetComponentInParent<EnemyHealth>();
-            BossHealth  bossHealth  = collision.GetComponentInParent<BossHealth>();
+            EnemyHealth    enemyHealth   = collision.GetComponentInParent<EnemyHealth>();
+            BossHealth     bossHealth    = collision.GetComponentInParent<BossHealth>();
+            ZagreusHealth  zagreusHealth = collision.GetComponentInParent<ZagreusHealth>();
 
             Vector2 src = transform.position;
-            if (enemyHealth != null) enemyHealth.TakeDamage(damage, src);
-            if (bossHealth  != null) bossHealth.TakeDamage(damage, src);
+            if (enemyHealth   != null) enemyHealth.TakeDamage(damage, src);
+            if (bossHealth    != null) bossHealth.TakeDamage(damage, src);
+            if (zagreusHealth != null) zagreusHealth.TakeDamage(damage, src);
 
-            if (enemyHealth != null || bossHealth != null)
+            if (enemyHealth != null || bossHealth != null || zagreusHealth != null)
                 SoundManager.Instance?.Get("JavelinHitEnemy")?.PlayOneShot();
 
             Destroy(gameObject);

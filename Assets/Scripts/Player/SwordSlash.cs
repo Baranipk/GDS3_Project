@@ -27,8 +27,9 @@ public class SwordSlash : MonoBehaviour
 
         if (isEnemy || isBoss)
         {
-            EnemyHealth enemyHealth = collision.GetComponentInParent<EnemyHealth>();
-            BossHealth  bossHealth  = collision.GetComponentInParent<BossHealth>();
+            EnemyHealth    enemyHealth   = collision.GetComponentInParent<EnemyHealth>();
+            BossHealth     bossHealth    = collision.GetComponentInParent<BossHealth>();
+            ZagreusHealth  zagreusHealth = collision.GetComponentInParent<ZagreusHealth>();
 
             Vector2 src = transform.position;
             if (enemyHealth != null)
@@ -40,6 +41,11 @@ public class SwordSlash : MonoBehaviour
             {
                 bossHealth.TakeDamage(damage, src);
                 Debug.Log($"Sabit slash {collision.name} (Boss) objesine {damage} hasar verdi!");
+            }
+            if (zagreusHealth != null)
+            {
+                zagreusHealth.TakeDamage(damage, src);
+                Debug.Log($"Sabit slash {collision.name} (Zagreus) objesine {damage} hasar verdi!");
             }
         }
 

@@ -154,7 +154,7 @@ public class BossController : MonoBehaviour
         if (IsActivated || health.IsDead) return;
         IsActivated = true;
 
-        SoundManager.Instance?.TryPlay(musicSoundName);
+        SoundManager.Instance?.PlayMusic(musicSoundName);  // Theme fade-out, boss music fade-in
 
         Debug.Log($"[Boss {name}] Activate çağrıldı. startWithIntro={startWithIntro}", this);
 

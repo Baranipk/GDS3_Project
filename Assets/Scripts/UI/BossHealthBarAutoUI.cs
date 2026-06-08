@@ -20,9 +20,11 @@ using TMPro;
 public class BossHealthBarAutoUI : MonoBehaviour
 {
     // ─── Boss Bağlantısı ──────────────────────────────────────
-    [Header("Boss Bağlantısı")]
+    [Header("Boss Bağlantısı (BossController VEYA ZagreusController — hangisi atanırsa)")]
     [SerializeField] private BossController boss;
     [SerializeField] private BossHealth bossHealth;
+    [SerializeField] private ZagreusController zagreusBoss;
+    [SerializeField] private ZagreusHealth zagreusHealth;
 
     // ─── Ekran Pozisyonu ──────────────────────────────────────
     public enum ScreenAnchor
@@ -109,6 +111,8 @@ public class BossHealthBarAutoUI : MonoBehaviour
 
         if (boss != null && bossHealth == null)
             bossHealth = boss.GetComponent<BossHealth>();
+        if (zagreusBoss != null && zagreusHealth == null)
+            zagreusHealth = zagreusBoss.GetComponent<ZagreusHealth>();
 
         if (Application.isPlaying)
         {
@@ -121,23 +125,40 @@ public class BossHealthBarAutoUI : MonoBehaviour
     private void OnEnable()
     {
         if (!Application.isPlaying) return;
+
         if (boss != null) boss.onActivated.AddListener(HandleActivated);
         if (bossHealth != null)
         {
             bossHealth.onHealthChanged.AddListener(HandleHealthChanged);
             bossHealth.onBossDied.AddListener(HandleBossDied);
         }
+
+        if (zagreusBoss != null) zagreusBoss.onActivated.AddListener(HandleActivated);
+        if (zagreusHealth != null)
+        {
+            zagreusHealth.onHealthChanged.AddListener(HandleHealthChanged);
+            zagreusHealth.onBossDied.AddListener(HandleBossDied);
+        }
     }
 
     private void OnDisable()
     {
         if (!Application.isPlaying) return;
+
         if (boss != null) boss.onActivated.RemoveListener(HandleActivated);
         if (bossHealth != null)
         {
             bossHealth.onHealthChanged.RemoveListener(HandleHealthChanged);
             bossHealth.onBossDied.RemoveListener(HandleBossDied);
         }
+
+        if (zagreusBoss != null) zagreusBoss.onActivated.RemoveListener(HandleActivated);
+        if (zagreusHealth != null)
+        {
+            zagreusHealth.onHealthChanged.RemoveListener(HandleHealthChanged);
+            zagreusHealth.onBossDied.RemoveListener(HandleBossDied);
+        }
+
         _fillTween?.Kill();
         _flashTween?.Kill();
         _shakeSeq?.Kill();
@@ -429,7 +450,11 @@ public class BossHealthBarAutoUI : MonoBehaviour
 
     private void HandleActivated()
     {
-        if (bossHealth != null) SetFillImmediate(bossHealth.CurrentHealth, bossHealth.MaxHealth);
+        // Hangi boss aktive olduysa onun HP'sini fill'e yansıt
+        if (bossHealth != null)
+            SetFillImmediate(bossHealth.CurrentHealth, bossHealth.MaxHealth);
+        else if (zagreusHealth != null)
+            SetFillImmediate(zagreusHealth.CurrentHealth, zagreusHealth.MaxHealth);
 
         _canvasGroup.DOKill();
         _canvasGroup.DOFade(1f, fadeInDuration).SetEase(Ease.OutQuad);
